@@ -2,7 +2,9 @@ public class PieceJ extends Tetromino{
     
     public PieceJ(int row_, int col_, int scale_, Block[][] grid_, int rotation_){
         super(row_, col_, scale_, grid_);
+        ghost = true;
         color clr = color(50, 50, 255);
+        ghost = true;
         blocks[0] = new Block(row, col, scale, clr);
         blocks[1] = new Block(row, col + 1, scale, clr);
         blocks[2] = new Block(row, col - 1, scale, clr);
@@ -66,7 +68,9 @@ public class PieceJ extends Tetromino{
             blocks[2].setPos(row + 1, col);
             blocks[3].setPos(row + 1, col - 1);
         }
-        moveInBounds(clockwise);
+
+        if(!ghost)
+            moveInBounds(clockwise);
     }
 
     public void reset(){

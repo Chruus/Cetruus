@@ -3,6 +3,7 @@ public abstract class Tetromino{
     Block[] blocks;
     Block[][] grid;
     int rotation, scale;
+    boolean ghost;
 
     public Tetromino(int row_, int col_, int scale_, Block[][] grid_){
         row = row_;
@@ -11,6 +12,7 @@ public abstract class Tetromino{
         grid = grid_;
         blocks = new Block[4];
         rotation = 0;
+        ghost = false;
     }
 
 
@@ -80,6 +82,7 @@ public abstract class Tetromino{
         } else if(direction.equals("down")){
             row++;
             for(Block block : blocks){
+                //System.out.println(block.row() + " " + block.col() + canMove("down"));
                 block.setPos(block.row() + 1, block.col());
             }
         }
@@ -107,10 +110,18 @@ public abstract class Tetromino{
                 move("right");
             while(block.col() >= grid[0].length && canMove("left"))
                 move("left");
-            
-            if(block.row() < 0 || block.row() >= grid.length || block.col() < 0 || block.col() >= grid[0].length)
-                rotate(!clockwise);
         }
+        if(!isInBounds())
+                rotate(!clockwise);
+    }
+
+    public boolean isInBounds(){
+        for(Block block : blocks){
+            if(block.row() < 0 || block.col() < 0 || block.row() >= grid.length 
+            || block.col() >= grid[0].length || grid[block.row()][block.col()] != null)
+                return false;
+        }
+        return true;
     }
 
     public abstract Tetromino clone();

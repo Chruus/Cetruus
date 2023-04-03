@@ -2,6 +2,7 @@ public class PieceL extends Tetromino{
     
     public PieceL(int row_, int col_, int scale_, Block[][] grid_, int rotation_){
         super(row_, col_, scale_, grid_);
+        ghost = true;
         color clr = color(255, 125, 0);
         blocks[0] = new Block(row, col, scale, clr);
         blocks[1] = new Block(row, col - 1, scale, clr);
@@ -66,7 +67,8 @@ public class PieceL extends Tetromino{
             blocks[2].setPos(row - 1, col);
             blocks[3].setPos(row - 1, col - 1);
         }
-        moveInBounds(clockwise);
+        if(!ghost)
+            moveInBounds(clockwise);
     }
 
     public void reset(){

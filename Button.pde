@@ -4,7 +4,7 @@ public class Button{
     boolean hasBeenPressed;
     String text;
 
-    public Button(text_, textColor_, x_, y_, width_, height_, buttonColor_){
+    public Button(String text_, color textColor_, int x_, int y_, int width_, int height_, color buttonColor_){
         text = text_;
         textColor = textColor_;
         buttonColor = buttonColor_;
@@ -43,7 +43,7 @@ public class Button{
         popStyle();
     }
 
-    public void void mouseReleased() {
+    public void mouseReleased() {
         hasBeenPressed = true;
     }
 }

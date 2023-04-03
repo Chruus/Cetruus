@@ -31,8 +31,8 @@ public class UserInterface{
         pushMatrix();
 
         background(0, 100);
-        color backgroundColor = new Color(225, 225, 255);
-        color textColor = new Color(0);
+        color backgroundColor = color(225, 225, 255);
+        color textColor = color(0);
         Button playAgain = new Button("Play Again", textColor, width / 2, 15 * scale, 5 * scale, 2 * scale, backgroundColor);
         Button backToMenu = new Button("Back To Menu", textColor, width / 2, 17 * scale, 5 * scale, 2 * scale, backgroundColor);
     
@@ -42,7 +42,7 @@ public class UserInterface{
         
         text("Score:\n" + score, width / 2, 8 * scale);
         text("Lines:\n" + linesCleared, width / 2, 10 * scale);
-        text("Level:\n" + level, 2idth / 2, 12 * scale);
+        text("Level:\n" + level, width / 2, 12 * scale);
 
         popMatrix();
         popStyle();

@@ -27,13 +27,12 @@ public class Bag{
     }
 
     public Tetromino getNextPiece(){
-        System.out.println(main);
-        System.out.println(reserve + "\n");
         if(main.size() == 0){
             for(Tetromino piece : reserve)
                 main.add(piece);
             reset(reserve);
         }
+        main.get(0).reset();
         return main.remove(0);
     }
 

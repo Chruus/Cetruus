@@ -9,7 +9,7 @@ void setup() {
     score = 0;
 
     canSwapHeldPiece = true;
-    isAlive = false;
+    isAlive = true;
     
     grid = new Block[20][10];
     bag = new Bag(scale, grid);
@@ -78,7 +78,6 @@ private void drawBackground(){
 }
 
 private void displayGrid(){
-    clearFullRows();
     for(int r = 0; r < grid.length; r++){
         for(int c = 0; c < grid[r].length; c++){
             if(grid[r][c] != null)
@@ -140,8 +139,10 @@ private void addToGrid(){
         return;
     }
     currentPiece.addToGrid();
+    currentPiece.reset();
     currentPiece = bag.getNextPiece();
     currentPiece.reset();
+    clearFullRows();
     canSwapHeldPiece = true;
     addToGridDelay = 30;
     if(!currentPiece.canMove("down"))
@@ -155,7 +156,7 @@ private void printGrid(){
         for(int c = 0; c < grid[r].length; c++){
             System.out.print('[');
             if(grid[r][c] != null)
-                System.out.print(r);
+                System.out.print(grid[r][c].clr());
             System.out.print(']');
         }
         System.out.println();
@@ -193,6 +194,7 @@ private void calculateScore(int numOfLinesCleared){
 }
 
 void keyPressed() {
+
     if(key == ' '){
         currentPiece.hardDrop();
         addToGridDelay = 0;
@@ -212,7 +214,7 @@ void keyPressed() {
         }
         if(keyCode == LEFT && currentPiece.canMove("left")){
             currentPiece.move("left");
-        }
+        }    
         if(keyCode == DOWN && currentPiece.canMove("down")){
             currentPiece.move("down");
         }
@@ -222,6 +224,7 @@ void keyPressed() {
 private void gravity(){
     if(!currentPiece.canMove("down")){
         addToGrid();
+        return;
     }
 
     if(level == 1 && frameCount % 48 == 0){

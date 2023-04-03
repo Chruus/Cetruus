@@ -2,6 +2,7 @@ public class PieceO extends Tetromino{
     
     public PieceO(int row_, int col_, int scale_, Block[][] grid_, int rotation_){
         super(row_, col_, scale_, grid_);
+        ghost = true;
         color clr = color(245, 245, 0);
         blocks[0] = new Block(row, col, scale, clr);
         blocks[1] = new Block(row - 1, col, scale, clr);

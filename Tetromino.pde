@@ -82,7 +82,6 @@ public abstract class Tetromino{
         } else if(direction.equals("down")){
             row++;
             for(Block block : blocks){
-                //System.out.println(block.row() + " " + block.col() + canMove("down"));
                 block.setPos(block.row() + 1, block.col());
             }
         }

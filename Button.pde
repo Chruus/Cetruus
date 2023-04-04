@@ -1,17 +1,17 @@
 public class Button{
     color textColor, buttonColor;
-    int x, y, width, height;
-    boolean hasBeenPressed;
+    int x, y, w, h;
+    boolean clicked, released;
     String text;
 
-    public Button(String text_, color textColor_, int x_, int y_, int width_, int height_, color buttonColor_){
+    public Button(String text_, color textColor_, int x_, int y_, int w_, int h_, color buttonColor_){
         text = text_;
         textColor = textColor_;
         buttonColor = buttonColor_;
         x = x_;
         y = y_;
-        width = width_;
-        height = height_;
+        w = w_;
+        h = h_;
     }
 
     public void display(){
@@ -20,30 +20,44 @@ public class Button{
         
         rectMode(CENTER);
         fill(buttonColor);
-        rect(x, y, width, height);
+        rect(x, y, w, h);
 
         fill(textColor);
         textAlign(CENTER);
-        textSize(width / text.length());
-        text(text, x, y);
+        int textSize = (int)(w / text.length() * 1.5);
+        textSize(textSize);
+        text(text, x, y + textSize / 3);
 
         popMatrix();
         popStyle();
     }
 
     public void mousePressed(){
-        pushStyle();
-        pushMatrix();
-
-        rectMode(CENTER);
-        fill(0, 50);
-        rect(x, y, width, height);
-
-        popMatrix();
-        popStyle();
+        if(!mouseIsOnButton())
+            return;
+        clicked = true;
+        buttonColor = color((int)(red(buttonColor) * 0.8), (int)(green(buttonColor) * 0.8), (int)(blue(buttonColor) * 0.8));
     }
 
     public void mouseReleased() {
-        hasBeenPressed = true;
+        if(clicked){
+            buttonColor = color((int)(red(buttonColor) * 1.25), (int)(green(buttonColor) * 1.25), (int)(blue(buttonColor) * 1.25));
+            clicked = false;
+            released = true;
+        }
+    }
+
+    private boolean mouseIsOnButton(){
+        if(mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y - h / 2 && mouseY < y + h / 2)
+            return true;
+        return false;
+    }
+
+    public boolean hasBeenPressed(){
+        if(released){
+            released = false;
+            return true;
+        }
+        return false;
     }
 }

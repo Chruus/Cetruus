@@ -26,18 +26,28 @@ boolean canSwapHeldPiece, isAlive;
 Tetromino currentPiece, heldPiece;
 
 void draw() {
-    if(!isAlive){
+    if(UI.isInGameOver()){
+        UI.displayGameOver(score, linesCleared, level);
+        return;
+    }
+    if(UI.isInMenu()){
+        resetGame();
         UI.displayMenu();
         return;
     }
+
     drawBackground();
     displayGrid();
-    UI.displayCurrentStats(score, linesCleared, level);
-    UI.displayFuturePieces(bag.getFuturePieces());
-    UI.displayHeldPiece(heldPiece);
+    displayUI();
     gravity();
     currentPiece.displayGhost();
     currentPiece.display();
+}
+
+private void displayUI(){
+    UI.displayCurrentStats(score, linesCleared, level);
+    UI.displayFuturePieces(bag.getFuturePieces());
+    UI.displayHeldPiece(heldPiece);
 }
 
 private void swapHeldPiece(){
@@ -115,22 +125,20 @@ private void clearFullRows(){
     calculateScore(fullRows.size());
 }
 
-private void gameOver(){
+private void resetGame(){
+    canSwapHeldPiece = true;
+    isAlive = false;
+    
     addToGridDelay = 30;
     scale = 30;
     level = 1;
     linesCleared = 0;
     score = 0;
-
-    canSwapHeldPiece = true;
-    isAlive = false;
     
+    heldPiece = null;
     grid = new Block[20][10];
     bag = new Bag(scale, grid);
-    UI = new UserInterface(scale);
     currentPiece = bag.getNextPiece();
-
-    UI.displayGameOver();
 }
 
 private void addToGrid(){
@@ -145,8 +153,11 @@ private void addToGrid(){
     clearFullRows();
     canSwapHeldPiece = true;
     addToGridDelay = 30;
-    if(!currentPiece.canMove("down"))
-        gameOver();
+
+    if(!currentPiece.canMove("down")){
+        isAlive = false;
+        UI.gameOver();
+    }
 }
 
 
@@ -191,6 +202,14 @@ private void calculateScore(int numOfLinesCleared){
         score += 800 * level;
     }
     level = linesCleared / 10 + 1;
+}
+
+void mousePressed(){
+    UI.mousePressed();
+}
+
+void mouseReleased(){
+    UI.mouseReleased();
 }
 
 void keyPressed() {

@@ -26,12 +26,15 @@ boolean canSwapHeldPiece, isAlive;
 Tetromino currentPiece, heldPiece;
 
 void draw() {
+    
+    if(UI.needToResetGame()){
+        resetGame();
+    }
     if(UI.isInGameOver()){
         UI.displayGameOver(score, linesCleared, level);
         return;
     }
     if(UI.isInMenu()){
-        resetGame();
         UI.displayMenu();
         return;
     }

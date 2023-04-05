@@ -1,6 +1,6 @@
 public class UserInterface{
     int scale;
-    boolean hasChangedMenu;
+    boolean hasChangedMenu, needToResetGame;
     boolean inMenu, inGame, inGameOver;
     Button returnToMenu, playAgain, play;
     public UserInterface(int scale_){
@@ -34,13 +34,21 @@ public class UserInterface{
 
     public boolean hasBeenPressed(){
         if(play.hasBeenPressed() || playAgain.hasBeenPressed()){
-            inGame = true;
+            inGame = needToResetGame = true;
             inGameOver = inMenu = false;
             return true;
         }
         if(inGameOver && returnToMenu.hasBeenPressed()){
             inMenu = true;
             inGameOver = inGame = false;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean needToResetGame(){
+        if(needToResetGame){
+            needToResetGame = false;
             return true;
         }
         return false;

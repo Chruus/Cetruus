@@ -26,7 +26,6 @@ boolean canSwapHeldPiece, isAlive;
 Tetromino currentPiece, heldPiece;
 
 void draw() {
-    
     if(UI.needToResetGame()){
         resetGame();
     }
@@ -39,10 +38,14 @@ void draw() {
         return;
     }
 
-    drawBackground();
-    displayGrid();
+    calculateGravity();
+    displayBackground();
     displayUI();
-    gravity();
+    displayGrid();
+    displayCurrentPiece();
+}
+
+private void displayCurrentPiece(){
     currentPiece.displayGhost();
     currentPiece.display();
 }
@@ -72,7 +75,7 @@ private void swapHeldPiece(){
     currentPiece.reset();
 }
 
-private void drawBackground(){
+private void displayBackground(){
     pushMatrix();
     pushStyle();
 
@@ -145,10 +148,16 @@ private void resetGame(){
 }
 
 private void addToGrid(){
+    if(currentPiece.canMove("down")){
+        if(addToGridDelay < 30)
+            addToGridDelay++;
+        return;
+    }
     if(addToGridDelay > 0){
         addToGridDelay--;
         return;
     }
+
     currentPiece.addToGrid();
     currentPiece.reset();
     currentPiece = bag.getNextPiece();
@@ -216,7 +225,6 @@ void mouseReleased(){
 }
 
 void keyPressed() {
-
     if(key == ' '){
         currentPiece.hardDrop();
         addToGridDelay = 0;
@@ -243,11 +251,8 @@ void keyPressed() {
     }
 }
 
-private void gravity(){
-    if(!currentPiece.canMove("down")){
-        addToGrid();
-        return;
-    }
+private void calculateGravity(){
+    addToGrid();
 
     if(level == 1 && frameCount % 48 == 0){
         currentPiece.move("down");

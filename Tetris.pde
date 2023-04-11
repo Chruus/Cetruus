@@ -226,7 +226,7 @@ void mouseReleased(){
 
 void keyPressed() {
     if(key == ' '){
-        currentPiece.hardDrop();
+        score += currentPiece.hardDrop();
         addToGridDelay = 0;
     }
     if(key == 'c'){
@@ -247,12 +247,15 @@ void keyPressed() {
         }    
         if(keyCode == DOWN && currentPiece.canMove("down")){
             currentPiece.move("down");
+            score++;
         }
     }
 }
 
 private void calculateGravity(){
     addToGrid();
+    if(!currentPiece.canMove("down"))
+        return;
 
     if(level == 1 && frameCount % 48 == 0){
         currentPiece.move("down");

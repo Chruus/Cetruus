@@ -3,12 +3,17 @@ public class UserInterface{
     boolean hasChangedMenu, needToResetGame;
     boolean inMenu, inGame, inGameOver;
     Button returnToMenu, playAgain, play;
+    ScoreFile file;
     public UserInterface(int scale_){
         scale = scale_;
+        
         color backgroundColor = color(225, 225, 255);
         color textColor = color(0);
+
         inMenu = true;
         inGame = inGameOver = false;
+
+        file = new ScoreFile();
         play = new Button("Play", textColor, width / 2, 5 * scale, 10 * scale, 4 * scale, backgroundColor);
         playAgain = new Button("Play Again", textColor, width / 2, (int)(16.5 * scale), 5 * scale, 2 * scale, backgroundColor);
         returnToMenu = new Button("Return to Menu", textColor, width / 2, (int)(13.5 * scale), 5 * scale, 2 * scale, backgroundColor);
@@ -65,9 +70,9 @@ public class UserInterface{
         textSize(scale);
         fill(255);
         
-        text("Highest Score:\n" + score, width / 2, 10 * scale);
-        text("Highest Lines:\n" + linesCleared, width / 2, 13 * scale);
-        text("Highest Level:\n" + level, width / 2, 16 * scale);
+        text("Highest Score:\n" + file.hiScore(), width / 2, 10 * scale);
+        text("Highest Lines:\n" + file.hiLines(), width / 2, 13 * scale);
+        text("Highest Level:\n" + file.hiLevel(), width / 2, 16 * scale);
 
         popMatrix();
         popStyle();
@@ -95,6 +100,7 @@ public class UserInterface{
     public void displayGameOver(int score, int linesCleared, int level){
         inGameOver = true;
         inGame = inMenu = false;
+        file.saveScores(score, linesCleared, level);
 
         pushStyle();
         pushMatrix();

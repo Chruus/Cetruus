@@ -35,11 +35,14 @@ public abstract class Tetromino{
         }
     }
 
-    public void hardDrop(){
+    public int hardDrop(){
+        int timesMovedDown = 0;
         while(canMove("down")){
             moveDown();
+            timesMovedDown++;
         }
         addToGrid();
+        return timesMovedDown;
     }
 
     public void addToGrid(){

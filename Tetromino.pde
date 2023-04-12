@@ -1,11 +1,11 @@
 public abstract class Tetromino{
     int row, col;
     Block[] blocks;
-    Block[][] grid;
+    Grid grid;
     int rotation, scale;
     boolean ghost;
 
-    public Tetromino(int row_, int col_, int scale_, Block[][] grid_){
+    public Tetromino(int row_, int col_, int scale_, Grid grid_){
         row = row_;
         col = col_;
         scale = scale_;
@@ -39,7 +39,7 @@ public abstract class Tetromino{
         int timesMovedDown = 0;
         while(canMove("down")){
             moveDown();
-            timesMovedDown++;
+            timesMovedDown += 2;
         }
         addToGrid();
         return timesMovedDown;
@@ -47,7 +47,7 @@ public abstract class Tetromino{
 
     public void addToGrid(){
         for(Block block : blocks){
-            grid[block.row()][block.col()] = block.clone();
+            grid.setBlock(block.clone(), block.row(), block.col());
         }
     }
 
@@ -92,10 +92,10 @@ public abstract class Tetromino{
 
     public boolean canMove(String direction){
         for(Block block : blocks){
-            if((direction.equals("right") && (block.col() >= grid[0].length - 1 || grid[block.row()][block.col() + 1] != null))
-            || (direction.equals("left") && (block.col() <= 0 || grid[block.row()][block.col() - 1] != null))
-            || (direction.equals("up") && (block.row() <= 0 || grid[block.row() - 1][block.col()] != null))
-            || (direction.equals("down") && (block.row() >= grid.length - 1 || grid[block.row() + 1][block.col()] != null))){
+            if((direction.equals("right") && (block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null))
+            || (direction.equals("left") && (block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null))
+            || (direction.equals("up") && (block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null))
+            || (direction.equals("down") && (block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null))){
                 return false;
             }
         }
@@ -106,11 +106,11 @@ public abstract class Tetromino{
         for(Block block : blocks){
             while(block.row() < 0 && canMove("down"))
                 move("down");
-            while(block.row() >= grid.length && canMove("up"))
+            while(block.row() >= grid.length() && canMove("up"))
                 move("up");
             while(block.col() < 0 && canMove("right"))
                 move("right");
-            while(block.col() >= grid[0].length && canMove("left"))
+            while(block.col() >= grid.width() && canMove("left"))
                 move("left");
         }
         if(!isInBounds())
@@ -119,8 +119,8 @@ public abstract class Tetromino{
 
     public boolean isInBounds(){
         for(Block block : blocks){
-            if(block.row() < 0 || block.col() < 0 || block.row() >= grid.length 
-            || block.col() >= grid[0].length || grid[block.row()][block.col()] != null)
+            if(block.row() < 0 || block.col() < 0 || block.row() >= grid.length() 
+            || block.col() >= grid.width() || grid.getBlock(block.row(), block.col()) != null)
                 return false;
         }
         return true;

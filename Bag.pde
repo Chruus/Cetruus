@@ -3,9 +3,9 @@ import java.util.Collections;
 public class Bag{
     ArrayList<Tetromino> main, reserve;
     int scale;
-    Block[][] grid;
+    Grid grid;
 
-    public Bag(int scale_, Block[][] grid_){
+    public Bag(int scale_, Grid grid_){
         scale = scale_;
         grid = grid_;
         main = new ArrayList<Tetromino>();

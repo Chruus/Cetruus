@@ -165,4 +165,22 @@ public class UserInterface{
             returnToMenu.mouseReleased();
         }
     }
+
+    public void displayBackground(){
+        pushMatrix();
+        pushStyle();
+
+        background(30, 30, 40);
+        strokeWeight(2);
+        stroke(15, 15, 20);
+        for(int x = 0; x <= scale * 10; x += scale){
+            line(x, 0, x, scale * 20);
+        }
+        for(int y = 0; y <= scale * 20; y += scale){
+            line(0, y, scale * 10, y);
+        }
+
+        popStyle();
+        popMatrix();
+    }
 }

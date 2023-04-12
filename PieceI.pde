@@ -1,6 +1,6 @@
 public class PieceI extends Tetromino{
     
-    public PieceI(int row_, int col_, int scale_, Block[][] grid_, int rotation_){
+    public PieceI(int row_, int col_, int scale_, Grid grid_, int rotation_){
         super(row_, col_, scale_, grid_);
         ghost = true;
         color clr = color(0, 255, 255);
@@ -13,7 +13,7 @@ public class PieceI extends Tetromino{
             rotate(true);
     }
 
-    public PieceI(int row_, int col_, int scale_, Block[][] grid_){
+    public PieceI(int row_, int col_, int scale_, Grid grid_){
         super(row_, col_, scale_, grid_);
         color clr = color(0, 255, 255);
         blocks[0] = new Block(row, col, scale, clr);
@@ -22,7 +22,7 @@ public class PieceI extends Tetromino{
         blocks[3] = new Block(row, col - 2, scale, clr);
     }
 
-    public PieceI(int scale_, Block[][] grid_){
+    public PieceI(int scale_, Grid grid_){
         super(1, 5, scale_, grid_);
         row = 1;
         col = 5;

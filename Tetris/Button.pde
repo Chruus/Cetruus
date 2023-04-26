@@ -20,11 +20,11 @@ public class Button{
         
         rectMode(CENTER);
         fill(buttonColor);
-        rect(x, y, w, h);
+        rect(x, y, w, h, 5, 5, 5, 5);
 
         fill(textColor);
         textAlign(CENTER);
-        int textSize = (int)(w / text.length() * 1.5);
+        int textSize = Math.min((int)(w / text.length() * 1.5), (int)(h / 2.2));
         textSize(textSize);
         text(text, x, y + textSize / 3);
 

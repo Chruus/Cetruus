@@ -2,6 +2,7 @@
 void setup() {
     size(420, 600);
     resetGame();
+    scale = 30;
     UI = new UserInterface(scale);
 }
 
@@ -49,7 +50,7 @@ private void displayCurrentPiece(){
 }
 
 private void displayGame(){
-    UI.displayBackground();
+    UI.displayGameBackground();
     UI.displayCurrentStats(score, linesCleared, level);
     UI.displayFuturePieces(bag.getFuturePieces());
     UI.displayHeldPiece(heldPiece);
@@ -76,7 +77,6 @@ private void resetGame(){
     canSwapHeldPiece = true;
     isAlive = false;
     
-    scale = 30;
     level = 1;
     linesCleared = 0;
     score = 0;
@@ -131,6 +131,9 @@ void keyPressed() {
         key = 0;
         UI.pause();
     }
+    if(keyCode == BACKSPACE){
+        key = 27;
+    }
     if(key == ' '){
         score += currentPiece.hardDrop();
         addToGrid();
@@ -141,20 +144,18 @@ void keyPressed() {
     if(key == 'z'){
         currentPiece.rotate(false);
     }
-    if(key == CODED){
-        if(keyCode == UP){
-            currentPiece.rotate(true);
-        }
-        if(keyCode == RIGHT && currentPiece.canMove("right")){
-            currentPiece.move("right");
-        }
-        if(keyCode == LEFT && currentPiece.canMove("left")){
-            currentPiece.move("left");
-        }    
-        if(keyCode == DOWN && currentPiece.canMove("down")){
-            currentPiece.move("down");
-            score++;
-        }
+    if(keyCode == UP){
+        currentPiece.rotate(true);
+    }
+    if(keyCode == RIGHT && currentPiece.canMove("right")){
+        currentPiece.move("right");
+    }
+    if(keyCode == LEFT && currentPiece.canMove("left")){
+        currentPiece.move("left");
+    }    
+    if(keyCode == DOWN && currentPiece.canMove("down")){
+        currentPiece.move("down");
+        score++;
     }
 }
 

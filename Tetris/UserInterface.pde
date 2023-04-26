@@ -4,6 +4,7 @@ public class UserInterface{
     boolean inMenu, inGame, inGameOver, inPause;
     Button returnToMenu, playAgain, play, resume, restart, quit;
     ScoreFile file;
+    Block[][] background;
     public UserInterface(int scale_){
         scale = scale_;
         
@@ -14,12 +15,14 @@ public class UserInterface{
         inGame = inGameOver = false;
 
         file = new ScoreFile();
-        play = new Button("Play", textColor, width / 2, 5 * scale, 10 * scale, 4 * scale, backgroundColor);
+        play = new Button("Play", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
         playAgain = new Button("Play Again", textColor, width / 2, (int)(16.5 * scale), 5 * scale, 2 * scale, backgroundColor);
         returnToMenu = new Button("Return to Menu", textColor, width / 2, (int)(13.5 * scale), 5 * scale, 2 * scale, backgroundColor);
-        resume = new Button("Resume", textColor, width / 2, 5 * scale, 10 * scale, 4 * scale, backgroundColor);
-        restart = new Button("Restart", textColor, width / 2, 10 * scale, 10 * scale, 4 * scale, backgroundColor);
-        quit = new Button("Quit", textColor, width / 2, 15 * scale, 10 * scale, 4 * scale, backgroundColor);
+        resume = new Button("Resume", textColor, width / 2, 9 * scale, 10 * scale, 3 * scale, backgroundColor);
+        restart = new Button("Restart", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
+        quit = new Button("Quit", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
+
+        resetBackground();
     }
 
     public void displayHeldPiece(Tetromino piece){
@@ -44,19 +47,21 @@ public class UserInterface{
         if(resume.hasBeenPressed()){
             inGame = true;
             inGameOver = inMenu = inPause = false;
+            resetBackground();
             return true;
         }
         if((play.hasBeenPressed() || playAgain.hasBeenPressed() || restart.hasBeenPressed())){
             inGame = needToResetGame = true;
             inGameOver = inMenu = inPause = false;
             file.saveScores(score, linesCleared, level);
-            
+            resetBackground();
             return true;
         }
         if(returnToMenu.hasBeenPressed() || quit.hasBeenPressed()){
             inMenu = true;
             inGameOver = inGame = inPause = false;
             file.saveScores(score, linesCleared, level);
+            resetBackground();
             return true;
         }
         return false;
@@ -74,16 +79,20 @@ public class UserInterface{
         pushStyle();
         pushMatrix();
         
-        background(0, 100);
+        displayBackground();
         play.display();
     
         textAlign(CENTER);
-        textSize(scale);
         fill(255);
+        textSize(scale * 3);
+
+        text("Tetris", width / 2, 4 * scale);
+
+        textSize(scale);
         
-        text("Highest Score:\n" + file.hiScore(), width / 2, 10 * scale);
-        text("Highest Lines:\n" + file.hiLines(), width / 2, 13 * scale);
-        text("Highest Level:\n" + file.hiLevel(), width / 2, 16 * scale);
+        text("Highest Score:\n" + file.hiScore(), width / 2, 7 * scale);
+        text("Highest Lines:\n" + file.hiLines(), width / 2, 10 * scale);
+        text("Highest Level:\n" + file.hiLevel(), width / 2, 13 * scale);
 
         popMatrix();
         popStyle();
@@ -120,10 +129,16 @@ public class UserInterface{
         pushStyle();
         pushMatrix();
         
-        background(0, 100);
+        displayBackground();
         resume.display();
         restart.display();
         quit.display();
+
+        textAlign(CENTER);
+        textSize(scale * 3);
+        fill(255);
+        
+        text("Paused", width / 2, 5 * scale);
 
         popMatrix();
         popStyle();
@@ -139,7 +154,7 @@ public class UserInterface{
         pushStyle();
         pushMatrix();
 
-        background(0, 100);
+        displayBackground();
         playAgain.display();
         returnToMenu.display();
     
@@ -163,7 +178,7 @@ public class UserInterface{
     public void displayCurrentStats(int score, int linesCleared, int level){
         pushStyle();
         pushMatrix();
-
+        
         textAlign(LEFT);
         textSize(scale * 0.5);
         fill(255);
@@ -179,22 +194,52 @@ public class UserInterface{
         popStyle();
     }
 
-    public void displayBackground(){
-        pushMatrix();
+    public void displayGameBackground(){  
+        background(25);
+
         pushStyle();
+        pushMatrix();
 
-        background(30, 30, 40);
+        rectMode(CENTER);
         strokeWeight(2);
-        stroke(15, 15, 20);
-        for(int x = 0; x <= scale * 10; x += scale){
-            line(x, 0, x, scale * 20);
-        }
-        for(int y = 0; y <= scale * 20; y += scale){
-            line(0, y, scale * 10, y);
-        }
+        stroke(20);
+        fill(40);
+        
+        rect(360, 60, 118, 119, 5, 5, 5, 5);
+        rect(360, 270, 118, 299, 5, 5, 5, 5);
+        rect(360, 510, 118, 179, 5, 5, 5, 5);
 
-        popStyle();
         popMatrix();
+        popStyle();
+    }
+
+    public void resetBackground(){
+        background = new Block[20][15];
+        color[] colors = {color(0, 255, 255), color(50, 50, 255), color(255, 125, 0), color(245, 245, 0), color(25, 240, 25), color(125, 0, 255), color(255, 0, 0)};
+        for(int r = 0; r < background.length; r++){
+            for(int c = 0; c < background[r].length; c++){
+                color clr = colors[(int)(Math.random() * 7)];
+                background[r][c] = new Block(r, c, scale, clr);
+            }
+        }
+    }
+
+    public void displayBackground(){
+        background(25);
+        for(int r = 0; r < background.length; r++){
+            for(int c = 0; c < background[r].length; c++){
+                background[r][c].display();
+            }
+        }
+        pushStyle();
+        pushMatrix();
+
+        rectMode(CENTER);
+        fill(20, 230);
+        rect(0, 0, 2000, 2000);
+
+        popMatrix();
+        popStyle();
     }
 
     public void mousePressed(){

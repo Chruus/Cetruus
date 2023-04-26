@@ -16,17 +16,15 @@ boolean canSwapHeldPiece, isAlive;
 void draw() {
     if(isInMenu())
         return;
-    
+    if(UI.needToResetGame())
+        resetGame();
+
     calculateGravity();
     displayGame();
     displayCurrentPiece();
 }
 
 private boolean isInMenu(){
-    if(UI.needToResetGame()){
-        resetGame();
-    }
-
     if(UI.isInGameOver()){
         UI.displayGameOver(score, linesCleared, level);
         return true;
@@ -34,6 +32,11 @@ private boolean isInMenu(){
     
     if(UI.isInMenu()){
         UI.displayMenu();
+        return true;
+    }
+
+    if(UI.isInPause()){
+        UI.displayPause();
         return true;
     }
 
@@ -124,6 +127,10 @@ void mouseReleased(){
 }
 
 void keyPressed() {
+    if(keyCode == 27 && UI.isInGame()){
+        key = 0;
+        UI.pause();
+    }
     if(key == ' '){
         score += currentPiece.hardDrop();
         addToGrid();

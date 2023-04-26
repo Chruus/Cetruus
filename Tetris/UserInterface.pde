@@ -1,8 +1,8 @@
 public class UserInterface{
     int scale;
     boolean hasChangedMenu, needToResetGame;
-    boolean inMenu, inGame, inGameOver;
-    Button returnToMenu, playAgain, play;
+    boolean inMenu, inGame, inGameOver, inPause;
+    Button returnToMenu, playAgain, play, resume, restart, quit;
     ScoreFile file;
     public UserInterface(int scale_){
         scale = scale_;
@@ -17,6 +17,9 @@ public class UserInterface{
         play = new Button("Play", textColor, width / 2, 5 * scale, 10 * scale, 4 * scale, backgroundColor);
         playAgain = new Button("Play Again", textColor, width / 2, (int)(16.5 * scale), 5 * scale, 2 * scale, backgroundColor);
         returnToMenu = new Button("Return to Menu", textColor, width / 2, (int)(13.5 * scale), 5 * scale, 2 * scale, backgroundColor);
+        resume = new Button("Resume", textColor, width / 2, 5 * scale, 10 * scale, 4 * scale, backgroundColor);
+        restart = new Button("Restart", textColor, width / 2, 10 * scale, 10 * scale, 4 * scale, backgroundColor);
+        quit = new Button("Quit", textColor, width / 2, 15 * scale, 10 * scale, 4 * scale, backgroundColor);
     }
 
     public void displayHeldPiece(Tetromino piece){
@@ -38,14 +41,22 @@ public class UserInterface{
     }
 
     public boolean hasBeenPressed(){
-        if(play.hasBeenPressed() || playAgain.hasBeenPressed()){
-            inGame = needToResetGame = true;
-            inGameOver = inMenu = false;
+        if(resume.hasBeenPressed()){
+            inGame = true;
+            inGameOver = inMenu = inPause = false;
             return true;
         }
-        if(inGameOver && returnToMenu.hasBeenPressed()){
+        if((play.hasBeenPressed() || playAgain.hasBeenPressed() || restart.hasBeenPressed())){
+            inGame = needToResetGame = true;
+            inGameOver = inMenu = inPause = false;
+            file.saveScores(score, linesCleared, level);
+            
+            return true;
+        }
+        if(returnToMenu.hasBeenPressed() || quit.hasBeenPressed()){
             inMenu = true;
-            inGameOver = inGame = false;
+            inGameOver = inGame = inPause = false;
+            file.saveScores(score, linesCleared, level);
             return true;
         }
         return false;
@@ -80,6 +91,10 @@ public class UserInterface{
         hasBeenPressed();
     }
 
+    public void pause(){
+        inPause = !inPause;
+    }
+
     public boolean isInGame(){
         return inGame;
     }
@@ -89,12 +104,31 @@ public class UserInterface{
         inMenu = inGame = false;
     }
 
+    public boolean isInPause(){
+        return inPause;
+    }
+
     public boolean isInGameOver(){
         return inGameOver;
     }
 
     public boolean isInMenu(){
         return inMenu;
+    }
+
+    public void displayPause(){
+        pushStyle();
+        pushMatrix();
+        
+        background(0, 100);
+        resume.display();
+        restart.display();
+        quit.display();
+
+        popMatrix();
+        popStyle();
+        
+        hasBeenPressed();
     }
 
     public void displayGameOver(int score, int linesCleared, int level){
@@ -143,27 +177,6 @@ public class UserInterface{
 
         popMatrix();
         popStyle();
-        
-        hasBeenPressed();
-    }
-
-    public void mousePressed(){
-        if(inMenu){
-            play.mousePressed();
-        }
-        if(inGameOver){
-            playAgain.mousePressed();
-            returnToMenu.mousePressed();
-        }
-    }
-
-    public void mouseReleased(){
-        if(inMenu)
-            play.mouseReleased();
-        if(inGameOver){
-            playAgain.mouseReleased();
-            returnToMenu.mouseReleased();
-        }
     }
 
     public void displayBackground(){
@@ -183,4 +196,34 @@ public class UserInterface{
         popStyle();
         popMatrix();
     }
+
+    public void mousePressed(){
+        if(inMenu){
+            play.mousePressed();
+        }
+        if(inGameOver){
+            playAgain.mousePressed();
+            returnToMenu.mousePressed();
+        }
+        if(inPause){
+            resume.mousePressed();
+            restart.mousePressed();
+            quit.mousePressed();
+        }
+    }
+
+    public void mouseReleased(){
+        if(inMenu)
+            play.mouseReleased();
+        if(inGameOver){
+            playAgain.mouseReleased();
+            returnToMenu.mouseReleased();
+        }
+        if(inPause){
+            resume.mouseReleased();
+            restart.mouseReleased();
+            quit.mouseReleased();
+        }
+    }
+
 }

@@ -20,3 +20,8 @@ Controls:
 - Space: drops tetromino to bottom
 - Escape: pauses game mid-game, closes window in menu
 - Backspace: closes window 
+
+Credits:
+ - Tucker:
+    - ~~Created UI~~
+    - Helped Brainstorm Ideas

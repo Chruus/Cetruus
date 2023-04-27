@@ -7,12 +7,12 @@ void setup() {
 }
 
 Bag bag;
-UserInterface UI;
-Tetromino currentPiece, heldPiece;
+boolean canSwapHeldPiece, isAlive;
 Grid grid;
 int level, score, linesCleared;
 int scale, timeToMoveDown;
-boolean canSwapHeldPiece, isAlive;
+Tetromino currentPiece, heldPiece;
+UserInterface UI;
 
 void draw() {
     if(isInMenu())

@@ -1,9 +1,9 @@
 public abstract class Tetromino{
-    int row, col;
     Block[] blocks;
-    Grid grid;
-    int rotation, scale;
     boolean ghost;
+    Grid grid;
+    int row, col;
+    int rotation, scale;
 
     public Tetromino(int row_, int col_, int scale_, Grid grid_){
         row = row_;

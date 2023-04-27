@@ -1,6 +1,6 @@
 public class Block{
-    private int row, col, scale;
     private color clr;
+    private int row, col, scale;
     
     public Block(float row_, float col_, int scale_, color clr_){
         row = (int) row_;
@@ -39,6 +39,11 @@ public class Block{
         popStyle();
     }
 
+    public void setPos(float newRow, float newCol){
+        row = (int) newRow;
+        col = (int) newCol;
+    }
+
     public int row(){
         return row;
     }
@@ -49,11 +54,6 @@ public class Block{
 
     public color clr(){
         return clr;
-    }
-
-    public void setPos(float newRow, float newCol){
-        row = (int) newRow;
-        col = (int) newCol;
     }
 
     public Block clone(){

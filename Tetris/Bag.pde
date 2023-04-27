@@ -1,9 +1,9 @@
-import java.util.Collections;
+import java.util.*;
 
 public class Bag{
     ArrayList<Tetromino> main, reserve;
-    int scale;
     Grid grid;
+    int scale;
 
     public Bag(int scale_, Grid grid_){
         scale = scale_;
@@ -14,24 +14,13 @@ public class Bag{
         reset(reserve);
     }
 
-    private void reset(ArrayList<Tetromino> bag){
-        bag.clear();
-        bag.add(new PieceI(scale, grid));
-        bag.add(new PieceJ(scale, grid));
-        bag.add(new PieceL(scale, grid));
-        bag.add(new PieceO(scale, grid));
-        bag.add(new PieceS(scale, grid));
-        bag.add(new PieceT(scale, grid));
-        bag.add(new PieceZ(scale, grid));
-        Collections.shuffle(bag);
-    }
-
     public Tetromino getNextPiece(){
         if(main.size() == 0){
             for(Tetromino piece : reserve)
                 main.add(piece);
             reset(reserve);
         }
+
         main.get(0).reset();
         return main.remove(0);
     }
@@ -49,5 +38,17 @@ public class Bag{
             futurePieces.add(piece);
         }
         return futurePieces;
+    }
+
+    private void reset(ArrayList<Tetromino> bag){
+        bag.clear();
+        bag.add(new PieceI(scale, grid));
+        bag.add(new PieceJ(scale, grid));
+        bag.add(new PieceL(scale, grid));
+        bag.add(new PieceO(scale, grid));
+        bag.add(new PieceS(scale, grid));
+        bag.add(new PieceT(scale, grid));
+        bag.add(new PieceZ(scale, grid));
+        Collections.shuffle(bag);
     }
 }

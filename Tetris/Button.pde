@@ -1,7 +1,7 @@
 public class Button{
+    boolean clicked, released;
     color textColor, buttonColor;
     int x, y, w, h;
-    boolean clicked, released;
     String text;
 
     public Button(String text_, color textColor_, int x_, int y_, int w_, int h_, color buttonColor_){
@@ -32,6 +32,20 @@ public class Button{
         popStyle();
     }
 
+    private boolean mouseIsOnButton(){
+        if(mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y - h / 2 && mouseY < y + h / 2)
+            return true;
+        return false;
+    }
+
+    public boolean hasBeenPressed(){
+        if(released){
+            released = false;
+            return true;
+        }
+        return false;
+    }
+
     public void mousePressed(){
         if(!mouseIsOnButton())
             return;
@@ -45,19 +59,5 @@ public class Button{
             clicked = false;
             released = true;
         }
-    }
-
-    private boolean mouseIsOnButton(){
-        if(mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y - h / 2 && mouseY < y + h / 2)
-            return true;
-        return false;
-    }
-
-    public boolean hasBeenPressed(){
-        if(released){
-            released = false;
-            return true;
-        }
-        return false;
     }
 }

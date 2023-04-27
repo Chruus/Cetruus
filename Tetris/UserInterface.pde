@@ -1,10 +1,11 @@
 public class UserInterface{
-    int scale;
+    Block[][] background;
     boolean hasChangedMenu, needToResetGame;
     boolean inMenu, inGame, inGameOver, inPause;
     Button returnToMenu, playAgain, play, resume, restart, quit;
+    int scale;
     ScoreFile file;
-    Block[][] background;
+
     public UserInterface(int scale_){
         scale = scale_;
         
@@ -23,56 +24,6 @@ public class UserInterface{
         quit = new Button("Quit", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
 
         resetBackground();
-    }
-
-    public void displayHeldPiece(Tetromino piece){
-        if(piece == null)
-            return;
-        Tetromino heldPiece = piece.clone();
-        heldPiece.reset();
-        heldPiece.setPos(2, 12);
-        heldPiece.display();
-    }
-
-    public void displayFuturePieces(ArrayList<Tetromino> pieces){
-        pieces.get(0).setPos(6, 12);
-        pieces.get(1).setPos(9, 12);
-        pieces.get(2).setPos(12, 12);
-        for(Tetromino piece : pieces){
-            piece.display();
-        }
-    }
-
-    public boolean hasBeenPressed(){
-        if(resume.hasBeenPressed()){
-            inGame = true;
-            inGameOver = inMenu = inPause = false;
-            resetBackground();
-            return true;
-        }
-        if((play.hasBeenPressed() || playAgain.hasBeenPressed() || restart.hasBeenPressed())){
-            inGame = needToResetGame = true;
-            inGameOver = inMenu = inPause = false;
-            file.saveScores(score, linesCleared, level);
-            resetBackground();
-            return true;
-        }
-        if(returnToMenu.hasBeenPressed() || quit.hasBeenPressed()){
-            inMenu = true;
-            inGameOver = inGame = inPause = false;
-            file.saveScores(score, linesCleared, level);
-            resetBackground();
-            return true;
-        }
-        return false;
-    }
-
-    public boolean needToResetGame(){
-        if(needToResetGame){
-            needToResetGame = false;
-            return true;
-        }
-        return false;
     }
 
     public void displayMenu(){
@@ -98,31 +49,6 @@ public class UserInterface{
         popStyle();
 
         hasBeenPressed();
-    }
-
-    public void pause(){
-        inPause = !inPause;
-    }
-
-    public boolean isInGame(){
-        return inGame;
-    }
-
-    public void gameOver(){
-        inGameOver = true;
-        inMenu = inGame = false;
-    }
-
-    public boolean isInPause(){
-        return inPause;
-    }
-
-    public boolean isInGameOver(){
-        return inGameOver;
-    }
-
-    public boolean isInMenu(){
-        return inMenu;
     }
 
     public void displayPause(){
@@ -175,6 +101,24 @@ public class UserInterface{
         hasBeenPressed();
     }
 
+    public void displayHeldPiece(Tetromino piece){
+        if(piece == null)
+            return;
+        Tetromino heldPiece = piece.clone();
+        heldPiece.reset();
+        heldPiece.setPos(2, 12);
+        heldPiece.display();
+    }
+
+    public void displayFuturePieces(ArrayList<Tetromino> pieces){
+        pieces.get(0).setPos(6, 12);
+        pieces.get(1).setPos(9, 12);
+        pieces.get(2).setPos(12, 12);
+        for(Tetromino piece : pieces){
+            piece.display();
+        }
+    }
+
     public void displayCurrentStats(int score, int linesCleared, int level){
         pushStyle();
         pushMatrix();
@@ -213,6 +157,25 @@ public class UserInterface{
         popStyle();
     }
 
+    public void displayBackground(){
+        background(25);
+        for(int r = 0; r < background.length; r++){
+            for(int c = 0; c < background[r].length; c++){
+                background[r][c].display();
+            }
+        }
+        
+        pushStyle();
+        pushMatrix();
+
+        rectMode(CENTER);
+        fill(20, 230);
+        rect(0, 0, 2000, 2000);
+
+        popMatrix();
+        popStyle();
+    }
+
     public void resetBackground(){
         background = new Block[20][15];
         color[] colors = {color(0, 255, 255), color(50, 50, 255), color(255, 125, 0), color(245, 245, 0), color(25, 240, 25), color(125, 0, 255), color(255, 0, 0)};
@@ -224,22 +187,61 @@ public class UserInterface{
         }
     }
 
-    public void displayBackground(){
-        background(25);
-        for(int r = 0; r < background.length; r++){
-            for(int c = 0; c < background[r].length; c++){
-                background[r][c].display();
-            }
+    public boolean hasBeenPressed(){
+        if(resume.hasBeenPressed()){
+            inGame = true;
+            inGameOver = inMenu = inPause = false;
+            resetBackground();
+            return true;
         }
-        pushStyle();
-        pushMatrix();
+        if((play.hasBeenPressed() || playAgain.hasBeenPressed() || restart.hasBeenPressed())){
+            inGame = needToResetGame = true;
+            inGameOver = inMenu = inPause = false;
+            file.saveScores(score, linesCleared, level);
+            resetBackground();
+            return true;
+        }
+        if(returnToMenu.hasBeenPressed() || quit.hasBeenPressed()){
+            inMenu = true;
+            inGameOver = inGame = inPause = false;
+            file.saveScores(score, linesCleared, level);
+            resetBackground();
+            return true;
+        }
+        return false;
+    }
 
-        rectMode(CENTER);
-        fill(20, 230);
-        rect(0, 0, 2000, 2000);
+    public boolean needToResetGame(){
+        if(needToResetGame){
+            needToResetGame = false;
+            return true;
+        }
+        return false;
+    }
+    
+    public void pause(){
+        inPause = !inPause;
+    }
 
-        popMatrix();
-        popStyle();
+    public void gameOver(){
+        inGameOver = true;
+        inMenu = inGame = false;
+    }
+
+    public boolean isInGame(){
+        return inGame;
+    }
+
+    public boolean isInPause(){
+        return inPause;
+    }
+
+    public boolean isInGameOver(){
+        return inGameOver;
+    }
+
+    public boolean isInMenu(){
+        return inMenu;
     }
 
     public void mousePressed(){

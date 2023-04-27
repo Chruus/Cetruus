@@ -1,5 +1,6 @@
 public class ScoreFile{
     int hiScore, hiLines, hiLevel;
+    
     public ScoreFile(){
         String[] words = loadStrings("scores.txt");
         if(words.length > 0){

@@ -6,6 +6,15 @@ public class Grid{
         grid = new Block[20][10];
         addToGridDelay = 30;
     }
+    
+    public void display(){
+        for(int r = 0; r < grid.length; r++){
+            for(int c = 0; c < grid[r].length; c++){
+                if(grid[r][c] != null)
+                    grid[r][c].display();
+            }
+        }
+    }
 
     public boolean canAddTetromino(Tetromino currentTetromino){
         if(currentTetromino.canMove("down")){
@@ -21,30 +30,17 @@ public class Grid{
         addToGridDelay = 30;
         return true;
     }
-    
-    public void display(){
-        for(int r = 0; r < grid.length; r++){
-            for(int c = 0; c < grid[r].length; c++){
-                if(grid[r][c] != null)
-                    grid[r][c].display();
-            }
+
+    public void clearFullRows(){
+        ArrayList<Integer> fullRows = getFullRows();
+        if(fullRows.size() == 0)
+            return;
+        
+        for(int row : fullRows){
+            shiftGridDown(row);
         }
-    }
-
-    public void setBlock(Block block, int row, int col){
-        grid[row][col] = block;
-    }
-
-    public Block getBlock(int row, int col){
-        return grid[row][col];
-    }
-
-    public int length(){
-        return grid.length;
-    }
-
-    public int width(){
-        return grid[0].length;
+        
+        calculateScore(fullRows.size());
     }
 
     private ArrayList<Integer> getFullRows(){
@@ -76,18 +72,6 @@ public class Grid{
             grid[0][c] = null;
         }
     }
-
-    public void clearFullRows(){
-        ArrayList<Integer> fullRows = getFullRows();
-        if(fullRows.size() == 0)
-            return;
-        
-        for(int row : fullRows){
-            shiftGridDown(row);
-        }
-        
-        calculateScore(fullRows.size());
-    }
     
     public String toString(){
         String output = "";
@@ -103,5 +87,21 @@ public class Grid{
         }
 
         return output;
+    }
+
+    public void setBlock(Block block, int row, int col){
+        grid[row][col] = block;
+    }
+
+    public Block getBlock(int row, int col){
+        return grid[row][col];
+    }
+
+    public int length(){
+        return grid.length;
+    }
+
+    public int width(){
+        return grid[0].length;
     }
 }

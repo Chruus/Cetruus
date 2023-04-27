@@ -1,5 +1,7 @@
 # Tetris
-Clone of Tetris, written in Processing.
+This is a Tetris Clone I made in the beginning of 2023.
+
+NOTE: You will need to download processing to run this. Link to their website: https://processing.org/download 
 
 Features:
 - Home, pause, and game over menus
@@ -8,7 +10,6 @@ Features:
 - Able to see next three tetrominos
 - Able to hold a tetromino
 - Tetris?
-
 
 Controls:
 - Left / Right: moves tetromino left/right

@@ -53,7 +53,7 @@ private void displayGame(){
     UI.displayGameBackground();
     UI.displayCurrentStats(score, linesCleared, level);
     UI.displayFutureTetrominos(bag.getFutureTetrominos());
-    UI.displayheldTetromino(heldTetro);
+    UI.displayHeldTetromino(heldTetro);
     grid.display();
 }
 

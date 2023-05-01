@@ -14,7 +14,7 @@ public class Bag{
         reset(reserve);
     }
 
-    public Tetromino getNextTetro(){
+    public Tetromino getNextTetromino(){
         if(main.size() == 0){
             for(Tetromino tetro : reserve)
                 main.add(tetro);

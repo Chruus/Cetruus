@@ -7,11 +7,11 @@ void setup() {
 }
 
 Bag bag;
-boolean canSwapHeldPiece, isAlive;
+boolean canswapHeldTetromino, isAlive;
 Grid grid;
 int level, score, linesCleared;
 int scale, timeToMoveDown;
-Tetromino currentPiece, heldPiece;
+Tetromino currentTetro, heldTetro;
 UserInterface UI;
 
 void draw() {
@@ -22,7 +22,7 @@ void draw() {
 
     calculateGravity();
     displayGame();
-    displayCurrentPiece();
+    displaycurrentTetro();
 }
 
 private boolean isInMenu(){
@@ -44,37 +44,37 @@ private boolean isInMenu(){
     return false;
 }
 
-private void displayCurrentPiece(){
-    currentPiece.displayGhost();
-    currentPiece.display();
+private void displaycurrentTetro(){
+    currentTetro.displayGhost();
+    currentTetro.display();
 }
 
 private void displayGame(){
     UI.displayGameBackground();
     UI.displayCurrentStats(score, linesCleared, level);
-    UI.displayFuturePieces(bag.getFuturePieces());
-    UI.displayHeldPiece(heldPiece);
+    UI.displayFutureTetrominos(bag.getFutureTetrominos());
+    UI.displayheldTetromino(heldTetro);
     grid.display();
 }
 
-private void swapHeldPiece(){
-    if(!canSwapHeldPiece)
+private void swapHeldTetromino(){
+    if(!canswapHeldTetromino)
         return;
     
-    Tetromino oldHeldPiece = heldPiece;
-    heldPiece = currentPiece;
-    canSwapHeldPiece = false;
+    Tetromino oldheldTetro = heldTetro;
+    heldTetro = currentTetro;
+    canswapHeldTetromino = false;
 
-    if(oldHeldPiece == null)
-        currentPiece = bag.getNextPiece();
+    if(oldheldTetro == null)
+        currentTetro = bag.getNextTetromino();
     else
-        currentPiece = oldHeldPiece;
+        currentTetro = oldheldTetro;
     
-    currentPiece.reset();
+    currentTetro.reset();
 }
 
 private void resetGame(){
-    canSwapHeldPiece = true;
+    canswapHeldTetromino = true;
     isAlive = false;
     
     level = 1;
@@ -83,19 +83,19 @@ private void resetGame(){
     
     grid = new Grid();
     bag = new Bag(scale, grid);
-    currentPiece = bag.getNextPiece();
-    heldPiece = null;
+    currentTetro = bag.getNextTetromino();
+    heldTetro = null;
 }
 
 private void addToGrid(){
-    currentPiece.addToGrid();
-    currentPiece.reset();
-    currentPiece = bag.getNextPiece();
-    currentPiece.reset();
+    currentTetro.addToGrid();
+    currentTetro.reset();
+    currentTetro = bag.getNextTetromino();
+    currentTetro.reset();
     grid.clearFullRows();
-    canSwapHeldPiece = true;
+    canswapHeldTetromino = true;
 
-    if(!currentPiece.canMove("down")){
+    if(!currentTetro.canMove("down")){
         isAlive = false;
         UI.gameOver();
     }
@@ -135,39 +135,39 @@ void keyPressed() {
         key = 27;
     }
     if(key == ' '){
-        score += currentPiece.hardDrop();
+        score += currentTetro.hardDrop();
         addToGrid();
     }
     if(key == 'c'){
-        swapHeldPiece();
+        swapHeldTetromino();
     }
     if(key == 'z'){
-        currentPiece.rotate(false);
+        currentTetro.rotate(false);
     }
     if(keyCode == UP){
-        currentPiece.rotate(true);
+        currentTetro.rotate(true);
     }
-    if(keyCode == RIGHT && currentPiece.canMove("right")){
-        currentPiece.move("right");
+    if(keyCode == RIGHT && currentTetro.canMove("right")){
+        currentTetro.move("right");
     }
-    if(keyCode == LEFT && currentPiece.canMove("left")){
-        currentPiece.move("left");
+    if(keyCode == LEFT && currentTetro.canMove("left")){
+        currentTetro.move("left");
     }    
-    if(keyCode == DOWN && currentPiece.canMove("down")){
-        currentPiece.move("down");
+    if(keyCode == DOWN && currentTetro.canMove("down")){
+        currentTetro.move("down");
         score++;
     }
 }
 
 private void calculateGravity(){
-    if(!currentPiece.canMove("down")){
-        if(grid.canAddTetromino(currentPiece))
+    if(!currentTetro.canMove("down")){
+        if(grid.canAddTetromino(currentTetro))
             addToGrid();
         return;
     }
 
     if(isTimeToMoveDown()){
-        currentPiece.move("down");
+        currentTetro.move("down");
     }
 }
 

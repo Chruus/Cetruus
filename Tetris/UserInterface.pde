@@ -101,21 +101,21 @@ public class UserInterface{
         hasBeenPressed();
     }
 
-    public void displayHeldPiece(Tetromino piece){
-        if(piece == null)
+    public void displayHeldTetromino(Tetromino tetro){
+        if(tetro == null)
             return;
-        Tetromino heldPiece = piece.clone();
-        heldPiece.reset();
-        heldPiece.setPos(2, 12);
-        heldPiece.display();
+        Tetromino heldTetro = tetro.clone();
+        heldTetro.reset();
+        heldTetro.setPos(2, 12);
+        heldTetro.display();
     }
 
-    public void displayFuturePieces(ArrayList<Tetromino> pieces){
-        pieces.get(0).setPos(6, 12);
-        pieces.get(1).setPos(9, 12);
-        pieces.get(2).setPos(12, 12);
-        for(Tetromino piece : pieces){
-            piece.display();
+    public void displayFutureTetrominos(ArrayList<Tetromino> tetros){
+        tetros.get(0).setPos(6, 12);
+        tetros.get(1).setPos(9, 12);
+        tetros.get(2).setPos(12, 12);
+        for(Tetromino tetro : tetros){
+            tetro.display();
         }
     }
 

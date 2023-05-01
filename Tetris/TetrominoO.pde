@@ -1,6 +1,6 @@
-public class PieceO extends Tetromino{
+public class TetrominoO extends Tetromino{
     
-    public PieceO(int row_, int col_, int scale_, Grid grid_, int rotation_){
+    public TetrominoO(int row_, int col_, int scale_, Grid grid_, int rotation_){
         super(row_, col_, scale_, grid_);
         ghost = true;
         color clr = color(245, 245, 0);
@@ -13,7 +13,7 @@ public class PieceO extends Tetromino{
             rotate(true);
     }
 
-    public PieceO(int row_, int col_, int scale_, Grid grid_){
+    public TetrominoO(int row_, int col_, int scale_, Grid grid_){
         super(row_, col_, scale_, grid_);
         color clr = color(245, 245, 0);
         blocks[0] = new Block(row, col, scale, clr);
@@ -22,7 +22,7 @@ public class PieceO extends Tetromino{
         blocks[3] = new Block(row - 1, col + 1, scale, clr);
     }
 
-    public PieceO(int scale_, Grid grid_){
+    public TetrominoO(int scale_, Grid grid_){
         super(1, 4, scale_, grid_);
         row = 1;
         col = 4;
@@ -52,14 +52,14 @@ public class PieceO extends Tetromino{
     }
 
     public void displayGhost(){
-        Tetromino ghost = new PieceO(row, col, scale, grid, rotation);
+        Tetromino ghost = new TetrominoO(row, col, scale, grid, rotation);
         ghost.setPos(row, col);
         while(ghost.canMove("down"))
             ghost.move("down");
         ghost.display(70 - (row * 3));
     }
 
-    public PieceO clone(){
-        return new PieceO(row, col, scale, grid);
+    public TetrominoO clone(){
+        return new TetrominoO(row, col, scale, grid);
     }
 }

@@ -14,10 +14,10 @@ public class Bag{
         reset(reserve);
     }
 
-    public Tetromino getNextPiece(){
+    public Tetromino getNextTetro(){
         if(main.size() == 0){
-            for(Tetromino piece : reserve)
-                main.add(piece);
+            for(Tetromino tetro : reserve)
+                main.add(tetro);
             reset(reserve);
         }
 
@@ -25,30 +25,30 @@ public class Bag{
         return main.remove(0);
     }
 
-    public ArrayList<Tetromino> getFuturePieces(){
-        ArrayList<Tetromino> futurePieces = new ArrayList<Tetromino>();
-        for(Tetromino piece : main){
-            if(futurePieces.size() >= 3)
+    public ArrayList<Tetromino> getFutureTetrominos(){
+        ArrayList<Tetromino> futureTetros = new ArrayList<Tetromino>();
+        for(Tetromino tetro : main){
+            if(futureTetros.size() >= 3)
                 break;
-            futurePieces.add(piece);
+            futureTetros.add(tetro);
         }
-        for(Tetromino piece : reserve){
-            if(futurePieces.size() >= 3)
+        for(Tetromino tetro : reserve){
+            if(futureTetros.size() >= 3)
                 break;
-            futurePieces.add(piece);
+            futureTetros.add(tetro);
         }
-        return futurePieces;
+        return futureTetros;
     }
 
     private void reset(ArrayList<Tetromino> bag){
         bag.clear();
-        bag.add(new PieceI(scale, grid));
-        bag.add(new PieceJ(scale, grid));
-        bag.add(new PieceL(scale, grid));
-        bag.add(new PieceO(scale, grid));
-        bag.add(new PieceS(scale, grid));
-        bag.add(new PieceT(scale, grid));
-        bag.add(new PieceZ(scale, grid));
+        bag.add(new TetrominoI(scale, grid));
+        bag.add(new TetrominoJ(scale, grid));
+        bag.add(new TetrominoL(scale, grid));
+        bag.add(new TetrominoO(scale, grid));
+        bag.add(new TetrominoS(scale, grid));
+        bag.add(new TetrominoT(scale, grid));
+        bag.add(new TetrominoZ(scale, grid));
         Collections.shuffle(bag);
     }
 }

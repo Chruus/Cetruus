@@ -1,276 +1,106 @@
 public class UserInterface{
     Block[][] background;
-    boolean hasChangedMenu, needToResetGame;
-    boolean inMenu, inGame, inGameOver, inPause;
-    Button returnToMenu, playAgain, play, resume, restart, quit;
+    boolean needToResetGame, inGame, inPause;
+    GUI gameOver, main, pause, currentGUI;
     int scale;
     ScoreFile file;
-
-    public UserInterface(int scale_){
+    
+    public UserInterface(int scale_) {
         scale = scale_;
         
         color backgroundColor = color(225, 225, 255);
         color textColor = color(0);
-
-        inMenu = true;
-        inGame = inGameOver = false;
-
+        
         file = new ScoreFile();
-        play = new Button("Play", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
-        playAgain = new Button("Play Again", textColor, width / 2, (int)(16.5 * scale), 5 * scale, 2 * scale, backgroundColor);
-        returnToMenu = new Button("Return to Menu", textColor, width / 2, (int)(13.5 * scale), 5 * scale, 2 * scale, backgroundColor);
-        resume = new Button("Resume", textColor, width / 2, 9 * scale, 10 * scale, 3 * scale, backgroundColor);
-        restart = new Button("Restart", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
-        quit = new Button("Quit", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
-
+        gameOver = new GUIGameOver(scale, textColor, backgroundColor);
+        main = new GUIMain(scale, textColor, backgroundColor, file);
+        pause = new GUIPause(scale, textColor, backgroundColor);
+        currentGUI = main;
+        
         resetBackground();
     }
-
-    public void displayMenu(){
-        pushStyle();
-        pushMatrix();
-        
-        displayBackground();
-        play.display();
     
-        textAlign(CENTER);
-        fill(255);
-        textSize(scale * 3);
-
-        text("Tetris", width / 2, 4 * scale);
-
-        textSize(scale);
-        
-        text("Highest Score:\n" + file.hiScore(), width / 2, 7 * scale);
-        text("Highest Lines:\n" + file.hiLines(), width / 2, 10 * scale);
-        text("Highest Level:\n" + file.hiLevel(), width / 2, 13 * scale);
-
-        popMatrix();
-        popStyle();
-
-        hasBeenPressed();
-    }
-
-    public void displayPause(){
-        pushStyle();
-        pushMatrix();
-        
+    public void display() {
         displayBackground();
-        resume.display();
-        restart.display();
-        quit.display();
-
-        textAlign(CENTER);
-        textSize(scale * 3);
-        fill(255);
-        
-        text("Paused", width / 2, 5 * scale);
-
-        popMatrix();
-        popStyle();
-        
-        hasBeenPressed();
+        currentGUI.display();
+        checkGoto();
     }
-
-    public void displayGameOver(int score, int linesCleared, int level){
-        inGameOver = true;
-        inGame = inMenu = false;
-        file.saveScores(score, linesCleared, level);
-
-        pushStyle();
-        pushMatrix();
-
-        displayBackground();
-        playAgain.display();
-        returnToMenu.display();
     
-        textAlign(CENTER);
-        textSize(scale);
-        fill(255);
-        
-        text("Score:", width / 2, 3 * scale);
-        text(score, width / 2, 4.25 * scale);
-        text("Lines:", width / 2, 6 * scale);
-        text(linesCleared, width / 2, 7.25 * scale);
-        text("Level:", width / 2, 9 * scale);
-        text(level, width / 2, 10.25 * scale);
-
-        popMatrix();
-        popStyle();
-
-        hasBeenPressed();
-    }
-
-    public void displayHeldTetromino(Tetromino tetro){
-        if(tetro == null)
-            return;
-        Tetromino heldTetro = tetro.clone();
-        heldTetro.reset();
-        heldTetro.setPos(2, 12);
-        heldTetro.display();
-    }
-
-    public void displayFutureTetrominos(ArrayList<Tetromino> tetros){
-        tetros.get(0).setPos(6, 12);
-        tetros.get(1).setPos(9, 12);
-        tetros.get(2).setPos(12, 12);
-        for(Tetromino tetro : tetros){
-            tetro.display();
+    private void checkGoto() {
+        String goTo = currentGUI.goTo();
+        if (goTo.equals("main"))
+            currentGUI = main;
+        if (goTo.equals("game")) {
+            currentGUI = null;
+            inGame = true;
+        }
+        if (goTo.equals("new game")) {
+            currentGUI = null;
+            inGame = needToResetGame = true;
         }
     }
-
-    public void displayCurrentStats(int score, int linesCleared, int level){
-        pushStyle();
-        pushMatrix();
-        
-        textAlign(LEFT);
-        textSize(scale * 0.5);
-        fill(255);
-
-        int x = scale / 2 * 21;
-        int y = scale * 17;
-        
-        text("Score:\n" + score, x, y - scale * 1.65);
-        text("Lines:\n" + linesCleared, x, y);
-        text("Level:\n" + level, x, y + scale * 1.65);
-
-        popMatrix();
-        popStyle();
-    }
-
-    public void displayGameBackground(){  
+    
+    public void displayBackground() {
         background(25);
-
-        pushStyle();
-        pushMatrix();
-
-        rectMode(CENTER);
-        strokeWeight(2);
-        stroke(20);
-        fill(40);
-        
-        rect(360, 60, 118, 119, 5, 5, 5, 5);
-        rect(360, 270, 118, 299, 5, 5, 5, 5);
-        rect(360, 510, 118, 179, 5, 5, 5, 5);
-
-        popMatrix();
-        popStyle();
-    }
-
-    public void displayBackground(){
-        background(25);
-        for(int r = 0; r < background.length; r++){
-            for(int c = 0; c < background[r].length; c++){
+        for (int r = 0; r < background.length; r++) {
+            for (int c = 0; c < background[r].length; c++) {
                 background[r][c].display();
             }
         }
         
         pushStyle();
         pushMatrix();
-
+        
         rectMode(CENTER);
         fill(20, 230);
         rect(0, 0, 2000, 2000);
-
+        
         popMatrix();
         popStyle();
     }
-
-    public void resetBackground(){
+    
+    public void resetBackground() {
         background = new Block[20][15];
         color[] colors = {color(0, 255, 255), color(50, 50, 255), color(255, 125, 0), color(245, 245, 0), color(25, 240, 25), color(125, 0, 255), color(255, 0, 0)};
-        for(int r = 0; r < background.length; r++){
-            for(int c = 0; c < background[r].length; c++){
+        for (int r = 0; r < background.length; r++) {
+            for (int c = 0; c < background[r].length; c++) {
                 color clr = colors[(int)(Math.random() * 7)];
                 background[r][c] = new Block(r, c, scale, clr);
             }
         }
     }
-
-    public boolean hasBeenPressed(){
-        if(resume.hasBeenPressed()){
-            inGame = true;
-            inGameOver = inMenu = inPause = false;
-            resetBackground();
-            return true;
-        }
-        if((play.hasBeenPressed() || playAgain.hasBeenPressed() || restart.hasBeenPressed())){
-            inGame = needToResetGame = true;
-            inGameOver = inMenu = inPause = false;
-            file.saveScores(score, linesCleared, level);
-            resetBackground();
-            return true;
-        }
-        if(returnToMenu.hasBeenPressed() || quit.hasBeenPressed()){
-            inMenu = true;
-            inGameOver = inGame = inPause = false;
-            file.saveScores(score, linesCleared, level);
-            resetBackground();
-            return true;
-        }
-        return false;
+    
+    public void pause() {
+        if (!(inGame || currentGUI.equals(pause)))
+            exit();
+        
+        inPause = !inPause;
+        inGame = !inGame;
+        currentGUI = pause;
     }
-
-    public boolean needToResetGame(){
-        if(needToResetGame){
+    
+    public boolean needToResetGame() {
+        if (needToResetGame) {
             needToResetGame = false;
             return true;
         }
         return false;
     }
     
-    public void pause(){
-        inPause = !inPause;
+    public void gameOver() {
+        inGame = false;
+        currentGUI = gameOver;
     }
-
-    public void gameOver(){
-        inGameOver = true;
-        inMenu = inGame = false;
-    }
-
-    public boolean isInGame(){
+    
+    public boolean inGame() {
         return inGame;
     }
-
-    public boolean isInPause(){
-        return inPause;
+    
+    public void mousePressed() {
+        currentGUI.mousePressed();
     }
-
-    public boolean isInGameOver(){
-        return inGameOver;
+    
+    public void mouseReleased() {
+        currentGUI.mouseReleased();
     }
-
-    public boolean isInMenu(){
-        return inMenu;
-    }
-
-    public void mousePressed(){
-        if(inMenu){
-            play.mousePressed();
-        }
-        if(inGameOver){
-            playAgain.mousePressed();
-            returnToMenu.mousePressed();
-        }
-        if(inPause){
-            resume.mousePressed();
-            restart.mousePressed();
-            quit.mousePressed();
-        }
-    }
-
-    public void mouseReleased(){
-        if(inMenu)
-            play.mouseReleased();
-        if(inGameOver){
-            playAgain.mouseReleased();
-            returnToMenu.mouseReleased();
-        }
-        if(inPause){
-            resume.mouseReleased();
-            restart.mouseReleased();
-            quit.mouseReleased();
-        }
-    }
-
 }

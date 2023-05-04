@@ -66,7 +66,8 @@ public class TetrominoI extends Tetromino{
             blocks[1].setPos(row - 1, col - 1);
             blocks[2].setPos(row + 1, col - 1);
             blocks[3].setPos(row + 2, col - 1);
-        } 
+        }
+        
         if (!ghost)
             moveInBounds(clockwise);
     }

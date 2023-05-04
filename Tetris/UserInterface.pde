@@ -1,11 +1,11 @@
 public class UserInterface{
     Block[][] background;
     boolean needToResetGame, inGame, inPause;
-    GUI gameOver, main, pause, currentGUI;
+    GUI currentGUI, gameOver, main, pause, scores, settings;
     int scale;
     ScoreFile file;
     
-    public UserInterface(int scale_) {
+    public UserInterface(int scale_, KeyBindings keyBinds) {
         scale = scale_;
         
         color backgroundColor = color(225, 225, 255);
@@ -13,8 +13,10 @@ public class UserInterface{
         
         file = new ScoreFile();
         gameOver = new GUIGameOver(scale, textColor, backgroundColor);
-        main = new GUIMain(scale, textColor, backgroundColor, file);
+        main = new GUIMain(scale, textColor, backgroundColor);
         pause = new GUIPause(scale, textColor, backgroundColor);
+        scores = new GUIScores(scale, textColor, backgroundColor, file);
+        settings = new GUISettings(scale, textColor, backgroundColor, keyBinds);
         currentGUI = main;
         
         resetBackground();
@@ -30,6 +32,10 @@ public class UserInterface{
         String goTo = currentGUI.goTo();
         if (goTo.equals("main"))
             currentGUI = main;
+        if (goTo.equals("scores"))
+            currentGUI = scores;
+        if (goTo.equals("settings"))
+            currentGUI = settings;
         if (goTo.equals("game")) {
             currentGUI = null;
             inGame = true;

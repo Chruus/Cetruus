@@ -3,8 +3,8 @@ public class GUIGameOver extends GUI{
     
     public GUIGameOver(int scale_, color textColor, color backgroundColor) {
         super(scale_);
-        playAgain = new Button("Play Again", textColor, width / 2,(int)(16.5 * scale), 5 * scale, 2 * scale, backgroundColor);
-        returnToMain = new Button("Return to Menu", textColor, width / 2,(int)(13.5 * scale), 5 * scale, 2 * scale, backgroundColor);
+        playAgain = new Button("Play Again", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
+        returnToMain = new Button("Return to Menu", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
     }
     
     public void display() {//Need to access score, linesCleared, and level

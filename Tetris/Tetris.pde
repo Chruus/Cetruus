@@ -1,9 +1,13 @@
 //Christopher Petty
 void setup() {
     size(420, 600);
-    resetGame();
+    
     scale = 30;
-    UI = new UserInterface(scale);
+    
+    UI = new UserInterface(scale, keyBinds);
+    keyBinds = new KeyBindings();
+    
+    resetGame();
 }
 
 Bag bag;
@@ -11,6 +15,7 @@ boolean canswapHeldTetromino, isAlive;
 Grid grid;
 int level, score, linesCleared;
 int scale, timeToMoveDown;
+KeyBindings keyBinds;
 Tetromino currentTetro, heldTetro;
 UserInterface UI;
 
@@ -229,26 +234,27 @@ void keyPressed() {
     if (keyCode == BACKSPACE) {
         key = 27;
     }
-    if (key == ' ') {
+    
+    if (keyCode == keyBinds.get("hard drop")) {
         score += currentTetro.hardDrop();
         addToGrid();
     }
-    if (key == 'c') {
+    if (keyCode == keyBinds.get("hold tetro")) {
         swapHeldTetromino();
     }
-    if (key == 'z') {
+    if (keyCode == keyBinds.get("rotate counterclockwise")) {
         currentTetro.rotate(false);
     }
-    if (keyCode == UP) {
+    if (keyCode == keyBinds.get("rotate clockwise")) {
         currentTetro.rotate(true);
     }
-    if (keyCode == RIGHT && currentTetro.canMove("right")) {
+    if (keyCode == keyBinds.get("move right") && currentTetro.canMove("right")) {
         currentTetro.move("right");
     }
-    if (keyCode == LEFT && currentTetro.canMove("left")) {
+    if (keyCode == keyBinds.get("move left") && currentTetro.canMove("left")) {
         currentTetro.move("left");
     }    
-    if (keyCode == DOWN && currentTetro.canMove("down")) {
+    if (keyCode == keyBinds.get("soft drop") && currentTetro.canMove("down")) {
         currentTetro.move("down");
         score++;
     }

@@ -1,8 +1,10 @@
 public class Grid{
     Block[][] grid;
     int addToGridDelay;
+    Stats stats;
     
-    public Grid() {
+    public Grid(Stats stats_) {
+        stats = stats_;
         grid = new Block[20][10];
         addToGridDelay = 30;
     }
@@ -40,7 +42,7 @@ public class Grid{
             shiftGridDown(row);
         }
         
-        calculateScore(fullRows.size());
+        stats.calculateScore(fullRows.size());
     }
     
     private ArrayList<Integer> getFullRows() {

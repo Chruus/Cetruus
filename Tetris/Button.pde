@@ -32,6 +32,10 @@ public class Button{
         popStyle();
     }
     
+    public void setText(String text_) {
+        text = text_;
+    }
+    
     private boolean mouseIsOnButton() {
         if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y - h / 2 && mouseY < y + h / 2)
             return true;

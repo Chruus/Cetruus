@@ -4,8 +4,9 @@ void setup() {
     
     scale = 30;
     
-    UI = new UserInterface(scale, keyBinds);
+    stats = new Stats();
     keyBinds = new KeyBindings();
+    UI = new UserInterface(scale, keyBinds, stats);
     
     resetGame();
 }
@@ -13,9 +14,9 @@ void setup() {
 Bag bag;
 boolean canswapHeldTetromino, isAlive;
 Grid grid;
-int level, score, linesCleared;
 int scale, timeToMoveDown;
 KeyBindings keyBinds;
+Stats stats;
 Tetromino currentTetro, heldTetro;
 UserInterface UI;
 
@@ -66,11 +67,9 @@ private void resetGame() {
     canswapHeldTetromino = true;
     isAlive = false;
     
-    level = 1;
-    linesCleared = 0;
-    score = 0;
+    stats.reset();
     
-    grid = new Grid();
+    grid = new Grid(stats);
     bag = new Bag(scale, grid);
     currentTetro = bag.getNextTetromino();
     heldTetro = null;
@@ -89,24 +88,6 @@ private void addToGrid() {
         UI.gameOver();
     }
 }
-
-private void calculateScore(int numOfLinesCleared) {
-    if (numOfLinesCleared == 1) {
-        linesCleared += 1;
-        score += 100 * level;
-    } else if (numOfLinesCleared == 2) {
-        linesCleared += 2;
-        score += 300 * level;
-    } else if (numOfLinesCleared == 3) {
-        linesCleared += 3;
-        score += 500 * level;
-    } else if (numOfLinesCleared == 4) {
-        linesCleared += 4;
-        score += 800 * level;
-    }
-    level = linesCleared / 10 + 1;
-}
-
 
 private void displayHeldTetromino() {
     if (heldTetro == null)
@@ -137,9 +118,9 @@ private void displayCurrentStats() {
     int x = scale / 2 * 21;
     int y = scale * 17;
     
-    text("Score:\n" + score, x, y - scale * 1.65);
-    text("Lines:\n" + linesCleared, x, y);
-    text("Level:\n" + level, x, y + scale * 1.65);
+    text("Score:\n" + stats.score(), x, y - scale * 1.65);
+    text("Lines:\n" + stats.lines(), x, y);
+    text("Level:\n" + stats.level(), x, y + scale * 1.65);
     
     popMatrix();
     popStyle();
@@ -182,36 +163,7 @@ private boolean isTimeToMoveDown() {
         return false;
     }
     
-    if (level == 1)
-        timeToMoveDown = 48;
-    else if (level == 2)
-        timeToMoveDown = 43;
-    else if (level == 3)
-        timeToMoveDown = 38;
-    else if (level == 4)
-        timeToMoveDown = 33;
-    else if (level == 5)
-        timeToMoveDown = 28;
-    else if (level == 6)
-        timeToMoveDown = 23;
-    else if (level == 7)
-        timeToMoveDown = 18;
-    else if (level == 8)
-        timeToMoveDown = 13;
-    else if (level == 9)
-        timeToMoveDown = 8;
-    else if (level == 10)
-        timeToMoveDown = 6;
-    else if (level >= 11 && level <= 13)
-        timeToMoveDown = 5;
-    else if (level >= 14 && level <= 16)
-        timeToMoveDown = 4;
-    else if (level >= 17 && level <= 19)
-        timeToMoveDown = 3;
-    else if (level >= 20 && level <= 29)
-        timeToMoveDown = 2;
-    else if (level >= 30)
-        timeToMoveDown = 1;
+    timeToMoveDown = stats.getTimeToMoveDown();
     
     return true;
 }
@@ -234,18 +186,20 @@ void keyPressed() {
     if (keyCode == BACKSPACE) {
         key = 27;
     }
+    if (!UI.inGame())
+        return;
     
     if (keyCode == keyBinds.get("hard drop")) {
-        score += currentTetro.hardDrop();
+        stats.setScore(stats.score() + currentTetro.hardDrop());
         addToGrid();
     }
     if (keyCode == keyBinds.get("hold tetro")) {
         swapHeldTetromino();
     }
-    if (keyCode == keyBinds.get("rotate counterclockwise")) {
+    if (keyCode == keyBinds.get("rotate left")) {
         currentTetro.rotate(false);
     }
-    if (keyCode == keyBinds.get("rotate clockwise")) {
+    if (keyCode == keyBinds.get("rotate right")) {
         currentTetro.rotate(true);
     }
     if (keyCode == keyBinds.get("move right") && currentTetro.canMove("right")) {
@@ -256,6 +210,6 @@ void keyPressed() {
     }    
     if (keyCode == keyBinds.get("soft drop") && currentTetro.canMove("down")) {
         currentTetro.move("down");
-        score++;
+        stats.setScore(stats.score() + 1);
     }
 }

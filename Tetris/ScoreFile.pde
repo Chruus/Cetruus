@@ -10,13 +10,15 @@ public class ScoreFile{
         }
     }
     
-    public void saveScores(int score, int lines, int level) {
-        if (score > hiScore)
-            hiScore = score;
-        if (lines > hiLines)
-            hiLines = lines;
-        if (level > hiLevel)
-            hiLevel = level;
+    public void saveStats(Stats stats) {
+        if (stats.score() > hiScore)
+            hiScore = stats.score();
+        if (stats.lines() > hiLines)
+            hiLines = stats.lines();
+        if (stats.level() > hiLevel)
+            hiLevel = stats.level();
+        
+        stats.reset();
         updateFile();
     }
     

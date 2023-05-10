@@ -10,8 +10,8 @@ public class KeyBindings{
         keyBinds.put("move left", LEFT);
         keyBinds.put("move right", RIGHT);
         keyBinds.put("soft drop", DOWN);
-        keyBinds.put("rotate clockwise", UP);
-        keyBinds.put("rotate counterclockwise",(int)'Z');
+        keyBinds.put("rotate right", UP);
+        keyBinds.put("rotate left",(int)'Z');
         keyBinds.put("hard drop",(int)' ');
         keyBinds.put("hold tetro",(int)'C');
     }

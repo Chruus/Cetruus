@@ -4,15 +4,17 @@ public class UserInterface{
     GUI currentGUI, gameOver, main, pause, scores, settings;
     int scale;
     ScoreFile file;
+    Stats stats;
     
-    public UserInterface(int scale_, KeyBindings keyBinds) {
+    public UserInterface(int scale_, KeyBindings keyBinds, Stats stats_) {
         scale = scale_;
+        stats = stats_;
         
         color backgroundColor = color(225, 225, 255);
         color textColor = color(0);
         
         file = new ScoreFile();
-        gameOver = new GUIGameOver(scale, textColor, backgroundColor);
+        gameOver = new GUIGameOver(scale, textColor, backgroundColor, stats);
         main = new GUIMain(scale, textColor, backgroundColor);
         pause = new GUIPause(scale, textColor, backgroundColor);
         scores = new GUIScores(scale, textColor, backgroundColor, file);
@@ -30,7 +32,12 @@ public class UserInterface{
     
     private void checkGoto() {
         String goTo = currentGUI.goTo();
-        if (goTo.equals("main"))
+        
+        if (goTo.equals(""))
+            return;
+        if (currentGUI.equals(gameOver))
+            file.saveStats(stats);
+        if (goTo.equals("main")) 
             currentGUI = main;
         if (goTo.equals("scores"))
             currentGUI = scores;

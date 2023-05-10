@@ -33,8 +33,8 @@ public class TetrominoO extends Tetromino{
         blocks[3] = new Block(row - 1, col + 1, scale, clr);
     }
     
-    public void rotate(boolean clockwise) {
-        return;
+    public boolean rotate(boolean clockwise) {
+        return true;
     }
     
     public boolean canRotate(boolean clockwise, Grid grid_) {

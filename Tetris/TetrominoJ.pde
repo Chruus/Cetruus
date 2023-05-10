@@ -33,7 +33,7 @@ public class TetrominoJ extends Tetromino{
         blocks[3] = new Block(row - 1, col - 1, scale, clr);
     }
     
-    public void rotate(boolean clockwise) {
+    public boolean rotate(boolean clockwise) {
         if (clockwise) {
             rotation++;
         } else {
@@ -69,7 +69,8 @@ public class TetrominoJ extends Tetromino{
         }
         
         if (!ghost)
-            moveInBounds(clockwise);
+            return moveInBounds(clockwise);
+        return false;
     }
     
     public void reset() {

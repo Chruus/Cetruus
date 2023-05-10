@@ -1,6 +1,6 @@
 public class Grid{
     Block[][] grid;
-    int addToGridDelay;
+    int addToGridDelay, timesReset;
     Stats stats;
     
     public Grid(Stats stats_) {
@@ -18,19 +18,23 @@ public class Grid{
         }
     }
     
-    public boolean canAddTetromino(Tetromino currentTetromino) {
-        if (currentTetromino.canMove("down")) {
-            if (addToGridDelay < 30)
-                addToGridDelay++;
+    public boolean canAddTetromino(Tetromino currentTetro) {
+        if (currentTetro.canMove("down"))
             return false;
-        }
         
         if (addToGridDelay > 0) {
             addToGridDelay--;
             return false;
         }
-        addToGridDelay = 30;
+        addToGridDelay = 50;
+        timesReset = 0;
         return true;
+    }
+    
+    public void resetAddToGridDelay(Tetromino currentTetro) {
+        addToGridDelay = 50 - timesReset;
+        if (!currentTetro.canMove("down"))
+            timesReset += 2;
     }
     
     public void clearFullRows() {

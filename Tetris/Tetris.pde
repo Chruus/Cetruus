@@ -1,6 +1,7 @@
 //Christopher Petty
 void setup() {
     size(420, 600);
+    frameRate(60);
     
     scale = 30;
     
@@ -198,9 +199,11 @@ void keyPressed() {
     }
     if (keyCode == keyBinds.get("rotate left")) {
         currentTetro.rotate(false);
+        grid.resetAddToGridDelay(currentTetro);
     }
     if (keyCode == keyBinds.get("rotate right")) {
         currentTetro.rotate(true);
+        grid.resetAddToGridDelay(currentTetro);
     }
     if (keyCode == keyBinds.get("move right") && currentTetro.canMove("right")) {
         currentTetro.move("right");

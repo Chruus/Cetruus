@@ -102,7 +102,7 @@ public abstract class Tetromino{
         return true;
     }
     
-    public void moveInBounds(boolean clockwise) {
+    public boolean moveInBounds(boolean clockwise) {
         for (Block block : blocks) {
             while(block.row() < 0 && canMove("down"))
                 move("down");
@@ -113,8 +113,20 @@ public abstract class Tetromino{
             while(block.col() >= grid.width() && canMove("left"))
                 move("left");
         }
-        if (!isInBounds())
-            rotate(!clockwise);
+        
+        if (isInBounds())
+            return true;;
+        
+        move("up");
+        if (isInBounds())
+            return true;
+        move("up");
+        if (isInBounds())
+            return true;
+        move("down");
+        move("down");
+        rotate(!clockwise);
+        return false;
     }
     
     public boolean isInBounds() {
@@ -128,7 +140,7 @@ public abstract class Tetromino{
     
     public abstract Tetromino clone();
     
-    public abstract void rotate(boolean clockwise);
+    public abstract boolean rotate(boolean clockwise);
     
     public abstract void reset();
     

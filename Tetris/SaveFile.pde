@@ -1,7 +1,7 @@
-public class ScoreFile{
+public class SaveFile{
     int hiScore, hiLines, hiLevel;
     
-    public ScoreFile() {
+    public SaveFile() {
         String[] words = loadStrings("scores.txt");
         if (words.length > 0) {
             hiScore = Integer.parseInt(words[0]);

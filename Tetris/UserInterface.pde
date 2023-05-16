@@ -3,7 +3,7 @@ public class UserInterface{
     boolean needToResetGame, inGame, inPause;
     GUI currentGUI, gameOver, main, pause, scores, settings;
     int scale;
-    ScoreFile file;
+    SaveFile file;
     Stats stats;
     
     public UserInterface(int scale_, KeyBindings keyBinds, Stats stats_) {
@@ -13,7 +13,7 @@ public class UserInterface{
         color backgroundColor = color(225, 225, 255);
         color textColor = color(0);
         
-        file = new ScoreFile();
+        file = new SaveFile();
         gameOver = new GUIGameOver(scale, textColor, backgroundColor, stats);
         main = new GUIMain(scale, textColor, backgroundColor);
         pause = new GUIPause(scale, textColor, backgroundColor);

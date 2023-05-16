@@ -30,6 +30,9 @@ void draw() {
     if (UI.needToResetGame())
         resetGame();
     
+    if (keyBinds.canRegisterKey())
+        onInput();
+    
     calculateGravity();
     displayGame();
     displaycurrentTetro();
@@ -169,6 +172,19 @@ private boolean isTimeToMoveDown() {
     return true;
 }
 
+private void onInput() {
+    if (keyBinds.getCurrentKey() == keyBinds.get("move left") && currentTetro.canMove("left")) {
+        currentTetro.move("left");
+    }
+    if (keyBinds.getCurrentKey() == keyBinds.get("move right") && currentTetro.canMove("right")) {
+        currentTetro.move("right");
+    }
+    if (keyBinds.getCurrentKey() == keyBinds.get("soft drop") && currentTetro.canMove("down")) {
+        currentTetro.move("down");
+        stats.setScore(stats.score() + 1);
+    }
+}
+
 void mousePressed() {
     if (!UI.inGame())
         UI.mousePressed();
@@ -194,25 +210,19 @@ void keyPressed() {
         stats.setScore(stats.score() + currentTetro.hardDrop());
         addToGrid();
     }
-    if (keyCode == keyBinds.get("hold tetro")) {
-        swapHeldTetromino();
-    }
     if (keyCode == keyBinds.get("rotate left")) {
         currentTetro.rotate(false);
-        grid.resetAddToGridDelay(currentTetro);
     }
     if (keyCode == keyBinds.get("rotate right")) {
         currentTetro.rotate(true);
-        grid.resetAddToGridDelay(currentTetro);
     }
-    if (keyCode == keyBinds.get("move right") && currentTetro.canMove("right")) {
-        currentTetro.move("right");
+    if (keyCode == keyBinds.get("hold tetro")) {
+        swapHeldTetromino();
     }
-    if (keyCode == keyBinds.get("move left") && currentTetro.canMove("left")) {
-        currentTetro.move("left");
-    }    
-    if (keyCode == keyBinds.get("soft drop") && currentTetro.canMove("down")) {
-        currentTetro.move("down");
-        stats.setScore(stats.score() + 1);
-    }
+    
+    keyBinds.keyPressed();
+}
+
+void keyReleased() {
+    keyBinds.keyReleased();
 }

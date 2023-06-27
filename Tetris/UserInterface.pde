@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 public class UserInterface{
     Block[][] background;
     boolean needToResetGame, inGame, inPause;
@@ -86,10 +88,11 @@ public class UserInterface{
     public void pause() {
         if (!(inGame || currentGUI.equals(pause)))
             exit();
-        
+
         inPause = !inPause;
         inGame = !inGame;
         currentGUI = pause;
+        
     }
     
     public boolean needToResetGame() {

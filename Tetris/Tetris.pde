@@ -1,4 +1,7 @@
 //Christopher Petty
+
+import processing.sound.*;
+
 void setup() {
     size(420, 600);
     frameRate(60);
@@ -8,7 +11,10 @@ void setup() {
     stats = new Stats();
     keyBinds = new KeyBindings();
     UI = new UserInterface(scale, keyBinds, stats);
-    
+    hold = new SoundFile(this, "hold.wav");
+    music = new SoundFile(Tetris.this, "music.wav");
+
+    music.amp(0.25);
     resetGame();
 }
 
@@ -17,6 +23,7 @@ boolean canswapHeldTetromino, isAlive;
 Grid grid;
 int scale, timeToMoveDown;
 KeyBindings keyBinds;
+SoundFile hold, music;
 Stats stats;
 Tetromino currentTetro, heldTetro;
 UserInterface UI;
@@ -30,6 +37,9 @@ void draw() {
     if (UI.needToResetGame())
         resetGame();
     
+    if(!music.isPlaying())
+        music.play();
+
     calculateGravity();
     displayGame();
     displaycurrentTetro();
@@ -51,6 +61,8 @@ private void displayGame() {
 private void swapHeldTetromino() {
     if (!canswapHeldTetromino)
         return;
+    
+    hold.play();
     
     Tetromino oldheldTetro = heldTetro;
     heldTetro = currentTetro;
@@ -183,6 +195,11 @@ void keyPressed() {
     if (keyCode == 27) {
         key = 0;
         UI.pause();
+        
+        if(music.isPlaying())
+            music.pause();
+        else
+            music.play();
     }
     if (keyCode == BACKSPACE) {
         key = 27;

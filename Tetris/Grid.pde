@@ -1,12 +1,18 @@
+import processing.sound.*;
+
 public class Grid{
     Block[][] grid;
     int addToGridDelay, timesReset;
+    SoundFile drop, clear, clearTetris;
     Stats stats;
     
     public Grid(Stats stats_) {
         stats = stats_;
         grid = new Block[20][10];
         addToGridDelay = 30;
+        drop = new SoundFile(Tetris.this, "drop.wav");
+        clear = new SoundFile(Tetris.this, "clear.wav");
+        clearTetris = new SoundFile(Tetris.this, "clear tetris.wav");
     }
     
     public void display() {
@@ -39,8 +45,14 @@ public class Grid{
     
     public void clearFullRows() {
         ArrayList<Integer> fullRows = getFullRows();
-        if (fullRows.size() == 0)
+        if (fullRows.size() == 0){
+            drop.play();
             return;
+        }
+        else if(fullRows.size() < 4)
+            clear.play();
+        else
+            clearTetris.play();
         
         for (int row : fullRows) {
             shiftGridDown(row);

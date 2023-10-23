@@ -1,11 +1,8 @@
 public class GUISettingsMisc extends GUI{
     Button initialKeyDelayUp, initialKeyDelayDown, keyDelayUp, keyDelayDown;
-    KeyBindings keyBinds;
     
-    public GUISettingsMisc(int scale_, color textColor, color backgroundColor, KeyBindings keyBinds_) {
+    public GUISettingsMisc(int scale_, color textColor, color backgroundColor) {
         super(scale_);
-        
-        keyBinds = keyBinds_;
         
         initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 6 * scale, 2 * scale, 2 * scale, backgroundColor);
         initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 6 * scale, 2 * scale, 2 * scale, backgroundColor);

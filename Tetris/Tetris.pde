@@ -8,13 +8,15 @@ void setup() {
     
     scale = 30;
     
-    stats = new Stats();
+    stats = new Stats();        
+    file = new SaveFile();
     keyBinds = new KeyBindings();
-    UI = new UserInterface(scale, keyBinds, stats);
+    UI = new UserInterface(scale, stats);
     hold = new SoundFile(this, "hold.wav");
     music = new SoundFile(Tetris.this, "music.wav");
     
     music.amp(0.25);
+    
     resetGame();
 }
 
@@ -23,6 +25,7 @@ boolean canswapHeldTetromino, isAlive;
 Grid grid;
 int scale, timeToMoveDown;
 KeyBindings keyBinds;
+SaveFile file;
 SoundFile hold, music;
 Stats stats;
 Tetromino currentTetro, heldTetro;

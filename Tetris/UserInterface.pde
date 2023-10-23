@@ -5,22 +5,20 @@ public class UserInterface{
     boolean needToResetGame, inGame, inPause;
     GUI currentGUI, gameOver, main, pause, scores, settings;
     int scale;
-    SaveFile file;
     Stats stats;
     
-    public UserInterface(int scale_, KeyBindings keyBinds, Stats stats_) {
+    public UserInterface(int scale_, Stats stats_) {
         scale = scale_;
         stats = stats_;
         
         color backgroundColor = color(225, 225, 255);
         color textColor = color(0);
         
-        file = new SaveFile();
         gameOver = new GUIGameOver(scale, textColor, backgroundColor, stats);
         main = new GUIMain(scale, textColor, backgroundColor);
         pause = new GUIPause(scale, textColor, backgroundColor);
-        scores = new GUIScores(scale, textColor, backgroundColor, file);
-        settings = new GUISettings(scale, textColor, backgroundColor, keyBinds);
+        scores = new GUIScores(scale, textColor, backgroundColor);
+        settings = new GUISettings(scale, textColor, backgroundColor);
         currentGUI = main;
         
         resetBackground();
@@ -88,7 +86,7 @@ public class UserInterface{
     public void pause() {
         if (!(inGame || currentGUI.equals(pause)))
             exit();
-
+        
         inPause = !inPause;
         inGame = !inGame;
         currentGUI = pause;

@@ -14,17 +14,22 @@ public class KeyBindings{
         keyCodes = new ArrayList<Integer>();
         
         reset();
+        //  loadKeyBinds();        
     }
     
     public void setKeyDelay(int newKeyDelay) {
         defaultKeyDelay = newKeyDelay;
     }
     
-    public void setInitialKeyDelay(int newInitialKeyDelay) {
+    public void loadKeyBinds() {
+        //file.saveKeyBinds(keyBinds);
+    }
+    
+    public  void setInitialKeyDelay(int newInitialKeyDelay) {
         defaultInitialKeyDelay = newInitialKeyDelay;
     }
     
-    public void reset() {
+    public  void reset() {
         keyBinds.put("move left", LEFT);
         keyBinds.put("move right", RIGHT);
         keyBinds.put("soft drop", DOWN);
@@ -34,11 +39,11 @@ public class KeyBindings{
         keyBinds.put("hold tetro",(int)'C');
     }
     
-    public void set(String keyBind, int key) {
+    public  void set(String keyBind, int key) {
         keyBinds.put(keyBind, key);
     }
     
-    public void keyPressed() {
+    public  void keyPressed() {
         isKeyPressed = true;
         if (!keyCodes.contains(keyCode))
             keyCodes.add(keyCode);
@@ -47,7 +52,7 @@ public class KeyBindings{
         keyDelay = defaultKeyDelay;
     }
     
-    public void keyReleased() {
+    public  void keyReleased() {
         if (keyCodes.size() > 0)
             keyCodes.remove(0);
         
@@ -57,23 +62,23 @@ public class KeyBindings{
         }
     }
     
-    public int getCurrentKey() {
+    public  int getCurrentKey() {
         return keyCodes.get(0);
     }
     
-    public int get(String keyBind) {
+    public  int get(String keyBind) {
         return keyBinds.get(keyBind);
     }
     
-    public int keyDelay() {
+    public  int keyDelay() {
         return defaultKeyDelay;
     }
     
-    public int initialKeyDelay() {
+    public  int initialKeyDelay() {
         return defaultInitialKeyDelay;
     }
     
-    public boolean canRegisterKey() {
+    public  boolean canRegisterKey() {
         if (keyCodes.size() == 0 || keyPressed == false)
             return false;
         

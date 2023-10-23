@@ -2,10 +2,8 @@ public class GUIScores extends GUI{
     Button back;
     SaveFile file;
     
-    public GUIScores(int scale_, color textColor, color backgroundColor, SaveFile file_) {
+    public GUIScores(int scale_, color textColor, color backgroundColor) {
         super(scale_);
-        
-        file = file_;
         
         back = new Button("Back", textColor, 2 * scale, 1 * scale, 4 * scale, 2 * scale, backgroundColor);
     }

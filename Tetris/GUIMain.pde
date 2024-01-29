@@ -27,6 +27,8 @@ public class GUIMain extends GUI{
         popStyle();
     }
     
+    public void keyPressed() {}
+    
     public void mousePressed() {
         play.mousePressed();
         scores.mousePressed();

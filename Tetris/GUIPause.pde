@@ -26,6 +26,8 @@ public class GUIPause extends GUI{
         popStyle();
     }
     
+    public void keyPressed() {}
+    
     public void mousePressed() {
         resume.mousePressed();
         restart.mousePressed();

@@ -211,6 +211,11 @@ void mouseReleased() {
 }
 
 void keyPressed() {
+    keyBinds.keyPressed(keyCode);
+    
+    if (!UI.inGame())
+        UI.keyPressed();
+    
     if (keyCode == 27) {
         key = 0;
         UI.pause();
@@ -239,10 +244,8 @@ void keyPressed() {
     if (keyCode == keyBinds.get("hold tetro")) {
         swapHeldTetromino();
     }
-    
-    keyBinds.keyPressed();
 }
 
 void keyReleased() {
-    keyBinds.keyReleased();
+    keyBinds.keyReleased(keyCode);
 }

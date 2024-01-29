@@ -2,11 +2,11 @@ public class SaveFile{
     int hiScore, hiLines, hiLevel;
     
     public SaveFile() {
-        String[] words = loadStrings("scores.txt");
-        if (words.length > 0) {
-            hiScore = Integer.parseInt(words[0]);
-            hiLines = Integer.parseInt(words[1]);
-            hiLevel = Integer.parseInt(words[2]);
+        String[] scores = loadStrings("scores.txt");
+        if (scores.length == 3) {
+            hiScore = Integer.parseInt(scores[0]);
+            hiLines = Integer.parseInt(scores[1]);
+            hiLevel = Integer.parseInt(scores[2]);
         }
     }
     
@@ -19,16 +19,41 @@ public class SaveFile{
             hiLevel = stats.level();
         
         stats.reset();
-        updateFile();
+        updateStats();
     }
     
-    public void updateFile() {
+    public void updateStats() {
         String[] words = new String[3];
         words[0] = hiScore + "";
         words[1] = hiLines + "";
         words[2] = hiLevel + "";
         saveStrings("scores.txt", words);
+    }
+    
+    public boolean loadKeyBinds(HashMap<String, Integer> keyBinds) {
+        String[] keyBindsFile = loadStrings("keybinds.txt");
         
+        if (keyBindsFile.length == 0)
+            return false;
+        
+        for (int i = 0; i < keyBindsFile.length; i++) {
+            String[] data = keyBindsFile[i].split(" - ");
+            keyBinds.put(data[0], Integer.parseInt(data[1]));
+        }
+        
+        return true;
+    }
+    
+    public void saveKeyBinds(HashMap<String, Integer> keyBinds) {
+        String[] words = new String[7];
+        int num = 0;
+        
+        for (String key : keyBinds.keySet()) {
+            words[num] = key + " - " + keyBinds.get(key);
+            num++;
+        }
+        
+        saveStrings("keybinds.txt", words);
     }
     
     public int hiScore() {

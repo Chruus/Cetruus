@@ -1,28 +1,24 @@
 public class KeyBindings{
-    ArrayList<Integer> keyCodes;
-    boolean isKeyPressed;
+    LinkedList<Integer> inputBuffer;
     HashMap<String, Integer> keyBinds;
     int keyDelay, initialKeyDelay;
     int defaultKeyDelay, defaultInitialKeyDelay;
-    int lastKeyCode;
     
     public KeyBindings() {
         defaultInitialKeyDelay = initialKeyDelay = 12;
         defaultKeyDelay = keyDelay = 1;
         
         keyBinds = new HashMap<String, Integer>();
-        keyCodes = new ArrayList<Integer>();
+        inputBuffer = new LinkedList();
         
-        reset();
-        //  loadKeyBinds();        
+        if (!file.loadKeyBinds(keyBinds)) {
+            reset();
+            file.saveKeyBinds(keyBinds);
+        }
     }
     
     public void setKeyDelay(int newKeyDelay) {
         defaultKeyDelay = newKeyDelay;
-    }
-    
-    public void loadKeyBinds() {
-        //file.saveKeyBinds(keyBinds);
     }
     
     public  void setInitialKeyDelay(int newInitialKeyDelay) {
@@ -39,31 +35,29 @@ public class KeyBindings{
         keyBinds.put("hold tetro",(int)'C');
     }
     
-    public  void set(String keyBind, int key) {
+    public void set(String keyBind, int key) {
         keyBinds.put(keyBind, key);
+        file.saveKeyBinds(keyBinds);
     }
     
-    public  void keyPressed() {
-        isKeyPressed = true;
-        if (!keyCodes.contains(keyCode))
-            keyCodes.add(keyCode);
+    public void keyPressed(int key) {
+        if (inputBuffer.contains(key))
+            return;
         
+        inputBuffer.push(key);
         initialKeyDelay = defaultInitialKeyDelay;
         keyDelay = defaultKeyDelay;
     }
     
-    public  void keyReleased() {
-        if (keyCodes.size() > 0)
-            keyCodes.remove(0);
-        
-        if (keyCodes.size() == 0) {
-            lastKeyCode = -1;
-            keyPressed = false;
-        }
+    public  void keyReleased(int key) {
+        if (inputBuffer.contains(key))
+            inputBuffer.remove(new Integer(key));
     }
     
     public  int getCurrentKey() {
-        return keyCodes.get(0);
+        if (!inputBuffer.isEmpty())
+            return inputBuffer.peek();
+        return - 1;
     }
     
     public  int get(String keyBind) {
@@ -79,11 +73,10 @@ public class KeyBindings{
     }
     
     public  boolean canRegisterKey() {
-        if (keyCodes.size() == 0 || keyPressed == false)
+        if (inputBuffer.isEmpty())
             return false;
         
-        if (initialKeyDelay == defaultInitialKeyDelay || keyCodes.get(0) != lastKeyCode) {
-            lastKeyCode = keyCodes.get(0);
+        if (initialKeyDelay == defaultInitialKeyDelay) {
             initialKeyDelay = defaultInitialKeyDelay;
             keyDelay = defaultKeyDelay;
             initialKeyDelay--;

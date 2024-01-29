@@ -11,5 +11,7 @@ public abstract class GUI{
     
     public abstract void mouseReleased();
     
+    public abstract void keyPressed();
+    
     public abstract String goTo();
 }

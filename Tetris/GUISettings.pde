@@ -9,6 +9,8 @@ public class GUISettings extends GUI{
         misc = new GUISettingsMisc(scale_ ,textColor, backgroundColor);
         currentGUI = misc;
         
+        keyBindings = new GUISettingsKeyBindings(scale_, textColor, backgroundColor);
+        
         back = new Button("Back", textColor,(int)(1.5 * scale), 1 * scale, 3 * scale, 2 * scale, backgroundColor);
         toVideo = new Button("Video", textColor,(int)(4.5 * scale), 1 * scale, 3 * scale, 2 * scale, backgroundColor);
         toMisc = new Button("Misc", textColor,(int)(7.5 * scale), 1 * scale, 3 * scale, 2 * scale, backgroundColor);
@@ -23,6 +25,10 @@ public class GUISettings extends GUI{
         toKeyBindings.display();
         
         currentGUI.display();
+    }
+    
+    public void keyPressed() {
+        currentGUI.keyPressed();
     }
     
     public void mousePressed() {

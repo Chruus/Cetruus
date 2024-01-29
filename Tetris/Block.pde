@@ -59,4 +59,8 @@ public class Block{
     public Block clone() {
         return new Block(row, col, scale, clr);
     }
+    
+    public String toString() {
+        return row + " " + col + " " + scale;
+    }
 }

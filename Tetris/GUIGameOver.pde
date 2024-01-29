@@ -41,6 +41,8 @@ public class GUIGameOver extends GUI{
         return "";
     }
     
+    public void keyPressed() {}
+    
     public void mousePressed() {
         playAgain.mousePressed();
         returnToMain.mousePressed();

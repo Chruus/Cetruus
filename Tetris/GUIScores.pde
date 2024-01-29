@@ -32,6 +32,8 @@ public class GUIScores extends GUI{
         popStyle();
     }
     
+    public void keyPressed() {}
+    
     public void mousePressed() {
         back.mousePressed();
     }

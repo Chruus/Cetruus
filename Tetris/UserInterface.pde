@@ -3,7 +3,7 @@ import processing.sound.*;
 public class UserInterface{
     Block[][] background;
     boolean needToResetGame, inGame, inPause;
-    GUI currentGUI, gameOver, main, pause, scores, settings;
+    GUI currentGUI, gameOver, main, pause, scores, settings, keyBinds;
     int scale;
     Stats stats;
     
@@ -108,6 +108,10 @@ public class UserInterface{
     
     public boolean inGame() {
         return inGame;
+    }
+    
+    public void keyPressed() {
+        currentGUI.keyPressed();
     }
     
     public void mousePressed() {

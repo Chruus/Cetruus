@@ -57,6 +57,8 @@ public class GUISettingsMisc extends GUI{
         
     }
     
+    public void keyPressed() {}
+    
     public void mousePressed() {
         initialKeyDelayUp.mousePressed();
         initialKeyDelayDown.mousePressed();

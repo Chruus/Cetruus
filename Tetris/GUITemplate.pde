@@ -8,6 +8,10 @@ public class GUITemplate extends GUI{
         
     }
     
+    public void keyPressed() {
+        
+    }
+    
     public void mousePressed() {
         
     }

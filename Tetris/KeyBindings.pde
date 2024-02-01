@@ -5,8 +5,8 @@ public class KeyBindings{
     int defaultKeyDelay, defaultInitialKeyDelay;
     
     public KeyBindings() {
-        defaultInitialKeyDelay = initialKeyDelay = 12;
-        defaultKeyDelay = keyDelay = 1;
+        defaultInitialKeyDelay = initialKeyDelay = file.loadInitDelay();
+        defaultKeyDelay = keyDelay = file.loadDelay();
         
         keyBinds = new HashMap<String, Integer>();
         inputBuffer = new LinkedList();

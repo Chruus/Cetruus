@@ -3,11 +3,16 @@ public class SaveFile{
     
     public SaveFile() {
         String[] scores = loadStrings("scores.txt");
-        if (scores.length == 3) {
-            hiScore = Integer.parseInt(scores[0]);
-            hiLines = Integer.parseInt(scores[1]);
-            hiLevel = Integer.parseInt(scores[2]);
+        
+        if (scores == null) {
+            scores = new String[3];
+            scores[0] = scores[1] = scores[2] = "0";
+            saveStrings("scores.txt", scores);
         }
+        
+        hiScore = Integer.parseInt(scores[0]);
+        hiLines = Integer.parseInt(scores[1]);
+        hiLevel = Integer.parseInt(scores[2]);
     }
     
     public void saveStats(Stats stats) {
@@ -33,7 +38,7 @@ public class SaveFile{
     public boolean loadKeyBinds(HashMap<String, Integer> keyBinds) {
         String[] keyBindsFile = loadStrings("keybinds.txt");
         
-        if (keyBindsFile.length == 0)
+        if (keyBindsFile == null)
             return false;
         
         for (int i = 0; i < keyBindsFile.length; i++) {
@@ -54,6 +59,47 @@ public class SaveFile{
         }
         
         saveStrings("keybinds.txt", words);
+    }
+    
+    
+    public int loadInitDelay() {
+        String[] words = loadStrings("delays.txt");
+        
+        if (words == null) {
+            words = new String[2];
+            words[0] = "8";
+            words[1] = "1";
+            saveStrings("delays.txt", words);
+            
+            return 8;
+        }
+        
+        return Integer.parseInt(words[0]);
+    }
+    
+    public int loadDelay() {
+        String[] words = loadStrings("delays.txt");
+        
+        if (words == null) {
+            words = new String[2];
+            words[0] = "8";
+            words[1] = "1";
+            saveStrings("delays.txt", words);
+            
+            return 1;
+        }
+        
+        return Integer.parseInt(words[1]);
+    }
+    
+    public void saveDelays() {
+        String[] words = new String[2];
+        int num = 0;
+        
+        words[0] = "" + keyBinds.initialKeyDelay();
+        words[1] = "" + keyBinds.keyDelay();
+        
+        saveStrings("delays.txt", words);
     }
     
     public int hiScore() {

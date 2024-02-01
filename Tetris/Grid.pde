@@ -24,7 +24,7 @@ public class Grid{
         }
     }
     
-    public boolean canAddTetromino(Tetromino currentTetro) {
+    public boolean canAddTetromino(Tetromino currentTetro, int delay) {
         if (currentTetro.canMove("down"))
             return false;
         
@@ -32,7 +32,7 @@ public class Grid{
             addToGridDelay--;
             return false;
         }
-        addToGridDelay = 50;
+        addToGridDelay = delay;
         timesReset = 0;
         return true;
     }
@@ -45,11 +45,11 @@ public class Grid{
     
     public void clearFullRows() {
         ArrayList<Integer> fullRows = getFullRows();
-        if (fullRows.size() == 0){
+        if (fullRows.size() == 0) {
             drop.play();
             return;
         }
-        else if(fullRows.size() < 4)
+        else if (fullRows.size() < 4)
             clear.play();
         else
             clearTetris.play();

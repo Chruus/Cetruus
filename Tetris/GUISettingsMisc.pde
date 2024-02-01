@@ -50,11 +50,7 @@ public class GUISettingsMisc extends GUI{
         else 
             return;
         
-        updateFile();
-    }
-    
-    private void updateFile() {
-        
+        file.saveDelays();
     }
     
     public void keyPressed() {}

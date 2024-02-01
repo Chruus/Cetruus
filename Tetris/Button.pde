@@ -1,7 +1,7 @@
 public class Button{
     boolean clicked, released;
     color textColor, buttonColor;
-    int x, y, w, h;
+    int x, y, w, h, textSize;
     String text;
     
     public Button(String text_, color textColor_, int x_, int y_, int w_, int h_, color buttonColor_) {
@@ -12,6 +12,18 @@ public class Button{
         y = y_;
         w = w_;
         h = h_;
+        textSize = Math.min((int)(w / text.length()),(int)(h / 2.2));
+    } 
+    
+    public Button(String text_, color textColor_, int x_, int y_, int w_, int h_, int textSize_, color buttonColor_) {
+        text = text_;
+        textColor = textColor_;
+        buttonColor = buttonColor_;
+        x = x_;
+        y = y_;
+        w = w_;
+        h = h_;
+        textSize = textSize_;
     }
     
     public void display() {
@@ -24,9 +36,8 @@ public class Button{
         
         fill(textColor);
         textAlign(CENTER);
-        int textSize = Math.min((int)(w / text.length() * 1.5),(int)(h / 2.2));
         textSize(textSize);
-        text(text, x, y + textSize / 3);
+        text(text, x, y + textSize / 1.5);
         
         popMatrix();
         popStyle();

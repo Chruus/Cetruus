@@ -14,17 +14,20 @@ void setup() {
     UI = new UserInterface(scale, stats);
     hold = new SoundFile(this, "hold.wav");
     music = new SoundFile(Tetris.this, "music.wav");
+    font = createFont("tetris font.otf", scale);
     
     music.amp(0.25);
     
+    textFont(font);
     resetGame();
 }
 
 Bag bag;
-boolean canswapHeldTetromino, isAlive;
+boolean canswapHeldTetromino;
 Grid grid;
 int scale, timeToMoveDown;
 KeyBindings keyBinds;
+PFont font;
 SaveFile file;
 SoundFile hold, music;
 Stats stats;
@@ -84,7 +87,6 @@ private void swapHeldTetromino() {
 
 private void resetGame() {
     canswapHeldTetromino = true;
-    isAlive = false;
     
     stats.reset();
     
@@ -103,7 +105,6 @@ private void addToGrid() {
     canswapHeldTetromino = true;
     
     if (!currentTetro.canMove("down")) {
-        isAlive = false;
         UI.gameOver();
     }
 }
@@ -131,7 +132,7 @@ private void displayCurrentStats() {
     pushMatrix();
     
     textAlign(LEFT);
-    textSize(scale * 0.5);
+    textSize(scale * 0.3);
     fill(255);
     
     int x = scale / 2 * 21;

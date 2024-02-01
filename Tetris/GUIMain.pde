@@ -4,7 +4,7 @@ public class GUIMain extends GUI{
     public GUIMain(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
-        play = new Button("Play", textColor, width / 2, 9 * scale, 10 * scale, 3 * scale, backgroundColor);
+        play = new Button("Play", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
         scores = new Button("High Scores", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
         settings = new Button("Settings", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
     }
@@ -14,14 +14,27 @@ public class GUIMain extends GUI{
         pushMatrix();
         
         play.display();
-        scores.display();
+        //scores.display();
         settings.display();
         
         textAlign(CENTER);
         fill(255);
-        textSize(scale * 3);
+        textSize(scale * 2);
         
-        text("Tetris", width / 2, 4 * scale);
+        text("Tetris", width / 2, 5 * scale);
+        
+        fill(255);
+        textSize(scale * 0.4);
+        textAlign(CENTER);
+        
+        text("Hi Score: " + file.hiScore(), width / 2, 8 * scale);
+        text("Hi Lines: " + file.hiLines(), width / 2, 9 * scale);
+        text("Hi Level: " + file.hiLevel(), width / 2, 10 * scale);
+        
+        
+        //text(file.hiScore(), 7 * scale, 8 * scale);
+        //text(file.hiLines(), 7 * scale, 9 * scale);
+        //text(file.hiLevel(), 7 * scale, 10 * scale);
         
         popMatrix();
         popStyle();
@@ -31,21 +44,21 @@ public class GUIMain extends GUI{
     
     public void mousePressed() {
         play.mousePressed();
-        scores.mousePressed();
+        //scores.mousePressed();
         settings.mousePressed();
     }
     
     public void mouseReleased() {
         play.mouseReleased();
-        scores.mouseReleased();
+        //scores.mouseReleased();
         settings.mouseReleased();
     }
     
     public String goTo() {
         if (play.hasBeenPressed())
             return "new game";
-        if (scores.hasBeenPressed())
-            return "scores";
+        //if (scores.hasBeenPressed())
+        //    return "scores";
         if (settings.hasBeenPressed())
             return "settings";
         return "";

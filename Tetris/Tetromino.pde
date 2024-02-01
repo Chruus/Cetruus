@@ -92,10 +92,22 @@ public abstract class Tetromino{
     
     public boolean canMove(String direction) {
         for (Block block : blocks) {
-            boolean right = (direction.equals("right") && (block.col() >= grid.width() - 1 || (isInBounds() && grid.getBlock(block.row(), block.col() + 1) != null)));
-            boolean left = (direction.equals("left") && (block.col() <= 0 || (isInBounds() && grid.getBlock(block.row(), block.col() - 1) != null)));
-            boolean up = (direction.equals("up") && (block.row() <= 0 || (isInBounds() && grid.getBlock(block.row() - 1, block.col()) != null)));
-            boolean down = (direction.equals("down") && (block.row() >= grid.length() - 1 || (isInBounds() && grid.getBlock(block.row() + 1, block.col()) != null)));
+            boolean right = direction.equals("right") && (block.col() >= grid.width() - 1 
+                || (isInBounds() && (grid.getBlock(block.row(), block.col() + 1) != null 
+                || grid.getBlock(block.row(), block.col()) != null)));
+            
+            boolean left = direction.equals("left") && (block.col() <= 0 
+                || (isInBounds() && (grid.getBlock(block.row(), block.col() - 1) != null
+                || grid.getBlock(block.row(), block.col()) != null)));
+            
+            boolean up = direction.equals("up") && (block.row() <= 0 
+                || (isInBounds() && (grid.getBlock(block.row() - 1, block.col()) != null
+                || grid.getBlock(block.row(), block.col()) != null)));
+            
+            boolean down = direction.equals("down") && (block.row() >= grid.length() - 1 
+                || (isInBounds() && (grid.getBlock(block.row() + 1, block.col()) != null
+                || grid.getBlock(block.row(), block.col()) != null)));
+            
             if (right || left || up || down)
                 return false;
         }

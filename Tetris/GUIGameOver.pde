@@ -19,6 +19,7 @@ public class GUIGameOver extends GUI{
         returnToMain.display();
         
         textAlign(CENTER);
+        textFont(font);
         textSize(scale);
         fill(255);
         

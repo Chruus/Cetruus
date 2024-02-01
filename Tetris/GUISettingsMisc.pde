@@ -4,10 +4,10 @@ public class GUISettingsMisc extends GUI{
     public GUISettingsMisc(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
-        initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 6 * scale, 2 * scale, 2 * scale, backgroundColor);
-        initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 6 * scale, 2 * scale, 2 * scale, backgroundColor);
-        keyDelayDown = new Button("-1", textColor, 4 * scale, 10 * scale, 2 * scale, 2 * scale, backgroundColor);
-        keyDelayUp = new Button("+1", textColor, 10 * scale, 10 * scale, 2 * scale, 2 * scale, backgroundColor);
+        initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 6 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 6 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        keyDelayDown = new Button("-1", textColor, 4 * scale, 10 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        keyDelayUp = new Button("+1", textColor, 10 * scale, 10 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
     }
     
     public void display() {
@@ -39,13 +39,13 @@ public class GUISettingsMisc extends GUI{
     }
     
     private void checkForChanges() {
-        if (initialKeyDelayUp.hasBeenPressed())
+        if (initialKeyDelayUp.hasBeenPressed() && keyBinds.initialKeyDelay() < 127)
             keyBinds.setInitialKeyDelay(keyBinds.initialKeyDelay() + 1);
-        else if (initialKeyDelayDown.hasBeenPressed())
+        else if (initialKeyDelayDown.hasBeenPressed() && keyBinds.initialKeyDelay() > 1)
             keyBinds.setInitialKeyDelay(keyBinds.initialKeyDelay() - 1);
-        else if (keyDelayUp.hasBeenPressed())
+        else if (keyDelayUp.hasBeenPressed() && keyBinds.keyDelay() < 127)
             keyBinds.setKeyDelay(keyBinds.keyDelay() + 1);
-        else if (keyDelayDown.hasBeenPressed())
+        else if (keyDelayDown.hasBeenPressed() && keyBinds.keyDelay() > 1)
             keyBinds.setKeyDelay(keyBinds.keyDelay() - 1);
         else 
             return;

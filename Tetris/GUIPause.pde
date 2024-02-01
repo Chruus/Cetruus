@@ -17,7 +17,7 @@ public class GUIPause extends GUI{
         quit.display();
         
         textAlign(CENTER);
-        textSize(scale * 3);
+        textSize(scale * 2);
         fill(255);
         
         text("Paused", width / 2, 5 * scale);

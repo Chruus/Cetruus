@@ -4,10 +4,10 @@ public class GUISettingsMisc extends GUI{
     public GUISettingsMisc(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
-        initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 6 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 6 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        keyDelayDown = new Button("-1", textColor, 4 * scale, 10 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        keyDelayUp = new Button("+1", textColor, 10 * scale, 10 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        keyDelayDown = new Button("-1", textColor, 4 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        keyDelayUp = new Button("+1", textColor, 10 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
     }
     
     public void display() {
@@ -23,16 +23,16 @@ public class GUISettingsMisc extends GUI{
         
         rectMode(CENTER);
         fill(0);
-        rect(width / 2, scale * 6, 4 * scale, 2 * scale);
-        rect(width / 2, scale * 10, 4 * scale, 2 * scale);
+        rect(width / 2, scale * 7, 4 * scale, 2 * scale);
+        rect(width / 2, scale * 12, 4 * scale, 2 * scale);
         
         fill(255);
         textAlign(CENTER);
         textSize(20);
-        text("Repeated Key Delay", width / 2, scale * 4.5);
-        text(keyBinds.initialKeyDelay(), width / 2, scale * 6 + 8);
-        text("Repeated Key Speed", width / 2, scale * 8.5);
-        text(keyBinds.keyDelay(), width / 2, scale * 10 + 8);
+        text("Repeated Key Delay", width / 2, scale * 5.5);
+        text(keyBinds.initialKeyDelay(), width / 2, scale * 7 + 16);
+        text("Repeated Key Speed", width / 2, scale * 10.5);
+        text(keyBinds.keyDelay(), width / 2, scale * 12 + 16);
         
         popMatrix();
         popStyle();

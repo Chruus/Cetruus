@@ -7,13 +7,13 @@ public class GUISettingsKeyBindings extends GUI{
     public GUISettingsKeyBindings(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
-        moveLeft = new Button("Move Left", textColor, 4 * scale, 6 * scale, 6 * scale, 2 * scale, backgroundColor);
-        moveRight = new Button("Move Right", textColor, 4 * scale, 8 * scale, 6 * scale, 2 * scale, backgroundColor);
-        softDrop = new Button("Soft Drop", textColor, 4 * scale, 10 * scale, 6 * scale, 2 * scale, backgroundColor);
-        hardDrop = new Button("Hard Drop", textColor, 4 * scale, 12 * scale, 6 * scale, 2 * scale, backgroundColor);
-        hold = new Button("Hold", textColor, 4 * scale, 14 * scale, 6 * scale, 2 * scale, backgroundColor);
-        rotateLeft = new Button("Rotate Left", textColor, 4 * scale, 16 * scale, 6 * scale, 2 * scale, backgroundColor);
-        rotateRight = new Button("Rotate Right", textColor, 4 * scale, 18 * scale, 6 * scale, 2 * scale, backgroundColor);
+        moveLeft = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("move left")) + "\"", textColor, 11 * scale, 6 * scale, 5 * scale, 2 * scale, backgroundColor);
+        moveRight = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("move right")) + "\"", textColor, 11 * scale, 8 * scale, 5 * scale, 2 * scale, backgroundColor);
+        softDrop = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("soft drop")) + "\"", textColor, 11 * scale, 10 * scale, 5 * scale, 2 * scale, backgroundColor);
+        hardDrop = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("hard drop")) + "\"", textColor, 11 * scale, 12 * scale, 5 * scale, 2 * scale, backgroundColor);
+        hold = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("hold tetro")) + "\"", textColor, 11 * scale, 14 * scale, 5 * scale, 2 * scale, backgroundColor);
+        rotateLeft = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("rotate left")) + "\"", textColor, 11 * scale, 16 * scale, 5 * scale, 2 * scale, backgroundColor);
+        rotateRight = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("rotate right")) + "\"", textColor, 11 * scale, 18 * scale, 5 * scale, 2 * scale, backgroundColor);        
     }
     
     public void display() {
@@ -28,18 +28,17 @@ public class GUISettingsKeyBindings extends GUI{
         rotateLeft.display();
         rotateRight.display();
         
-        textAlign(CENTER);
-        textSize(24);
+        textAlign(LEFT);
+        textSize(18);
         fill(255);
         
-        
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("move left")) + "\"", 10 * scale, 6 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("move right")) + "\"", 10 * scale, 8 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("soft drop")) + "\"", 10 * scale, 10 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("hard drop")) + "\"", 10 * scale, 12 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("hold tetro")) + "\"", 10 * scale, 14 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("rotate left")) + "\"", 10 * scale, 16 * scale + 5);
-        text("\"" + KeyEvent.getKeyText(keyBinds.get("rotate right")) + "\"", 10 * scale, 18 * scale + 5);
+        text("move left",(int)(0.5 * scale), 6 * scale + 10);
+        text("move right",(int)(0.5 * scale), 8 * scale + 10);
+        text("soft drop",(int)(0.5 * scale), 10 * scale + 10);
+        text("hard drop",(int)(0.5 * scale), 12 * scale + 10);
+        text("hold tetromino",(int)(0.5 * scale), 14 * scale + 10);
+        text("rotate left",(int)(0.5 * scale), 16 * scale + 10);
+        text("rotate right",(int)(0.5 * scale), 18 * scale + 10);
         
         checkForNewSettings();
         
@@ -60,7 +59,34 @@ public class GUISettingsKeyBindings extends GUI{
         if (newKeyBind.equals(""))
             return;
         
+        switch(newKeyBind) {
+            case "":
+                break;
+            case "move left":
+                moveLeft.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "move right":
+                moveRight.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "soft drop":
+                softDrop.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "hard drop":
+                hardDrop.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "hold tetro":
+                hold.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "rotate left":
+                rotateLeft.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+            case "rotate right":
+                rotateRight.setText("\"" + KeyEvent.getKeyText(keyCode) + "\"");
+                break;
+        }
+        
         keyBinds.set(newKeyBind, keyCode); 
+        
         newKeyBind = "";
         
     }

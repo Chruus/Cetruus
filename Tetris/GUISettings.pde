@@ -11,8 +11,8 @@ public class GUISettings extends GUI{
         keyBindings = new GUISettingsKeyBindings(scale_, textColor, backgroundColor);
         
         back = new Button("Back", textColor,(int)(2 * scale),(int)(1.5 * scale), 3 * scale, 2 * scale, backgroundColor);
-        toMisc = new Button("Misc", textColor,(int)(6 * scale),(int)(1.5 * scale), 3 * scale, 2 * scale, backgroundColor);
-        toKeyBindings = new Button("Key Binds", textColor,(int)(11 * scale),(int)(1.5 * scale), 5 * scale, 2 * scale, backgroundColor);
+        toMisc = new Button("Delay", textColor,(int)(6.25 * scale),(int)(1.5 * scale),(int)(3.5 * scale), 2 * scale, backgroundColor);
+        toKeyBindings = new Button("Key Bind", textColor,(int)(10.75 * scale),(int)(1.5 * scale),(int)(5.5 * scale), 2 * scale, backgroundColor);
     }
     
     public void display() {

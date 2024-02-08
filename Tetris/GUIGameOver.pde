@@ -8,7 +8,7 @@ public class GUIGameOver extends GUI{
         stats = stats_;
         
         playAgain = new Button("Play Again", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
-        returnToMain = new Button("Return to Menu", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
+        returnToMain = new Button("Main Menu", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
     }
     
     public void display() {
@@ -20,7 +20,7 @@ public class GUIGameOver extends GUI{
         
         textAlign(CENTER);
         textFont(font);
-        textSize(scale);
+        textSize((int)(scale * 0.65));
         fill(255);
         
         text("Score:", width / 2, 3 * scale);

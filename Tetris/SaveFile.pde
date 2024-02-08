@@ -2,12 +2,12 @@ public class SaveFile{
     int hiScore, hiLines, hiLevel;
     
     public SaveFile() {
-        String[] scores = loadStrings("scores.txt");
+        String[] scores = loadStrings("data\\scores.txt");
         
         if (scores == null) {
             scores = new String[3];
             scores[0] = scores[1] = scores[2] = "0";
-            saveStrings("scores.txt", scores);
+            saveStrings("data\\scores.txt", scores);
         }
         
         hiScore = Integer.parseInt(scores[0]);
@@ -32,11 +32,11 @@ public class SaveFile{
         words[0] = hiScore + "";
         words[1] = hiLines + "";
         words[2] = hiLevel + "";
-        saveStrings("scores.txt", words);
+        saveStrings("data\\scores.txt", words);
     }
     
     public boolean loadKeyBinds(HashMap<String, Integer> keyBinds) {
-        String[] keyBindsFile = loadStrings("keybinds.txt");
+        String[] keyBindsFile = loadStrings("data\\keybinds.txt");
         
         if (keyBindsFile == null)
             return false;
@@ -58,18 +58,18 @@ public class SaveFile{
             num++;
         }
         
-        saveStrings("keybinds.txt", words);
+        saveStrings("data\\keybinds.txt", words);
     }
     
     
     public int loadInitDelay() {
-        String[] words = loadStrings("delays.txt");
+        String[] words = loadStrings("data\\delays.txt");
         
         if (words == null) {
             words = new String[2];
             words[0] = "8";
             words[1] = "1";
-            saveStrings("delays.txt", words);
+            saveStrings("data\\delays.txt", words);
             
             return 8;
         }
@@ -78,13 +78,13 @@ public class SaveFile{
     }
     
     public int loadDelay() {
-        String[] words = loadStrings("delays.txt");
+        String[] words = loadStrings("data\\delays.txt");
         
         if (words == null) {
             words = new String[2];
             words[0] = "8";
             words[1] = "1";
-            saveStrings("delays.txt", words);
+            saveStrings("data\\delays.txt", words);
             
             return 1;
         }
@@ -99,7 +99,7 @@ public class SaveFile{
         words[0] = "" + keyBinds.initialKeyDelay();
         words[1] = "" + keyBinds.keyDelay();
         
-        saveStrings("delays.txt", words);
+        saveStrings("data\\delays.txt", words);
     }
     
     public int hiScore() {

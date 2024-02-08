@@ -12,7 +12,7 @@ public class Button{
         y = y_;
         w = w_;
         h = h_;
-        textSize = Math.min((int)(w / text.length()),(int)(h / 2.2));
+        textSize = Math.min((int)(w / text.length()),(int)(h / 2.8));
     } 
     
     public Button(String text_, color textColor_, int x_, int y_, int w_, int h_, int textSize_, color buttonColor_) {
@@ -31,7 +31,10 @@ public class Button{
         pushMatrix();
         
         rectMode(CENTER);
-        fill(buttonColor);
+        if (mouseIsOnButton())
+            fill(color((int)(red(buttonColor) * 0.8),(int)(green(buttonColor) * 0.8),(int)(blue(buttonColor) * 0.8)));
+        else
+            fill(buttonColor);
         rect(x, y, w, h, 5, 5, 5, 5);
         
         fill(textColor);
@@ -65,12 +68,12 @@ public class Button{
         if (!mouseIsOnButton())
             return;
         clicked = true;
-        buttonColor = color((int)(red(buttonColor) * 0.8),(int)(green(buttonColor) * 0.8),(int)(blue(buttonColor) * 0.8));
+        buttonColor = color((int)(red(buttonColor) * 0.5),(int)(green(buttonColor) * 0.5),(int)(blue(buttonColor) * 0.5));
     }
     
     public void mouseReleased() {
         if (clicked) {
-            buttonColor = color((int)(red(buttonColor) * 1.25),(int)(green(buttonColor) * 1.25),(int)(blue(buttonColor) * 1.25));
+            buttonColor = color((int)(red(buttonColor) * 2),(int)(green(buttonColor) * 2),(int)(blue(buttonColor) * 2));
             clicked = false;
             released = true;
         }

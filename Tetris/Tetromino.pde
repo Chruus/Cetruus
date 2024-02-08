@@ -92,24 +92,31 @@ public abstract class Tetromino{
     
     public boolean canMove(String direction) {
         for (Block block : blocks) {
-            boolean right = direction.equals("right") && (block.col() >= grid.width() - 1 
-                || (isInBounds() && (grid.getBlock(block.row(), block.col() + 1) != null 
-                || grid.getBlock(block.row(), block.col()) != null)));
             
-            boolean left = direction.equals("left") && (block.col() <= 0 
-                || (isInBounds() && (grid.getBlock(block.row(), block.col() - 1) != null
-                || grid.getBlock(block.row(), block.col()) != null)));
-            
-            boolean up = direction.equals("up") && (block.row() <= 0 
-                || (isInBounds() && (grid.getBlock(block.row() - 1, block.col()) != null
-                || grid.getBlock(block.row(), block.col()) != null)));
-            
-            boolean down = direction.equals("down") && (block.row() >= grid.length() - 1 
-                || (isInBounds() && (grid.getBlock(block.row() + 1, block.col()) != null
-                || grid.getBlock(block.row(), block.col()) != null)));
-            
-            if (right || left || up || down)
+            if (isInBounds() && grid.getBlock(block.row(), block.col()) != null) 
                 return false;
+            
+            switch(direction) {
+                case "right":
+                    if (block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null)
+                        return false;
+                    break;
+                
+                case "left":
+                    if (block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null)
+                        return false;
+                    break;
+                
+                case "up":
+                    if (block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null)
+                        return false;
+                    break;
+                
+                case "down":
+                    if (block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null)
+                        return false;
+                    break;
+            }
         }
         return true;
     }
@@ -157,4 +164,8 @@ public abstract class Tetromino{
     public abstract void reset();
     
     public abstract void displayGhost();
+    
+    public String toString() {
+        return blocks[0] + "\n" + blocks[1] + "\n" + blocks[2] + "\n" + blocks[3]; 
+    }
 }

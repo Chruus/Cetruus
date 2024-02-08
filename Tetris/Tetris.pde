@@ -104,6 +104,8 @@ private void addToGrid() {
     grid.clearFullRows();
     canswapHeldTetromino = true;
     
+    System.out.println(currentTetro + " " +  grid);
+    
     if (!currentTetro.canMove("down")) {
         UI.gameOver();
     }
@@ -266,7 +268,7 @@ void keyPressed() {
     if (!UI.inGame())
         return;
     
-    if (keyCode == keyBinds.get("hard drop")) {
+    if (keyCode == keyBinds.get("hard drop") && currentTetro.canMove("down")) {
         stats.setScore(stats.score() + currentTetro.hardDrop());
         addToGrid();
     }

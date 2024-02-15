@@ -51,4 +51,8 @@ public class Bag{
         bag.add(new TetrominoZ(scale, grid));
         Collections.shuffle(bag);
     }
+    
+    public String toString() {
+        return main.toString();
+    }
 }

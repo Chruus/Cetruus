@@ -27,11 +27,12 @@ public class UserInterface{
     public void display() {
         displayBackground();
         currentGUI.display();
-        checkGoto();
+        checkGoto("");
     }
     
-    private void checkGoto() {
-        String goTo = currentGUI.goTo();
+    private void checkGoto(String goTo) {
+        if (goTo == "")
+            goTo = currentGUI.goTo();
         
         if (goTo.equals(""))
             return;
@@ -108,6 +109,10 @@ public class UserInterface{
     
     public boolean inGame() {
         return inGame;
+    }
+    
+    public boolean inPause() {
+        return currentGUI.equals(pause);
     }
     
     public void keyPressed() {

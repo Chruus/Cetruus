@@ -7,7 +7,7 @@ public class SaveFile{
         if (scores == null) {
             scores = new String[3];
             scores[0] = scores[1] = scores[2] = "0";
-            saveStrings("data\\scores.txt", scores);
+            saveStrings("data\\hiScores.txt", scores);
         }
         
         hiScore = Integer.parseInt(scores[0]);
@@ -23,7 +23,6 @@ public class SaveFile{
         if (stats.level() > hiLevel)
             hiLevel = stats.level();
         
-        stats.reset();
         updateStats();
     }
     
@@ -32,7 +31,7 @@ public class SaveFile{
         words[0] = hiScore + "";
         words[1] = hiLines + "";
         words[2] = hiLevel + "";
-        saveStrings("data\\scores.txt", words);
+        saveStrings("data\\hiScores.txt", words);
     }
     
     public boolean loadKeyBinds(HashMap<String, Integer> keyBinds) {
@@ -100,6 +99,110 @@ public class SaveFile{
         words[1] = "" + keyBinds.keyDelay();
         
         saveStrings("data\\delays.txt", words);
+    }
+    
+    public void saveGame(Grid grid, Bag bag, Stats stats, Tetromino currentTetro, Tetromino heldTetro) {
+        String[] data = new String[27];
+        
+        for (int r = 0; r < 20; r++) {
+            for (int c = 0; c < 10; c++) {
+                if (data[r] == null)
+                    data[r] = "";
+                if (grid.getBlock(r, c) == null)
+                    data[r] += "none ";
+                else
+                    data[r] += grid.getBlock(r, c).toString() + " ";
+            }
+        }
+        
+        data[20] = bag.main.toString().substring(1, bag.main.toString().length() - 1);
+        data[21] = bag.reserve.toString().substring(1, bag.reserve.toString().length() - 1);
+        
+        data[22] = "" + stats.score();
+        data[23] = "" + stats.lines();
+        data[24] = "" + stats.level();
+        
+        data[25] = currentTetro.toString().substring(0, 10) + " " + currentTetro.row() + " " + currentTetro.col() + " " + currentTetro.rotation();
+        if (heldTetro != null)
+            data[26] = heldTetro.toString().substring(0, 10) + " " + heldTetro.row() + " " + heldTetro.col() + " " + heldTetro.rotation();
+        
+        saveStrings("data\\gameState.txt", data);
+    }
+    
+    public void loadGame() {
+        String[] data = loadStrings("data\\gameState.txt");
+        
+        stats = new Stats(Integer.parseInt(data[22]), Integer.parseInt(data[23]), Integer.parseInt(data[24]));
+        grid = new Grid(stats);
+        bag = new Bag(scale, grid);
+        
+        for (int r = 0; r < 20; r++) {
+            String[] blocks = data[r].split(" ");
+            for (int c = 0; c < 10; c++) {
+                if (blocks[c].equals("none"))
+                    continue;
+                Block temp = new Block(r, c, scale, color(Integer.parseInt(blocks[c])));
+                grid.setBlock(temp, r, c);
+            }
+        }
+        
+        bag.main = new ArrayList<Tetromino>();
+        
+        for (String str : data[20].split(", ")) {
+            String[] temp = str.split(" ");
+            bag.main.add(getTetro(temp[0], Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), grid, Integer.parseInt(temp[3])));
+        }
+        
+        bag.reserve = new ArrayList<Tetromino>();
+        for (String str : data[21].split(", ")) {
+            String[] temp = str.split(" ");
+            bag.reserve.add(getTetro(temp[0], Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), grid, Integer.parseInt(temp[3])));
+        }
+        
+        String[] temp = data[25].split(" ");
+        currentTetro = getTetro(temp[0], Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), grid, Integer.parseInt(temp[3]));
+        
+        if (data[26].equals("null"))
+            return;
+        temp = data[26].split(" ");
+        heldTetro = getTetro(temp[0], Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), grid, Integer.parseInt(temp[3]));
+    }
+    
+    public void resetGame() {
+        String[] temp = new String[1];
+        temp[0] = "";
+        
+        saveStrings("data\\gameState.txt", temp);
+    }
+    
+    public Tetromino getTetro(String name, int row, int col, Grid grid, int rotation) {
+        Tetromino output = null;
+        
+        switch(name) {
+            case "TetrominoI":
+                output = new TetrominoI(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoJ":
+                output = new TetrominoJ(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoL":
+                output = new TetrominoL(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoO":
+                output = new TetrominoO(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoS":
+                output = new TetrominoS(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoT":
+                output = new TetrominoT(row, col, scale, grid, rotation);
+                break;
+            case "TetrominoZ":
+                output = new TetrominoZ(row, col, scale, grid, rotation);
+                break;
+        }
+        
+        return output;
     }
     
     public int hiScore() {

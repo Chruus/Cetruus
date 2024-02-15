@@ -72,4 +72,8 @@ public class Stats{
     public int level() {
         return level;
     }
+    
+    public String toString() {
+        return score + " " + lines + " " + level;
+    }
 }

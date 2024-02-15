@@ -157,6 +157,22 @@ public abstract class Tetromino{
         return true;
     }
     
+    public String toString() {
+        return this.getClass().getSimpleName() + " " + row + " " + col + " " + rotation;
+    }
+    
+    public int row() {
+        return row;
+    }
+    
+    public int col() {
+        return col;
+    }
+    
+    public int rotation() {
+        return rotation;
+    }
+    
     public abstract Tetromino clone();
     
     public abstract boolean rotate(boolean clockwise);
@@ -165,7 +181,5 @@ public abstract class Tetromino{
     
     public abstract void displayGhost();
     
-    public String toString() {
-        return blocks[0] + "\n" + blocks[1] + "\n" + blocks[2] + "\n" + blocks[3]; 
-    }
+    
 }

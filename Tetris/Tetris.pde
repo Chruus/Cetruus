@@ -6,7 +6,7 @@ void setup() {
     size(420, 600);
     frameRate(60);
     
-    scale = 30;
+    scale = Math.min(displayWidth / 64, displayHeight / 36);
     
     stats = new Stats();        
     file = new SaveFile();
@@ -19,20 +19,32 @@ void setup() {
     music.amp(0.25);
     
     textFont(font);
-    resetGame();
+    
+    if (midGame()) {
+        UI.checkGoto("game");
+        UI.pause();
+        file.loadGame();
+    }
+    
+    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+        public void run() {
+            if (UI.inGame() || UI.inPause())
+                file.saveGame(grid, bag, stats, currentTetro, heldTetro);
+        }
+    }));
 }
 
-Bag bag;
-boolean canswapHeldTetromino;
-Grid grid;
-int scale, timeToMoveDown;
-KeyBindings keyBinds;
-PFont font;
-SaveFile file;
-SoundFile hold, music;
-Stats stats;
-Tetromino currentTetro, heldTetro;
-UserInterface UI;
+public static Bag bag;
+private boolean canswapHeldTetromino;
+public static Grid grid;
+public int scale, timeToMoveDown;
+public static KeyBindings keyBinds;
+private PFont font;
+public static SaveFile file;
+private SoundFile hold, music;
+public static Stats stats;
+public static Tetromino currentTetro, heldTetro;
+public static UserInterface UI;
 
 void draw() {
     if (!UI.inGame()) {
@@ -41,7 +53,7 @@ void draw() {
     }
     
     if (UI.needToResetGame())
-        resetGame();
+        resetGameState();
     
     if (keyBinds.canRegisterKey())
         onInput();
@@ -52,6 +64,13 @@ void draw() {
     calculateGravity();
     displayGame();
     displaycurrentTetro();
+}
+
+private boolean midGame() {
+    String[] temp = loadStrings("data\\gameState.txt");
+    if (temp == null || temp.length < 20)
+        return false;
+    return true;
 }
 
 private void displaycurrentTetro() {
@@ -85,7 +104,7 @@ private void swapHeldTetromino() {
     currentTetro.reset();
 }
 
-private void resetGame() {
+private void resetGameState() {
     canswapHeldTetromino = true;
     
     stats.reset();
@@ -104,10 +123,11 @@ private void addToGrid() {
     grid.clearFullRows();
     canswapHeldTetromino = true;
     
-    System.out.println(currentTetro + " " +  grid);
-    
     if (!currentTetro.canMove("down")) {
         UI.gameOver();
+        music.stop();
+        file.saveStats(stats);
+        file.resetGame();
     }
 }
 

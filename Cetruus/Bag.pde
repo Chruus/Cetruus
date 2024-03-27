@@ -16,13 +16,17 @@ public class Bag{
     
     public Tetromino getNextTetromino() {
         if (main.size() == 0) {
-            for (Tetromino tetro : reserve)
-                main.add(tetro);
-            reset(reserve);
+            reserveToMain();
         }
         
         main.get(0).reset();
         return main.remove(0);
+    }
+    
+    public void reserveToMain() {
+        for (Tetromino tetro : reserve)
+            main.add(tetro);
+        reset(reserve);
     }
     
     public ArrayList<Tetromino> getFutureTetrominos() {

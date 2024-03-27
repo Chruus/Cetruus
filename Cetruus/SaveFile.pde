@@ -116,6 +116,8 @@ public class SaveFile{
             }
         }
         
+        if (bag.main.size() == 0)
+            bag.reserveToMain();
         data[20] = bag.main.toString().substring(1, bag.main.toString().length() - 1);
         data[21] = bag.reserve.toString().substring(1, bag.reserve.toString().length() - 1);
         

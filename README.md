@@ -8,7 +8,7 @@ Features:
 - Able to see next three tetrominos
 - Able to hold a tetromino
 - Can customize & save keybinds and delays
-- Tetris?
+- Saves game-state if window is closed mid-game
 
 Controls:
 - All gameplay controls are available in the settings

@@ -3,13 +3,31 @@
 import processing.sound.*;
 
 void settings() {
-    size((int)(displayWidth * 420 / 1920),(int)(displayHeight * 600 / 1200));    
+    ratio = (int)(((float)displayWidth / (float)displayHeight) * 1000.0);
+
+    //16x10
+    if(ratio == 1600){
+        size((int)(displayWidth * 420 / 1920),(int)(displayHeight * 600 / 1200));
+        scale = Math.min(displayWidth / 64, displayHeight / 40);
+    }
+    //16x9
+    else if(ratio == 1777){
+        size((int)(displayWidth * 420 / 1920),(int)(displayHeight * 600 / 1080));
+        scale = Math.min(displayWidth / 64, displayHeight / 36);
+    }
+    //21x9
+    else if(ratio == 2333){
+        size((int)(displayWidth * 420 / 2560),(int)(displayHeight * 600 / 1080));
+        scale = Math.min((int)(displayWidth / (85 + 1/3)), displayHeight / 36);
+    }
+    else {
+        size((int)(displayWidth / 4), (int)(displayHeight / 2));
+        scale = Math.min(displayWidth / 64, displayHeight / 36);
+    }
 }
 
 void setup() {    
     frameRate(60);
-    
-    scale = Math.min(displayWidth / 64, displayHeight / 36);
     
     stats = new Stats();        
     file = new SaveFile();
@@ -41,7 +59,7 @@ void setup() {
 public static Bag bag;
 private boolean canswapHeldTetromino;
 public static Grid grid;
-public int scale, timeToMoveDown;
+public int scale, ratio, timeToMoveDown;
 public static KeyBindings keyBinds;
 private PFont font;
 public static SaveFile file;
@@ -56,7 +74,6 @@ void draw() {
         return;
     }
     
-    println(focused + " " + UI.inPause());
     if (!focused && !UI.inPause())
         pause();
     

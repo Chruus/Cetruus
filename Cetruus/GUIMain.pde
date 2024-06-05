@@ -19,9 +19,9 @@ public class GUIMain extends GUI{
         
         textAlign(CENTER);
         fill(255);
-        textSize(scale * 2);
+        textSize(scale * 1.8);
         
-        text("Tetris", width / 2, 5 * scale);
+        text("Cetruus", width / 2 + scale / 5, 5 * scale);
         
         fill(255);
         textSize(scale * 0.4);

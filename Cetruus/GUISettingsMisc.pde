@@ -1,13 +1,13 @@
 public class GUISettingsMisc extends GUI{
-    Button initialKeyDelayUp, initialKeyDelayDown, keyDelayUp, keyDelayDown;
+    Button initialDASUp, initialDASDown, DASUp, DASDown;
     
     public GUISettingsMisc(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
-        initialKeyDelayDown = new Button("-1", textColor, 4 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        initialKeyDelayUp = new Button("+1", textColor, 10 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        keyDelayDown = new Button("-1", textColor, 4 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        keyDelayUp = new Button("+1", textColor, 10 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        initialDASDown = new Button("-1", textColor, 4 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        initialDASUp = new Button("+1", textColor, 10 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        DASDown = new Button("-1", textColor, 4 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        DASUp = new Button("+1", textColor, 10 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
     }
     
     public void display() {
@@ -16,10 +16,10 @@ public class GUISettingsMisc extends GUI{
         pushStyle();
         pushMatrix();
         
-        initialKeyDelayUp.display();
-        initialKeyDelayDown.display();
-        keyDelayUp.display();
-        keyDelayDown.display();
+        initialDASUp.display();
+        initialDASDown.display();
+        DASUp.display();
+        DASDown.display();
         
         rectMode(CENTER);
         fill(0);
@@ -29,24 +29,24 @@ public class GUISettingsMisc extends GUI{
         fill(255);
         textAlign(CENTER);
         textSize(20);
-        text("Repeated Key Delay", width / 2, scale * 5.5);
-        text(keyBinds.initialKeyDelay(), width / 2, scale * 7 + 16);
-        text("Repeated Key Speed", width / 2, scale * 10.5);
-        text(keyBinds.keyDelay(), width / 2, scale * 12 + 16);
+        text("Initial Delayed Auto Shift", width / 2, scale * 5.5);
+        text(keyBinds.initialDAS(), width / 2, scale * 7 + 16);
+        text("Delayed Auto Shift Speed", width / 2, scale * 10.5);
+        text(keyBinds.DAS(), width / 2, scale * 12 + 16);
         
         popMatrix();
         popStyle();
     }
     
     private void checkForChanges() {
-        if (initialKeyDelayUp.hasBeenPressed() && keyBinds.initialKeyDelay() < 127)
-            keyBinds.setInitialKeyDelay(keyBinds.initialKeyDelay() + 1);
-        else if (initialKeyDelayDown.hasBeenPressed() && keyBinds.initialKeyDelay() > 1)
-            keyBinds.setInitialKeyDelay(keyBinds.initialKeyDelay() - 1);
-        else if (keyDelayUp.hasBeenPressed() && keyBinds.keyDelay() < 127)
-            keyBinds.setKeyDelay(keyBinds.keyDelay() + 1);
-        else if (keyDelayDown.hasBeenPressed() && keyBinds.keyDelay() > 1)
-            keyBinds.setKeyDelay(keyBinds.keyDelay() - 1);
+        if (initialDASUp.hasBeenPressed() && keyBinds.initialDAS() < 127)
+            keyBinds.setInitialDAS(keyBinds.initialDAS() + 1);
+        else if (initialDASDown.hasBeenPressed() && keyBinds.initialDAS() > 1)
+            keyBinds.setInitialDAS(keyBinds.initialDAS() - 1);
+        else if (DASUp.hasBeenPressed() && keyBinds.DAS() < 127)
+            keyBinds.setDAS(keyBinds.DAS() + 1);
+        else if (DASDown.hasBeenPressed() && keyBinds.DAS() > 1)
+            keyBinds.setDAS(keyBinds.DAS() - 1);
         else 
             return;
         
@@ -56,17 +56,17 @@ public class GUISettingsMisc extends GUI{
     public void keyPressed() {}
     
     public void mousePressed() {
-        initialKeyDelayUp.mousePressed();
-        initialKeyDelayDown.mousePressed();
-        keyDelayUp.mousePressed();
-        keyDelayDown.mousePressed();
+        initialDASUp.mousePressed();
+        initialDASDown.mousePressed();
+        DASUp.mousePressed();
+        DASDown.mousePressed();
     }
     
     public void mouseReleased() {
-        initialKeyDelayUp.mouseReleased();
-        initialKeyDelayDown.mouseReleased();
-        keyDelayUp.mouseReleased();
-        keyDelayDown.mouseReleased();
+        initialDASUp.mouseReleased();
+        initialDASDown.mouseReleased();
+        DASUp.mouseReleased();
+        DASDown.mouseReleased();
     }
     
     public String goTo() {

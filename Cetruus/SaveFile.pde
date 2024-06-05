@@ -96,8 +96,8 @@ public class SaveFile{
         String[] words = new String[2];
         int num = 0;
         
-        words[0] = "" + keyBinds.initialKeyDelay();
-        words[1] = "" + keyBinds.keyDelay();
+        words[0] = "" + keyBinds.initialDAS();
+        words[1] = "" + keyBinds.DAS();
         
         saveStrings("data\\delays.txt", words);
     }

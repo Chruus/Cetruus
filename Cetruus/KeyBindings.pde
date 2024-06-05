@@ -1,12 +1,12 @@
 public class KeyBindings{
     LinkedList<Integer> inputBuffer;
     HashMap<String, Integer> keyBinds;
-    int keyDelay, initialKeyDelay;
-    int defaultKeyDelay, defaultInitialKeyDelay;
+    int DAS, initialDAS;
+    int defaultDAS, defaultInitialDAS;
     
     public KeyBindings() {
-        defaultInitialKeyDelay = initialKeyDelay = file.loadInitDelay();
-        defaultKeyDelay = keyDelay = file.loadDelay();
+        defaultInitialDAS = initialDAS = file.loadInitDelay();
+        defaultDAS = DAS = file.loadDelay();
         
         keyBinds = new HashMap<String, Integer>();
         inputBuffer = new LinkedList();
@@ -17,12 +17,12 @@ public class KeyBindings{
         }
     }
     
-    public void setKeyDelay(int newKeyDelay) {
-        defaultKeyDelay = newKeyDelay;
+    public void setDAS(int newDAS) {
+        defaultDAS = newDAS;
     }
     
-    public  void setInitialKeyDelay(int newInitialKeyDelay) {
-        defaultInitialKeyDelay = newInitialKeyDelay;
+    public  void setInitialDAS(int newInitialDAS) {
+        defaultInitialDAS = newInitialDAS;
     }
     
     public  void reset() {
@@ -45,8 +45,8 @@ public class KeyBindings{
             return;
         
         inputBuffer.push(key);
-        initialKeyDelay = defaultInitialKeyDelay;
-        keyDelay = defaultKeyDelay;
+        initialDAS = defaultInitialDAS;
+        DAS = defaultDAS;
     }
     
     public  void keyReleased(int key) {
@@ -64,40 +64,40 @@ public class KeyBindings{
         return keyBinds.get(keyBind);
     }
     
-    public  int keyDelay() {
-        return defaultKeyDelay;
+    public  int DAS() {
+        return defaultDAS;
     }
     
-    public  int initialKeyDelay() {
-        return defaultInitialKeyDelay;
+    public  int initialDAS() {
+        return defaultInitialDAS;
     }
     
     public  boolean canRegisterKey() {
         if (inputBuffer.isEmpty())
             return false;
         
-        if (initialKeyDelay == defaultInitialKeyDelay) {
-            initialKeyDelay = defaultInitialKeyDelay;
-            keyDelay = defaultKeyDelay;
-            initialKeyDelay--;
+        if (initialDAS == defaultInitialDAS) {
+            initialDAS = defaultInitialDAS;
+            DAS = defaultDAS;
+            initialDAS--;
             return true;
         }
         
-        if (initialKeyDelay > 0) {
-            initialKeyDelay--;
+        if (initialDAS > 0) {
+            initialDAS--;
             return false;
         }
-        if (initialKeyDelay == 0) {
-            initialKeyDelay--;
+        if (initialDAS == 0) {
+            initialDAS--;
             return true;
         }
         
-        if (keyDelay > 0) {
-            keyDelay--;
+        if (DAS > 0) {
+            DAS--;
             return false;
         }
         
-        keyDelay = defaultKeyDelay;
+        DAS = defaultDAS;
         return true;
     }
 }

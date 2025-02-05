@@ -61,6 +61,6 @@ public class Block{
     }
     
     public String toString() {
-        return clr + "";
+        return clr + " " + row + " " + col;
     }
 }

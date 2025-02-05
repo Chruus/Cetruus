@@ -1,10 +1,11 @@
 public class Stats{
-    private int score, lines, level;
+    private int score, lines, level, startLevel;
     private boolean hardLastClear;
     
     public Stats() {
         score = lines = 0;
         level = 1;
+        startLevel = 1;
         hardLastClear = false;
     }
     
@@ -33,9 +34,13 @@ public class Stats{
         level = level_;
     }
     
+    public void setStartingLevel(int level_) {
+        startLevel = level_;
+    }
+    
     public void reset() {
         score = lines = 0;
-        level = 1;
+        level = startLevel;
     }
     
     public void calculateScore(int numOfLinesCleared) {
@@ -58,7 +63,8 @@ public class Stats{
             hardLastClear = true;
         }
         
-        level = lines / 10 + 1;
+        if ((lines % 10) - numOfLinesCleared < 0)
+            level++;
     }
     
     public int score() {
@@ -71,6 +77,10 @@ public class Stats{
     
     public int level() {
         return level;
+    }
+    
+    public int getStartingLevel() {
+        return startLevel;
     }
     
     public String toString() {

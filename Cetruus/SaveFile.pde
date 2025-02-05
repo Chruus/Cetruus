@@ -4,7 +4,7 @@ public class SaveFile{
     public SaveFile() {
         String[] scores = loadStrings("data\\hiScores.txt");
         
-        if (scores == null) {
+        if (scores == null || scores.length < 3) {
             scores = new String[3];
             scores[0] = scores[1] = scores[2] = "0";
             saveStrings("data\\hiScores.txt", scores);

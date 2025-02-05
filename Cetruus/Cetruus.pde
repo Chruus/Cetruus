@@ -4,24 +4,24 @@ import processing.sound.*;
 
 void settings() {
     ratio = (int)(((float)displayWidth / (float)displayHeight) * 1000.0);
-
+    
     //16x10
-    if(ratio == 1600){
+    if (ratio == 1600) {
         size((int)(displayWidth * 420 / 1920),(int)(displayHeight * 600 / 1200));
         scale = Math.min(displayWidth / 64, displayHeight / 40);
     }
     //16x9
-    else if(ratio == 1777){
+    else if (ratio == 1777) {
         size((int)(displayWidth * 420 / 1920),(int)(displayHeight * 600 / 1080));
         scale = Math.min(displayWidth / 64, displayHeight / 36);
     }
     //21x9
-    else if(ratio == 2333){
+    else if (ratio == 2333) {
         size((int)(displayWidth * 420 / 2560),(int)(displayHeight * 600 / 1080));
-        scale = Math.min((int)(displayWidth / (85 + 1/3)), displayHeight / 36);
+        scale = Math.min((int)(displayWidth / (85 + 1 / 3)), displayHeight / 36);
     }
     else {
-        size((int)(displayWidth / 4), (int)(displayHeight / 2));
+        size((int)(displayWidth / 4),(int)(displayHeight / 2));
         scale = Math.min(displayWidth / 64, displayHeight / 36);
     }
 }
@@ -33,10 +33,11 @@ void setup() {
     file = new SaveFile();
     keyBinds = new KeyBindings();
     UI = new UserInterface(scale, stats);
-    hold = new SoundFile(this, "hold.wav");
-    music = new SoundFile(Cetruus.this, "music.wav");
+    hold = new SoundFile(Cetruus.this, "hold.wav", false);
+    music = new SoundFile(this, "music.wav");
     font = createFont("tetris font.otf", scale);
     
+    muted = false;
     music.amp(0.25);
     
     textFont(font);
@@ -56,8 +57,9 @@ void setup() {
     }));
 }
 
+
 public static Bag bag;
-private boolean canswapHeldTetromino;
+private boolean canswapHeldTetromino, muted;
 public static Grid grid;
 public int scale, ratio, timeToMoveDown;
 public static KeyBindings keyBinds;
@@ -115,7 +117,7 @@ private void swapHeldTetromino() {
     if (!canswapHeldTetromino)
         return;
     
-    hold.play();
+    //  hold.play();
     
     Tetromino oldheldTetro = heldTetro;
     heldTetro = currentTetro;
@@ -134,6 +136,7 @@ private void resetGameState() {
     
     file.resetGame();
     stats.reset();
+    stats.setLevel(UI.getStartingLevel());
     
     grid = new Grid(stats);
     bag = new Bag(scale, grid);
@@ -153,7 +156,6 @@ private void addToGrid() {
         UI.gameOver();
         music.stop();
         file.saveStats(stats);
-        println(stats);
     }
 }
 
@@ -306,6 +308,19 @@ void mouseReleased() {
 
 void keyPressed() {
     keyBinds.keyPressed(keyCode);
+    
+    if (keyCode == 'm') {
+        if (muted) {
+            //  music.amp(0.25);
+            
+        }
+        else{
+            //  music.amp(0);
+            
+        }
+        muted = !muted;
+    }
+    
     
     if (!UI.inGame())
         UI.keyPressed();

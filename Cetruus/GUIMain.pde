@@ -56,7 +56,7 @@ public class GUIMain extends GUI{
     
     public String goTo() {
         if (play.hasBeenPressed())
-            return "new game";
+            return "starting level";
         //if (scores.hasBeenPressed())
         //    return "scores";
         if (settings.hasBeenPressed())

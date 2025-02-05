@@ -3,8 +3,8 @@ import processing.sound.*;
 public class UserInterface{
     Block[][] background;
     boolean needToResetGame, inGame, inPause;
-    GUI currentGUI, gameOver, main, pause, scores, settings, keyBinds;
-    int scale;
+    GUI currentGUI, gameOver, main, pause, settings, keyBinds, selectStartingLevel;
+    int scale, startingLevel;
     Stats stats;
     
     public UserInterface(int scale_, Stats stats_) {
@@ -17,8 +17,8 @@ public class UserInterface{
         gameOver = new GUIGameOver(scale, textColor, backgroundColor, stats);
         main = new GUIMain(scale, textColor, backgroundColor);
         pause = new GUIPause(scale, textColor, backgroundColor);
-        scores = new GUIScores(scale, textColor, backgroundColor);
         settings = new GUISettings(scale, textColor, backgroundColor);
+        selectStartingLevel = new GuiStartingLevel(scale, textColor, backgroundColor);
         currentGUI = main;
         
         resetBackground();
@@ -38,14 +38,14 @@ public class UserInterface{
             return;
         if (goTo.equals("main")) 
             currentGUI = main;
-        if (goTo.equals("scores"))
-            currentGUI = scores;
         if (goTo.equals("settings"))
             currentGUI = settings;
         if (goTo.equals("game")) {
             currentGUI = null;
             inGame = true;
         }
+        if (goTo.equals("starting level"))
+            currentGUI = selectStartingLevel;
         if (goTo.equals("new game")) {
             currentGUI = null;
             inGame = needToResetGame = true;
@@ -69,6 +69,14 @@ public class UserInterface{
         
         popMatrix();
         popStyle();
+    }
+    
+    public void setStartingLevel(int newLevel) {
+        startingLevel = newLevel;
+    }
+    
+    public int getStartingLevel() {
+        return startingLevel;
     }
     
     public void resetBackground() {

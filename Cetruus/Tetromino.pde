@@ -98,23 +98,27 @@ public abstract class Tetromino{
             
             switch(direction) {
                 case "right":
-                    if (block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null)
+                    if (!isInBounds() || block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null) {
                         return false;
+                    }
                     break;
                 
                 case "left":
-                    if (block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null)
+                    if (!isInBounds() || block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null) {
                         return false;
+                    }
                     break;
                 
                 case "up":
-                    if (block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null)
+                    if (!isInBounds() || block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null) {
                         return false;
+                    }
                     break;
                 
                 case "down":
-                    if (block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null)
+                    if (!isInBounds() || block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null) {
                         return false;
+                    }
                     break;
             }
         }

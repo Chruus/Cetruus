@@ -10,9 +10,9 @@ public class Grid{
         stats = stats_;
         grid = new Block[20][10];
         addToGridDelay = 30;
-        drop = new SoundFile(Cetruus.this, "drop.wav");
-        clear = new SoundFile(Cetruus.this, "clear.wav");
-        clearTetris = new SoundFile(Cetruus.this, "clear tetris.wav");
+        drop = Cetruus.drop;
+        clear = Cetruus.clear;
+        clearTetris = Cetruus.clearTetris;
     }
     
     public void display() {
@@ -47,12 +47,17 @@ public class Grid{
         ArrayList<Integer> fullRows = getFullRows();
         if (fullRows.size() == 0) {
             drop.play();
+            drop.amp(soundAmp);
             return;
         }
-        else if (fullRows.size() < 4)
+        else if (fullRows.size() < 4) {
             clear.play();
-        else
+            clear.amp(Cetruus.soundAmp);
+        }
+        else{
             clearTetris.play();
+            clearTetris.amp(Cetruus.soundAmp);
+        }
         
         for (int row : fullRows) {
             shiftGridDown(row);

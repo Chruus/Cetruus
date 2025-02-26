@@ -15,7 +15,6 @@ public class GuiStartingLevel extends GUI{
         play.display();
         levelUp.display();
         levelDown.display();
-        println(file.hiLevel());
         if (levelUp.hasBeenPressed() && level < 20 && level < file.hiLevel())
             level++;
         if (levelDown.hasBeenPressed() && level > 1)

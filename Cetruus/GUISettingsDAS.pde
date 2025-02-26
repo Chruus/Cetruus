@@ -1,7 +1,7 @@
-public class GUISettingsMisc extends GUI{
+public class GUISettingsDAS extends GUI{
     Button initialDASUp, initialDASDown, DASUp, DASDown;
     
-    public GUISettingsMisc(int scale_, color textColor, color backgroundColor) {
+    public GUISettingsDAS(int scale_, color textColor, color backgroundColor) {
         super(scale_);
         
         initialDASDown = new Button("-1", textColor, 4 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);

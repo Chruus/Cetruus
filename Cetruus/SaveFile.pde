@@ -77,6 +77,55 @@ public class SaveFile{
         return Integer.parseInt(words[0]);
     }
     
+    public void saveDelays() {
+        String[] words = new String[2];
+        int num = 0;
+        
+        words[0] = "" + keyBinds.initialDAS();
+        words[1] = "" + keyBinds.DAS();
+        
+        saveStrings("data\\delays.txt", words);
+    }
+    
+    public int loadMusicVolume() {
+        String[] words = loadStrings("data\\volume.txt");
+        
+        if (words == null) {
+            words = new String[2];
+            words[0] = "1";
+            words[1] = "1";
+            saveStrings("data\\volume.txt", words);
+            
+            return 1;
+        }
+        
+        return Integer.parseInt(words[0]);
+    }
+    
+    public int loadSoundVolume() {
+        String[] words = loadStrings("data\\volume.txt");
+        
+        if (words == null) {
+            words = new String[2];
+            words[0] = "1";
+            words[1] = "1";
+            saveStrings("data\\volume.txt", words);
+            
+            return 1;
+        }
+        
+        return Integer.parseInt(words[1]);
+    }
+    
+    public void saveVolume(float musicVolume, float soundVolume) {
+        String[] words = new String[2];
+        
+        words[0] = "" + (int)(musicVolume * 100);
+        words[1] = "" + (int)(soundVolume * 100);
+        
+        saveStrings("data\\volume.txt", words);
+    }
+    
     public int loadDelay() {
         String[] words = loadStrings("data\\delays.txt");
         
@@ -92,16 +141,6 @@ public class SaveFile{
         return Integer.parseInt(words[1]);
     }
     
-    public void saveDelays() {
-        String[] words = new String[2];
-        int num = 0;
-        
-        words[0] = "" + keyBinds.initialDAS();
-        words[1] = "" + keyBinds.DAS();
-        
-        saveStrings("data\\delays.txt", words);
-    }
-    
     public void saveGame(Grid grid, Bag bag, Stats stats, Tetromino currentTetro, Tetromino heldTetro) {
         String[] data = new String[27];
         
@@ -111,8 +150,9 @@ public class SaveFile{
                     data[r] = "";
                 if (grid.getBlock(r, c) == null)
                     data[r] += "none ";
-                else
-                    data[r] += grid.getBlock(r, c).toString() + " ";
+                else{
+                    data[r] += grid.getBlock(r, c).clr() + " ";
+                }
             }
         }
         
@@ -137,8 +177,8 @@ public class SaveFile{
         
         stats = new Stats(Integer.parseInt(data[22]), Integer.parseInt(data[23]), Integer.parseInt(data[24]));
         grid = new Grid(stats);
-        bag = new Bag(scale, grid);
-        UI = new UserInterface(scale, stats);
+        bag = new Bag(grid);
+        UI = new UserInterface(stats);
         
         for (int r = 0; r < 20; r++) {
             String[] blocks = data[r].split(" ");

@@ -27,9 +27,11 @@ public class GUIMain extends GUI{
         textSize(scale * 0.4);
         textAlign(CENTER);
         
-        text("Hi Score: " + file.hiScore(), width / 2, 8 * scale);
-        text("Hi Lines: " + file.hiLines(), width / 2, 9 * scale);
-        text("Hi Level: " + file.hiLevel(), width / 2, 10 * scale);
+        if (file.hiScore() != 0 || file.hiLines() != 0 || file.hiLevel() != 0) {
+            text("Hi Score: " + file.hiScore(), width / 2, 8 * scale);
+            text("Hi Lines: " + file.hiLines(), width / 2, 9 * scale);
+            text("Hi Level: " + file.hiLevel(), width / 2, 10 * scale);
+        }
         
         
         //text(file.hiScore(), 7 * scale, 8 * scale);

@@ -5,8 +5,8 @@ public class Bag{
     Grid grid;
     int scale;
     
-    public Bag(int scale_, Grid grid_) {
-        scale = scale_;
+    public Bag(Grid grid_) {
+        scale = Cetruus.scale;
         grid = grid_;
         main = new ArrayList<Tetromino>();
         reserve = new ArrayList<Tetromino>();

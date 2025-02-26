@@ -29,16 +29,21 @@ void settings() {
 void setup() {    
     frameRate(60);
     
+    musicAmp = 1;
+    soundAmp = 1;
+    
     stats = new Stats();        
     file = new SaveFile();
     keyBinds = new KeyBindings();
-    UI = new UserInterface(scale, stats);
+    UI = new UserInterface(stats);
     hold = new SoundFile(Cetruus.this, "hold.wav", false);
     music = new SoundFile(this, "music.wav");
+    drop = new SoundFile(Cetruus.this, "drop.wav");
+    clear = new SoundFile(Cetruus.this, "clear.wav");
+    clearTetris = new SoundFile(Cetruus.this, "clear tetris.wav");
     font = createFont("tetris font.otf", scale);
     
     muted = false;
-    music.amp(0.25);
     
     textFont(font);
     
@@ -59,13 +64,16 @@ void setup() {
 
 
 public static Bag bag;
-private boolean canswapHeldTetromino, muted;
+private boolean canswapHeldTetromino;
+public static boolean muted;
 public static Grid grid;
-public int scale, ratio, timeToMoveDown;
+public static int scale;
+public static float musicAmp, soundAmp;
+private int ratio, timeToMoveDown;
 public static KeyBindings keyBinds;
 private PFont font;
 public static SaveFile file;
-private SoundFile hold, music;
+public static SoundFile hold, music, drop, clear, clearTetris;
 public static Stats stats;
 public static Tetromino currentTetro, heldTetro;
 public static UserInterface UI;
@@ -85,8 +93,10 @@ void draw() {
     if (keyBinds.canRegisterKey())
         onInput();
     
-    if (!music.isPlaying())
+    if (!music.isPlaying()) {
         music.play();
+        music.amp(musicAmp);
+    }
     
     calculateGravity();
     displayGame();
@@ -117,7 +127,8 @@ private void swapHeldTetromino() {
     if (!canswapHeldTetromino)
         return;
     
-    //  hold.play();
+    hold.play();
+    hold.amp(soundAmp);
     
     Tetromino oldheldTetro = heldTetro;
     heldTetro = currentTetro;
@@ -139,7 +150,7 @@ private void resetGameState() {
     stats.setLevel(UI.getStartingLevel());
     
     grid = new Grid(stats);
-    bag = new Bag(scale, grid);
+    bag = new Bag(grid);
     currentTetro = bag.getNextTetromino();
     heldTetro = null;
 }
@@ -291,8 +302,10 @@ void pause() {
     
     if (music.isPlaying())
         music.pause();
-    else
+    else{
         music.play();
+        music.amp(musicAmp);
+    }
 }
 
 void mousePressed() {
@@ -309,14 +322,24 @@ void mouseReleased() {
 void keyPressed() {
     keyBinds.keyPressed(keyCode);
     
-    if (keyCode == 'm') {
+    if (key == 'm') {
         if (muted) {
-            //  music.amp(0.25);
-            
+            musicAmp = file.loadMusicVolume() / 100.0;
+            soundAmp = file.loadSoundVolume() / 100.0;
+            music.amp(musicAmp);
+            hold.amp(soundAmp);
+            drop.amp(soundAmp);
+            clear.amp(soundAmp);
+            clearTetris.amp(soundAmp);
         }
         else{
-            //  music.amp(0);
-            
+            musicAmp = 0;
+            soundAmp = 0;
+            music.amp(0);
+            hold.amp(0);
+            drop.amp(0);
+            clear.amp(0);
+            clearTetris.amp(0);
         }
         muted = !muted;
     }

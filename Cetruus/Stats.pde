@@ -13,6 +13,7 @@ public class Stats{
         score = score_;
         lines = lines_;
         level = level_;
+        startLevel = 1;
         hardLastClear = false;
     }
     

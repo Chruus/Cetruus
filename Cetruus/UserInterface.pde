@@ -7,8 +7,8 @@ public class UserInterface{
     int scale, startingLevel;
     Stats stats;
     
-    public UserInterface(int scale_, Stats stats_) {
-        scale = scale_;
+    public UserInterface(Stats stats_) {
+        scale = Cetruus.scale;
         stats = stats_;
         
         color backgroundColor = color(225, 225, 255);

@@ -1,5 +1,9 @@
 # Cetruus
-This is a Tetris Clone developed from the beginning of 2023 in Processing. I designed it to have an NES scoring & gameplay, with some comfort features of modern Tetris.
+Cetruus is a passion project of mine, written in processing. There are no images or textures, as I like working with processing's shapes better. There are no libraries aside from P.sound, so every bit of the GUI, gameplay, etc is written by me. Originally I created it as a fun project to apply what I'd learned in my computer science classes. Over time I decided to shift it to address parts of actual releases of Tetris I was unhappy with.
+
+The main gimmick of Cetruus is that it combines NES and modern Tetris. I don't like how modern Tetris allows you to stall by spamming rotate when a Tetromino is at the bottom, so that aspect of the gameplay is more similar to NES Tetris. The other part was the score; I prefer NES Tetris' way of only tracking line clears. Everything else is more or less like modern Tetris implementations. You can see three Tetrominos ahead, there is a hold function, there's a bag to ensure that there won't be any bad draughts, and so on.
+
+This is one of those projects that I just keep adding on to whenever I think of ideas for it, so it probably won't ever be finished. That said, I'll try to continue posting compiled versions every once and a while when I get to a generally stable stopping point. 
 
 Features:
 - Saving high scores after closing the app
@@ -15,8 +19,3 @@ Controls:
 - All gameplay controls are available & customizable in the settings
 - Backspace: closes window
 - Escape: pauses game mid-game, closes window in menu
-
-Credits:
-  - Tucker:
-    - ~~Created UI~~
-    - ¯\_(ツ)_/¯

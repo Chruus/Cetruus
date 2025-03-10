@@ -93,30 +93,33 @@ public abstract class Tetromino{
     public boolean canMove(String direction) {
         for (Block block : blocks) {
             
-            if (isInBounds() && grid.getBlock(block.row(), block.col()) != null) 
+            if (isInBounds() && isColliding()) 
                 return false;
+            
+            if (!isInBounds(block))
+                continue;
             
             switch(direction) {
                 case "right":
-                    if (!isInBounds() || block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null) {
+                    if (block.col() >= grid.width() - 1 || grid.getBlock(block.row(), block.col() + 1) != null) {
                         return false;
                     }
                     break;
                 
                 case "left":
-                    if (!isInBounds() || block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null) {
+                    if (block.col() <= 0 || grid.getBlock(block.row(), block.col() - 1) != null) {
                         return false;
                     }
                     break;
                 
                 case "up":
-                    if (!isInBounds() || block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null) {
+                    if (block.row() <= 0 || grid.getBlock(block.row() - 1, block.col()) != null) {
                         return false;
                     }
                     break;
                 
                 case "down":
-                    if (!isInBounds() || block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null) {
+                    if (block.row() >= grid.length() - 1 || grid.getBlock(block.row() + 1, block.col()) != null) {
                         return false;
                     }
                     break;
@@ -137,17 +140,9 @@ public abstract class Tetromino{
                 move("left");
         }
         
-        if (isInBounds())
+        if (isInBounds() && !isColliding())
             return true;
         
-        move("up");
-        if (isInBounds())
-            return true;
-        move("up");
-        if (isInBounds())
-            return true;
-        move("down");
-        move("down");
         rotate(!clockwise);
         return false;
     }
@@ -159,6 +154,27 @@ public abstract class Tetromino{
                 return false;
         }
         return true;
+    }
+    
+    public boolean isInBounds(Block block) {
+        if (block.row() < 0 || block.col() < 0 || block.row() >= grid.length() 
+            || block.col() >= grid.width() || grid.getBlock(block.row(), block.col()) != null)
+            return false;
+        return true;
+    }
+    
+    public boolean isColliding() {
+        for (Block block : blocks) {
+            if (grid.getBlock(block.row(), block.col()) != null)
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isColliding(Block block) {
+        if (grid.getBlock(block.row(), block.col()) != null)
+            return true;
+        return false;
     }
     
     public String toString() {

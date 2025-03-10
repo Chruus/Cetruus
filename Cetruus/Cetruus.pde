@@ -98,6 +98,7 @@ void draw() {
         music.amp(musicAmp);
     }
     
+    
     calculateGravity();
     displayGame();
     displaycurrentTetro();
@@ -292,7 +293,7 @@ private void onInput() {
     }
     if (keyBinds.getCurrentKey() == keyBinds.get("soft drop") && currentTetro.canMove("down")) {
         currentTetro.move("down");
-        stats.setScore(stats.score() + 1);
+        stats.setScore(stats.score() + stats.level());
     }
 }
 

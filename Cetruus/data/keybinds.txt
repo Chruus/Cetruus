@@ -1,7 +1,0 @@
-move left - 37
-hold tetro - 67
-soft drop - 40
-hard drop - 32
-move right - 39
-rotate left - 90
-rotate right - 38

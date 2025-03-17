@@ -219,9 +219,9 @@ public void displayGameBackground() {
     stroke(20);
     fill(40);
     
-    rect(360, 60, 118, 119, 5, 5, 5, 5);
-    rect(360, 270, 118, 299, 5, 5, 5, 5);
-    rect(360, 510, 118, 179, 5, 5, 5, 5);
+    rect(scale * 12, scale * 2, scale * 4 - 2, scale * 4 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
+    rect(scale * 12, scale * 9, scale * 4 - 2, scale * 10 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
+    rect(scale * 12, scale * 17, scale * 4 - 2, scale * 6 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
     
     popMatrix();
     popStyle();

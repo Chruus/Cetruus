@@ -121,54 +121,9 @@ private void displayGame() {
     displayCurrentStats();
     displayFutureTetrominos();
     displayHeldTetromino();
+    if(muted)
+        displayMuted(scale * 13, scale * 19, scale * 2 / 3);
     grid.display();
-}
-
-private void swapHeldTetromino() {
-    if (!canswapHeldTetromino)
-        return;
-    
-    hold.play();
-    hold.amp(soundAmp);
-    
-    Tetromino oldheldTetro = heldTetro;
-    heldTetro = currentTetro;
-    canswapHeldTetromino = false;
-    
-    if (oldheldTetro == null)
-        currentTetro = bag.getNextTetromino();
-    else
-        currentTetro = oldheldTetro;
-    
-    currentTetro.reset();
-}
-
-private void resetGameState() {
-    canswapHeldTetromino = true;      
-    
-    file.resetGame();
-    stats.reset();
-    stats.setLevel(UI.getStartingLevel());
-    
-    grid = new Grid(stats);
-    bag = new Bag(grid);
-    currentTetro = bag.getNextTetromino();
-    heldTetro = null;
-}
-
-private void addToGrid() {
-    currentTetro.addToGrid();
-    currentTetro.reset();
-    currentTetro = bag.getNextTetromino();
-    currentTetro.reset();
-    grid.clearFullRows();
-    canswapHeldTetromino = true;
-    
-    if (!currentTetro.canMove("down")) {
-        UI.gameOver();
-        music.stop();
-        file.saveStats(stats);
-    }
 }
 
 private void displayHeldTetromino() {
@@ -225,6 +180,74 @@ public void displayGameBackground() {
     
     popMatrix();
     popStyle();
+}
+
+private void displayMuted(int x, int y, int size){
+  pushStyle();
+  pushMatrix();
+  
+  rectMode(CENTER);
+  ellipseMode(CENTER);
+  strokeWeight(size / 25);
+  stroke(255);
+  fill(255);
+  rect(x - size / 4, y, size / 2, size / 2);
+  quad(x, y - size / 4, x + size / 2, y - size / 2, x + size / 2, y + size / 2, x, y + size / 4);
+  strokeWeight(size / 10);
+  stroke(255,0,0);
+  fill(0, 0);
+  ellipse(x, y, size * 1.5, size * 1.5);
+  line(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+  
+  popMatrix();
+  popStyle();
+}
+
+private void swapHeldTetromino() {
+    if (!canswapHeldTetromino)
+        return;
+    
+    hold.play();
+    hold.amp(soundAmp);
+    
+    Tetromino oldheldTetro = heldTetro;
+    heldTetro = currentTetro;
+    canswapHeldTetromino = false;
+    
+    if (oldheldTetro == null)
+        currentTetro = bag.getNextTetromino();
+    else
+        currentTetro = oldheldTetro;
+    
+    currentTetro.reset();
+}
+
+private void resetGameState() {
+    canswapHeldTetromino = true;      
+    
+    file.resetGame();
+    stats.reset();
+    stats.setLevel(UI.getStartingLevel());
+    
+    grid = new Grid(stats);
+    bag = new Bag(grid);
+    currentTetro = bag.getNextTetromino();
+    heldTetro = null;
+}
+
+private void addToGrid() {
+    currentTetro.addToGrid();
+    currentTetro.reset();
+    currentTetro = bag.getNextTetromino();
+    currentTetro.reset();
+    grid.clearFullRows();
+    canswapHeldTetromino = true;
+    
+    if (!currentTetro.canMove("down")) {
+        UI.gameOver();
+        music.stop();
+        file.saveStats(stats);
+    }
 }
 
 private void calculateGravity() {

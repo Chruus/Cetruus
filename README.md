@@ -5,7 +5,7 @@ The main gimmick of Cetruus is that it combines NES and modern Tetris. I don't l
 
 This is one of those projects that I just keep adding on to whenever I think of ideas for it, so it probably won't ever be finished. That said, I'll try to continue posting compiled versions every once and a while when I get to a generally stable stopping point. 
 
-**Note:** I am just a guy and can't pay Microsoft, so Windows will tell you that "Windows protected your PC." Feel free to read the code if you don't trust it, but the first time you open it you'll need to click "more info" then "run anyway."
+**Note:** I am just a guy and can't pay Microsoft, so Windows will tell you that "Windows protected your PC" when you try to open Cetruus. To remedy this, the first time you open it you'll need to click "more info" then "run anyway." Feel free to read the code if you don't trust the program, it's all available here and in the files you downloaded.
 
 Features:
 - Saving high scores after closing the app

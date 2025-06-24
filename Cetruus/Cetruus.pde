@@ -84,9 +84,6 @@ void draw() {
         return;
     }
     
-    if (!focused && !UI.inPause())
-        pause();
-    
     if (UI.needToResetGame())
         resetGameState();
     
@@ -94,10 +91,13 @@ void draw() {
         onInput();
     
     if (!music.isPlaying()) {
+        music.stop();
         music.play();
         music.amp(musicAmp);
     }
     
+    if (!focused && !UI.inPause())
+        pause();
     
     calculateGravity();
     displayGame();
@@ -321,15 +321,17 @@ private void onInput() {
 }
 
 void pause() {
-    key = 0;
-    UI.pause();
-    
-    if (music.isPlaying())
+    print("test");
+    if (music.isPlaying()){
         music.pause();
+        music.amp(0);
+    }
     else{
         music.play();
         music.amp(musicAmp);
     }
+    key = 0;
+    UI.pause();
 }
 
 void mousePressed() {

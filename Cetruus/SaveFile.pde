@@ -185,7 +185,7 @@ public class SaveFile{
             for (int c = 0; c < 10; c++) {
                 if (blocks[c].equals("none"))
                     continue;
-                Block temp = new Block(r, c, scale, color(Integer.parseInt(blocks[c])));
+                Block temp = new Block(r, c, color(Integer.parseInt(blocks[c])));
                 grid.setBlock(temp, r, c);
             }
         }
@@ -228,25 +228,25 @@ public class SaveFile{
         
         switch(name) {
             case "TetrominoI":
-                output = new TetrominoI(row, col, scale, grid, rotation);
+                output = new TetrominoI(row, col, grid, rotation);
                 break;
             case "TetrominoJ":
-                output = new TetrominoJ(row, col, scale, grid, rotation);
+                output = new TetrominoJ(row, col, grid, rotation);
                 break;
             case "TetrominoL":
-                output = new TetrominoL(row, col, scale, grid, rotation);
+                output = new TetrominoL(row, col, grid, rotation);
                 break;
             case "TetrominoO":
-                output = new TetrominoO(row, col, scale, grid, rotation);
+                output = new TetrominoO(row, col, grid, rotation);
                 break;
             case "TetrominoS":
-                output = new TetrominoS(row, col, scale, grid, rotation);
+                output = new TetrominoS(row, col, grid, rotation);
                 break;
             case "TetrominoT":
-                output = new TetrominoT(row, col, scale, grid, rotation);
+                output = new TetrominoT(row, col, grid, rotation);
                 break;
             case "TetrominoZ":
-                output = new TetrominoZ(row, col, scale, grid, rotation);
+                output = new TetrominoZ(row, col, grid, rotation);
                 break;
         }
         

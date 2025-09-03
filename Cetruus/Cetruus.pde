@@ -1,9 +1,11 @@
 //Christopher Petty
-
 import processing.sound.*;
+//import processing.
 
 void settings() {
     ratio = (int)(((float)displayWidth / (float)displayHeight) * 1000.0);
+    
+    //windowTitle("Cetruus");
     
     //16x10
     if (ratio == 1600) {
@@ -24,9 +26,11 @@ void settings() {
         size((int)(displayWidth / 4),(int)(displayHeight / 2));
         scale = Math.min(displayWidth / 64, displayHeight / 36);
     }
+    
 }
 
-void setup() {    
+void setup() {
+    surface.setResizable(true);
     frameRate(60);
     
     musicAmp = 1;
@@ -62,7 +66,7 @@ void setup() {
     }));
 }
 
-
+private int prevWidth, prevHeight;
 public static Bag bag;
 private boolean canswapHeldTetromino;
 public static boolean muted;
@@ -79,6 +83,12 @@ public static Tetromino currentTetro, heldTetro;
 public static UserInterface UI;
 
 void draw() {
+    if (prevWidth != width || prevHeight != height) {
+        windowResized();
+        prevWidth = width;
+        prevHeight = height;
+    }
+    
     if (!UI.inGame()) {
         UI.display();
         return;
@@ -104,6 +114,11 @@ void draw() {
     displaycurrentTetro();
 }
 
+void windowResized() {    
+    scale = Math.min(30 * width / 420, 30 * height / 600);
+    UI.windowResized();
+}
+
 private boolean midGame() {
     String[] temp = loadStrings("data\\gameState.txt");
     if (temp == null || temp.length < 20)
@@ -121,7 +136,7 @@ private void displayGame() {
     displayCurrentStats();
     displayFutureTetrominos();
     displayHeldTetromino();
-    if(muted)
+    if (muted)
         displayMuted(scale * 13, scale * 19, scale * 2 / 3);
     grid.display();
 }
@@ -152,55 +167,185 @@ private void displayCurrentStats() {
     textSize(scale * 0.3);
     fill(255);
     
-    int x = scale / 2 * 21;
-    int y = scale * 17;
+    int x = (int)(width / 2 + scale * 3.5);
+    int y = (int)(height / 2 + scale * 7);
     
-    text("Score:\n" + stats.score(), x, y - scale * 1.65);
+    text("Score : \n" + stats.score(), x, y - scale * 1.65);
     text("Lines:\n" + stats.lines(), x, y);
-    text("Level:\n" + stats.level(), x, y + scale * 1.65);
+    text("Level : \n" + stats.level(), x, y + scale * 1.65);
     
     popMatrix();
     popStyle();
 }
 
 public void displayGameBackground() {  
-    background(25);
+    background(0);
     
     pushStyle();
     pushMatrix();
     
     rectMode(CENTER);
+    fill(25);
+    rect(width / 2, height / 2, scale * 14, scale * 20);
+    
     strokeWeight(2);
     stroke(20);
     fill(40);
     
-    rect(scale * 12, scale * 2, scale * 4 - 2, scale * 4 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
-    rect(scale * 12, scale * 9, scale * 4 - 2, scale * 10 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
-    rect(scale * 12, scale * 17, scale * 4 - 2, scale * 6 - 2, scale / 6, scale / 6, scale / 6, scale / 6);
+    rect(360, 60, 118, 119, 5, 5, 5, 5);
+    rect(360, 270, 118, 299, 5, 5, 5, 5);
+    rect(360, 510, 118, 179, 5, 5, 5, 5);
     
     popMatrix();
     popStyle();
 }
 
-private void displayMuted(int x, int y, int size){
-  pushStyle();
-  pushMatrix();
-  
-  rectMode(CENTER);
-  ellipseMode(CENTER);
-  strokeWeight(size / 25);
-  stroke(255);
-  fill(255);
-  rect(x - size / 4, y, size / 2, size / 2);
-  quad(x, y - size / 4, x + size / 2, y - size / 2, x + size / 2, y + size / 2, x, y + size / 4);
-  strokeWeight(size / 10);
-  stroke(255,0,0);
-  fill(0, 0);
-  ellipse(x, y, size * 1.5, size * 1.5);
-  line(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
-  
-  popMatrix();
-  popStyle();
+private void displayMuted(int x, int y, int size) {
+    pushStyle();
+    pushMatrix();
+    
+    rectMode(CENTER);
+    ellipseMode(CENTER);
+    strokeWeight(size / 25);
+    stroke(255);
+    fill(255);
+    rect(x - size / 4, y, size / 2, size / 2);
+    quad(x, y - size / 4, x + size / 2, y - size / 2, x + size / 2, y + size / 2, x, y + size / 4);
+    strokeWeight(size / 10);
+    stroke(255,0,0);
+    fill(0, 0);
+    ellipse(x, y, size * 1.5, size * 1.5);
+    line(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+    
+    popMatrix();
+    popStyle();
+}
+
+private void swapHeldTetromino() {
+    if (!canswapHeldTetromino)
+        return;
+    
+    hold.play();
+    hold.amp(soundAmp);
+    
+    Tetromino oldheldTetro = heldTetro;
+    heldTetro = currentTetro;
+    canswapHeldTetromino = false;
+    
+    if (oldheldTetro == null)
+        currentTetro = bag.getNextTetromino();
+    else
+        currentTetro = oldheldTetro;
+    
+    currentTetro.reset();
+}
+
+private void resetGameState() {
+    canswapHeldTetromino = true;      
+    
+    file.resetGame();
+    stats.reset();
+    stats.setLevel(UI.getStartingLevel());
+    
+    grid = new Grid(stats);
+    bag = new Bag(grid);
+    currentTetro = bag.getNextTetromino();
+    heldTetro = null;
+}
+
+private void addToGrid() {
+    currentTetro.addToGrid();
+    currentTetro.reset();
+    currentTetro = bag.getNextTetromino();
+    currentTetro.reset();
+    grid.clearFullRows();
+    canswapHeldTetromino = true;
+    
+    if (!currentTetro.canMove("down")) {
+        UI.gameOver();
+        music.stop();
+        file.saveStats(stats);
+    }
+}
+
+private void displayHeldTetromino() {
+    if (heldTetro == null)
+        return;
+    heldTetro.reset();
+    heldTetro.setPos(2, 12);
+    heldTetro.display();
+}
+
+private void displayFutureTetrominos() {
+    ArrayList<Tetromino> tetros = bag.getFutureTetrominos();
+    tetros.get(0).setPos(6, 12);
+    tetros.get(1).setPos(9, 12);
+    tetros.get(2).setPos(12, 12);
+    for (Tetromino tetro : tetros) {
+        tetro.display();
+    }
+}
+
+private void displayCurrentStats() {
+    pushStyle();
+    pushMatrix();
+    
+    textAlign(LEFT);
+    textSize(scale * 0.3);
+    fill(255);
+    
+    int x = (int)(width / 2 + scale * 3.5);
+    int y = (int)(height / 2 + scale * 7);
+    
+    text("Score : \n" + stats.score(), x, y - scale * 1.65);
+    text("Lines:\n" + stats.lines(), x, y);
+    text("Level : \n" + stats.level(), x, y + scale * 1.65);
+    
+    popMatrix();
+    popStyle();
+}
+
+public void displayGameBackground() {  
+    background(0);
+    
+    pushStyle();
+    pushMatrix();
+    
+    rectMode(CENTER);
+    fill(25);
+    rect(width / 2, height / 2, scale * 14, scale * 20);
+    
+    strokeWeight(2);
+    stroke(20);
+    fill(40);
+    
+    rect(width / 2 + scale * 5, height / 2 - scale * 8, scale * 4 - 2, scale * 4 - 1, 5, 5, 5, 5);
+    rect(width / 2 + scale * 5, height / 2 - scale * 1, scale * 4 - 2, scale * 10 - 1, 5, 5, 5, 5);
+    rect(width / 2 + scale * 5, height / 2 + scale * 7, scale * 4 - 2, scale * 6 - 1, 5, 5, 5, 5);
+    
+    popMatrix();
+    popStyle();
+}
+
+private void displayMuted(int x, int y, int size) {
+    pushStyle();
+    pushMatrix();
+    
+    rectMode(CENTER);
+    ellipseMode(CENTER);
+    strokeWeight(size / 25);
+    stroke(255);
+    fill(255);
+    rect(x - size / 4, y, size / 2, size / 2);
+    quad(x, y - size / 4, x + size / 2, y - size / 2, x + size / 2, y + size / 2, x, y + size / 4);
+    strokeWeight(size / 10);
+    stroke(255,0,0);
+    fill(0, 0);
+    ellipse(x, y, size * 1.5, size * 1.5);
+    line(x - size / 2, y - size / 2, x + size / 2, y + size / 2);
+    
+    popMatrix();
+    popStyle();
 }
 
 private void swapHeldTetromino() {
@@ -322,7 +467,7 @@ private void onInput() {
 
 void pause() {
     print("test");
-    if (music.isPlaying()){
+    if (music.isPlaying()) {
         music.pause();
         music.amp(0);
     }

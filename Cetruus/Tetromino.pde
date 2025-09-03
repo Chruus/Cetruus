@@ -3,12 +3,11 @@ public abstract class Tetromino{
     boolean ghost;
     Grid grid;
     int row, col;
-    int rotation, scale;
+    int rotation;
     
-    public Tetromino(int row_, int col_, int scale_, Grid grid_) {
+    public Tetromino(int row_, int col_, Grid grid_) {
         row = row_;
         col = col_;
-        scale = scale_;
         grid = grid_;
         blocks = new Block[4];
         rotation = 0;

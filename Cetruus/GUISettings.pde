@@ -2,19 +2,26 @@ public class GUISettings extends GUI{
     GUI keyBindings, DAS, audio, currentGUI;
     Button toKeyBindings, toDAS, toAudio, back;
     
-    public GUISettings(int scale_, color textColor, color backgroundColor) {
-        super(scale_);
+    public GUISettings(color textColor, color backgroundColor) {    
         
-        DAS = new GUISettingsDAS(scale_ ,textColor, backgroundColor);
+        DAS = new GUISettingsDAS(textColor, backgroundColor);
         currentGUI = DAS;
         
-        keyBindings = new GUISettingsKeyBindings(scale_, textColor, backgroundColor);
-        audio = new GUISettingsAudio(scale_, textColor, backgroundColor);
+        keyBindings = new GUISettingsKeyBindings(textColor, backgroundColor);
+        audio = new GUISettingsAudio(textColor, backgroundColor);
         
-        back = new Button("Back", textColor,(int)(1.5 * scale),(int)(1.5 * scale),(int)(2.5 * scale),(int)(1.5 * scale), backgroundColor);
-        toDAS = new Button("DAS", textColor,(int)(5 * scale),(int)(1.5 * scale),(int)(3 * scale),(int)(1.5 * scale), backgroundColor);
-        toKeyBindings = new Button("Keyboard", textColor,(int)(8.5 * scale),(int)(1.5 * scale),(int)(3 * scale),(int)(1.5 * scale), backgroundColor);
-        toAudio = new Button("Audio", textColor,(int)(12 * scale),(int)(1.5 * scale),(int)(3 * scale),(int)(1.5 * scale), backgroundColor);
+        int backX = width / 2 - (int)(5.5 * Cetruus.scale);
+        int toDasX = width / 2 - (int)(2 * Cetruus.scale);
+        int toKeyBindingsX = width / 2 + (int)(1.5 * Cetruus.scale);
+        int toAudioX = width / 2 + (int)(4 * Cetruus.scale);
+        int Y = height / 2 - (int)(8.5 * Cetruus.scale);
+        int backWidth = (int)(2.5 * Cetruus.scale);
+        int restWidth = (int)(3 * Cetruus.scale);
+        int height = (int)(1.5 * Cetruus.scale);
+        back = new Button("Back", textColor, backX, Y, backWidth, height, backgroundColor);
+        toDAS = new Button("DAS", textColor, toDasX, Y, restWidth, height, backgroundColor);
+        toKeyBindings = new Button("Keyboard", textColor, toKeyBindingsX, Y, restWidth, height, backgroundColor);
+        toAudio = new Button("Audio", textColor, toAudioX, Y, restWidth, height, backgroundColor);
     }
     
     public void display() {
@@ -24,6 +31,26 @@ public class GUISettings extends GUI{
         toAudio.display();
         
         currentGUI.display();
+    }
+    
+    public void windowResized() {
+        int backX = width / 2 - (int)(5.5 * Cetruus.scale);
+        int toDasX = width / 2 - (int)(2 * Cetruus.scale);
+        int toKeyBindingsX = width / 2 + (int)(1.5 * Cetruus.scale);
+        int toAudioX = width / 2 + (int)(5 * Cetruus.scale);
+        int Y = height / 2 - (int)(8.5 * Cetruus.scale);
+        int backWidth = (int)(2.5 * Cetruus.scale);
+        int restWidth = (int)(3 * Cetruus.scale);
+        int height = (int)(1.5 * Cetruus.scale);
+        
+        back.resize(backX, Y, backWidth, height);
+        toDAS.resize(toDasX, Y, restWidth, height);
+        toKeyBindings.resize(toKeyBindingsX, Y, restWidth, height);
+        toAudio.resize(toAudioX, Y, restWidth, height);
+        
+        keyBindings.windowResized();
+        DAS.windowResized();
+        audio.windowResized();
     }
     
     public void keyPressed() {

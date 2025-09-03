@@ -1,24 +1,23 @@
 public class Block{
     private color clr;
-    private int row, col, scale;
+    private int row, col;
     
-    public Block(float row_, float col_, int scale_, color clr_) {
+    public Block(float row_, float col_, color clr_) {
         row = (int) row_;
         col = (int) col_;
         clr = clr_;
-        scale = scale_;
     }
     
     public void display() {
         pushStyle();
         pushMatrix();
         
-        int x = (col + 1) * scale - scale / 2;
-        int y = (row + 1) * scale - scale / 2;
+        int x = width / 2 + (col - 6) * Cetruus.scale - Cetruus.scale / 2;
+        int y = height / 2 + (row - 9) * Cetruus.scale - Cetruus.scale / 2;
         rectMode(CENTER);
         strokeWeight(0);
         fill(clr);
-        rect(x, y, scale * 0.9, scale * 0.9, 4, 4, 4, 4);
+        rect(x, y, Cetruus.scale * 0.9, Cetruus.scale * 0.9, 4, 4, 4, 4);
         
         popMatrix();
         popStyle();
@@ -28,12 +27,12 @@ public class Block{
         pushStyle();
         pushMatrix();
         
-        int x = (col + 1) * scale - scale / 2;
-        int y = (row + 1) * scale - scale / 2;
+        int x = width / 2 + (col - 6) * Cetruus.scale - Cetruus.scale / 2;
+        int y = height / 2 + (row - 9) * Cetruus.scale - Cetruus.scale / 2;
         rectMode(CENTER);
         strokeWeight(0);
         fill(clr, opacity);
-        rect(x, y, scale * 0.9, scale * 0.9, 4, 4, 4, 4);
+        rect(x, y, Cetruus.scale * 0.9, Cetruus.scale * 0.9, 4, 4, 4, 4);
         
         popMatrix();
         popStyle();
@@ -57,7 +56,7 @@ public class Block{
     }
     
     public Block clone() {
-        return new Block(row, col, scale, clr);
+        return new Block(row, col, clr);
     }
     
     public String toString() {

@@ -1,13 +1,22 @@
 public class GUISettingsDAS extends GUI{
     Button initialDASUp, initialDASDown, DASUp, DASDown;
+    color textColor, backgroundColor;
     
-    public GUISettingsDAS(int scale_, color textColor, color backgroundColor) {
-        super(scale_);
+    public GUISettingsDAS(color textColor, color backgroundColor) {
+        this.textColor = textColor;
+        this.backgroundColor = backgroundColor;
         
-        initialDASDown = new Button("-1", textColor, 4 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        initialDASUp = new Button("+1", textColor, 10 * scale, 7 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        DASDown = new Button("-1", textColor, 4 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
-        DASUp = new Button("+1", textColor, 10 * scale, 12 * scale, 2 * scale, 2 * scale,(int)(0.5 * scale), backgroundColor);
+        int xUp = width / 2 - 3 * Cetruus.scale;
+        int xDown = width / 2 + 3 * Cetruus.scale;
+        int yIDAS = height / 2 - 3 * Cetruus.scale;
+        int yDAS = height / 2 + 2 * Cetruus.scale;
+        int wh = 2 * Cetruus.scale;
+        int textSize = (int)(0.5 * Cetruus.scale);
+        
+        initialDASDown = new Button("-1", textColor, xUp, yIDAS,  wh,  wh, textSize, backgroundColor);
+        initialDASUp = new Button("+1", textColor, xDown, yIDAS,  wh,  wh, textSize, backgroundColor);
+        DASDown = new Button("-1", textColor, xUp, yDAS,  wh,  wh, textSize, backgroundColor);
+        DASUp = new Button("+1", textColor, xDown, yDAS,  wh,  wh, textSize, backgroundColor);
     }
     
     public void display() {
@@ -23,19 +32,33 @@ public class GUISettingsDAS extends GUI{
         
         rectMode(CENTER);
         fill(0);
-        rect(width / 2, scale * 7, 4 * scale, 2 * scale);
-        rect(width / 2, scale * 12, 4 * scale, 2 * scale);
+        rect(width / 2, height / 2 - Cetruus.scale * 3, 4 * Cetruus.scale, 2 * Cetruus.scale);
+        rect(width / 2, height / 2 + Cetruus.scale * 2, 4 * Cetruus.scale, 2 * Cetruus.scale);
         
         fill(255);
         textAlign(CENTER);
-        textSize(20);
-        text("Initial Delayed Auto Shift", width / 2, scale * 5.5);
-        text(keyBinds.initialDAS(), width / 2, scale * 7 + 16);
-        text("Delayed Auto Shift Speed", width / 2, scale * 10.5);
-        text(keyBinds.DAS(), width / 2, scale * 12 + 16);
+        textSize(Cetruus.scale * 2 / 3);
+        text("Initial Delayed Auto Shift", width / 2, height / 2 - Cetruus.scale * 4.5);
+        text(keyBinds.initialDAS(), width / 2, height / 2 - Cetruus.scale * 2.5);
+        text("Delayed Auto Shift Speed", width / 2, height / 2 + Cetruus.scale * 0.5);
+        text(keyBinds.DAS(), width / 2, height / 2 + Cetruus.scale * 2.5);
         
         popMatrix();
         popStyle();
+    }
+    
+    public void windowResized() {
+        int xUp = width / 2 - 3 * Cetruus.scale;
+        int xDown = width / 2 + 3 * Cetruus.scale;
+        int yIDAS = height / 2 - 3 * Cetruus.scale;
+        int yDAS = height / 2 + 2 * Cetruus.scale;
+        int wh = 2 * Cetruus.scale;
+        int textSize = (int)(0.5 * Cetruus.scale);
+        
+        initialDASUp.resize(xUp, yIDAS, wh, wh);
+        initialDASDown.resize(xDown, yIDAS, wh, wh);
+        DASUp.resize(xUp, yDAS, wh, wh);
+        DASDown.resize(xDown, yDAS, wh, wh);
     }
     
     private void checkForChanges() {

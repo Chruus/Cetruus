@@ -1,11 +1,16 @@
 public class GUIPause extends GUI{
     Button resume, restart, quit;
     
-    public GUIPause(int scale_, color textColor, color backgroundColor) {
-        super(scale_);
-        resume = new Button("Resume", textColor, width / 2, 9 * scale, 10 * scale, 3 * scale, backgroundColor);
-        restart = new Button("Restart", textColor, width / 2, 13 * scale, 10 * scale, 3 * scale, backgroundColor);
-        quit = new Button("Quit", textColor, width / 2, 17 * scale, 10 * scale, 3 * scale, backgroundColor);
+    public GUIPause(color textColor, color backgroundColor) {
+        int X = width / 2;
+        int resumeY = height / 2 - Cetruus.scale;
+        int restartY = height / 2 + 3 * Cetruus.scale;
+        int quitY = height / 2 + 7 * Cetruus.scale;
+        int width = 10 * Cetruus.scale;
+        int height = 3 * Cetruus.scale;
+        resume = new Button("Resume", textColor, X, resumeY, width, height, backgroundColor);
+        restart = new Button("Restart", textColor, X, restartY, width, height, backgroundColor);
+        quit = new Button("Quit", textColor, X, quitY, width, height, backgroundColor);
     }
     
     public void display() {
@@ -17,13 +22,25 @@ public class GUIPause extends GUI{
         quit.display();
         
         textAlign(CENTER);
-        textSize(scale * 2);
+        textSize(Cetruus.scale * 2);
         fill(255);
         
-        text("Paused", width / 2, 5 * scale);
+        text("Paused", width / 2, height / 2 - Cetruus.scale * 5);
         
         popMatrix();
         popStyle();
+    }
+    
+    public void windowResized() {
+        int X = width / 2;
+        int resumeY = height / 2 - Cetruus.scale;
+        int restartY = height / 2 + 3 * Cetruus.scale;
+        int quitY = height / 2 + 7 * Cetruus.scale;
+        int width = 10 * Cetruus.scale;
+        int height = 3 * Cetruus.scale;
+        resume.resize(X, resumeY, width, height);
+        restart.resize(X, restartY, width, height);
+        quit.resize(X, quitY, width, height);
     }
     
     public void keyPressed() {}

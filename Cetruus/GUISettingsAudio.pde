@@ -2,21 +2,24 @@ import java.awt.event.KeyEvent;
 
 public class GUISettingsAudio extends GUI{
     
-    int scale;
     color textColor, backgroundColor;
     Slider musicVolume, soundVolume;
     SaveFile file;
     
-    public GUISettingsAudio(int scale_, color textColor, color backgroundColor) {
-        super(scale_);
-        this.scale = Cetruus.scale;
+    public GUISettingsAudio(color textColor, color backgroundColor) {
         this.textColor = textColor;
         this.backgroundColor = backgroundColor;
         
         this.file = Cetruus.file;
         
-        musicVolume = new Slider(width / 2, scale * 7, width * 3 / 4, height / 20, 20, backgroundColor,(color)(brightness(backgroundColor) / 2));
-        soundVolume = new Slider(width / 2, scale * 12, width * 3 / 4, height / 20, 20, backgroundColor,(color)(brightness(backgroundColor) / 2));
+        int x = width / 2;
+        int musicY = height / 2 - Cetruus.scale * 3;
+        int soundY = height / 2 + Cetruus.scale * 2;
+        int w = width * 3 / 4;
+        int h = height / 20;
+        
+        musicVolume = new Slider(x, musicY, w, h, 20, backgroundColor,(color)(brightness(backgroundColor) / 2));
+        soundVolume = new Slider(x, soundY, w, h, 20, backgroundColor,(color)(brightness(backgroundColor) / 2));
         
         Cetruus.musicAmp = file.loadMusicVolume() / 100.0;
         Cetruus.soundAmp = file.loadSoundVolume() / 100.0;
@@ -34,12 +37,23 @@ public class GUISettingsAudio extends GUI{
         
         fill(255);
         textAlign(CENTER);
-        textSize(20);
-        text("Music Volume", width / 2, scale * 5.5);
-        text("Sound Volume", width / 2, scale * 10.5);
+        textSize(Cetruus.scale * 2 / 3);
+        text("Music Volume", width / 2, height / 2 - Cetruus.scale * 4.5);
+        text("Sound Volume", width / 2, height / 2 + Cetruus.scale * 0.5);
         
         popStyle();
         popMatrix();
+    }
+    
+    public void windowResized() {
+        int x = width / 2;
+        int musicY = height / 2 - Cetruus.scale * 3;
+        int soundY = height / 2 + Cetruus.scale * 2;
+        int w = (int)(10.5 * Cetruus.scale);
+        int h = Cetruus.scale;
+        
+        musicVolume.resize(x, musicY, w, h);
+        soundVolume.resize(x, soundY, w, h);
     }
     
     public void keyPressed() {

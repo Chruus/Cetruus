@@ -1,36 +1,36 @@
 public class TetrominoI extends Tetromino{
     
-    public TetrominoI(int row_, int col_, int scale_, Grid grid_, int rotation_) {
-        super(row_, col_, scale_, grid_);
+    public TetrominoI(int row_, int col_, Grid grid_, int rotation_) {
+        super(row_, col_, grid_);
         ghost = true;
         color clr = color(0, 255, 255);
-        blocks[0] = new Block(row, col, scale, clr);
-        blocks[1] = new Block(row, col + 1, scale, clr);
-        blocks[2] = new Block(row, col - 1, scale, clr);
-        blocks[3] = new Block(row, col - 2, scale, clr);
+        blocks[0] = new Block(row, col, clr);
+        blocks[1] = new Block(row, col + 1, clr);
+        blocks[2] = new Block(row, col - 1, clr);
+        blocks[3] = new Block(row, col - 2, clr);
         
         while(rotation != rotation_)
             rotate(true);
     }
     
-    public TetrominoI(int row_, int col_, int scale_, Grid grid_) {
-        super(row_, col_, scale_, grid_);
+    public TetrominoI(int row_, int col_, Grid grid_) {
+        super(row_, col_, grid_);
         color clr = color(0, 255, 255);
-        blocks[0] = new Block(row, col, scale, clr);
-        blocks[1] = new Block(row, col + 1, scale, clr);
-        blocks[2] = new Block(row, col - 1, scale, clr);
-        blocks[3] = new Block(row, col - 2, scale, clr);
+        blocks[0] = new Block(row, col, clr);
+        blocks[1] = new Block(row, col + 1, clr);
+        blocks[2] = new Block(row, col - 1, clr);
+        blocks[3] = new Block(row, col - 2, clr);
     }
     
-    public TetrominoI(int scale_, Grid grid_) {
-        super(1, 5, scale_, grid_);
+    public TetrominoI(Grid grid_) {
+        super(1, 5, grid_);
         row = 1;
         col = 5;
         color clr = color(0, 255, 255);
-        blocks[0] = new Block(row, col, scale, clr);
-        blocks[1] = new Block(row, col + 1, scale, clr);
-        blocks[2] = new Block(row, col - 1, scale, clr);
-        blocks[3] = new Block(row, col - 2, scale, clr);
+        blocks[0] = new Block(row, col, clr);
+        blocks[1] = new Block(row, col + 1, clr);
+        blocks[2] = new Block(row, col - 1, clr);
+        blocks[3] = new Block(row, col - 2, clr);
     }
     
     public boolean rotate(boolean clockwise) {
@@ -84,7 +84,7 @@ public class TetrominoI extends Tetromino{
     }
     
     public void displayGhost() {
-        Tetromino ghost = new TetrominoI(row, col, scale, grid, rotation);
+        Tetromino ghost = new TetrominoI(row, col, grid, rotation);
         ghost.setPos(row, col);
         while(ghost.canMove("down"))
             ghost.move("down");
@@ -92,6 +92,6 @@ public class TetrominoI extends Tetromino{
     }
     
     public TetrominoI clone() {
-        return new TetrominoI(row, col, scale, grid);
+        return new TetrominoI(row, col, grid);
     }
 }

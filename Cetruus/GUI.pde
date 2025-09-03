@@ -1,8 +1,6 @@
 public abstract class GUI{
-    private int scale;
     
-    public GUI(int scale_) {
-        scale = scale_;
+    public GUI() {
     }
     
     public abstract void display();
@@ -14,4 +12,6 @@ public abstract class GUI{
     public abstract void keyPressed();
     
     public abstract String goTo();
+    
+    public abstract void windowResized();
 }

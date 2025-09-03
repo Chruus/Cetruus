@@ -26,6 +26,14 @@ public class Button{
         textSize = textSize_;
     }
     
+    public void resize(int x_, int y_, int w_, int h_) {
+        x = x_;
+        y = y_;
+        w = w_;
+        h = h_;
+        textSize = Math.min((int)(w / text.length()),(int)(h / 2.8));
+    }
+    
     public void display() {
         pushStyle();
         pushMatrix();

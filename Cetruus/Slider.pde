@@ -51,6 +51,13 @@ public class Slider{
         popMatrix();
     }
     
+    public void resize(int x, int y, int w, int h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+    }
+    
     public void mousePressed() {
         boolean mouseWithinSlider = mouseX < xSlider + w / 24 && mouseX > xSlider - w / 24 && mouseY < y + h && mouseY > y - h;
         boolean mouseWithinBar = mouseX < x + w / 2 + w / 24 & mouseX > x - w / 2 - w / 24 && mouseY < y + h / 2 && mouseY > y - h / 2;

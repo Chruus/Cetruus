@@ -3,10 +3,8 @@ import java.util.*;
 public class Bag{
     ArrayList<Tetromino> main, reserve;
     Grid grid;
-    int scale;
     
     public Bag(Grid grid_) {
-        scale = Cetruus.scale;
         grid = grid_;
         main = new ArrayList<Tetromino>();
         reserve = new ArrayList<Tetromino>();
@@ -46,13 +44,13 @@ public class Bag{
     
     private void reset(ArrayList<Tetromino> bag) {
         bag.clear();
-        bag.add(new TetrominoI(scale, grid));
-        bag.add(new TetrominoJ(scale, grid));
-        bag.add(new TetrominoL(scale, grid));
-        bag.add(new TetrominoO(scale, grid));
-        bag.add(new TetrominoS(scale, grid));
-        bag.add(new TetrominoT(scale, grid));
-        bag.add(new TetrominoZ(scale, grid));
+        bag.add(new TetrominoI(grid));
+        bag.add(new TetrominoJ(grid));
+        bag.add(new TetrominoL(grid));
+        bag.add(new TetrominoO(grid));
+        bag.add(new TetrominoS(grid));
+        bag.add(new TetrominoT(grid));
+        bag.add(new TetrominoZ(grid));
         Collections.shuffle(bag);
     }
     

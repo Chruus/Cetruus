@@ -3,17 +3,38 @@ import java.awt.event.KeyEvent;
 public class GUISettingsKeyBindings extends GUI{
     private String newKeyBind;
     private Button moveLeft, moveRight, softDrop, hardDrop, hold, rotateRight, rotateLeft;
+    color textColor, backgroundColor;
     
-    public GUISettingsKeyBindings(int scale_, color textColor, color backgroundColor) {
-        super(scale_);
+    public GUISettingsKeyBindings(color textColor, color backgroundColor) {
+        this.textColor = textColor;
+        this.backgroundColor = backgroundColor;
         
-        moveLeft = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("move left")) + "\"", textColor, 11 * scale, 6 * scale, 5 * scale, 2 * scale, backgroundColor);
-        moveRight = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("move right")) + "\"", textColor, 11 * scale, 8 * scale, 5 * scale, 2 * scale, backgroundColor);
-        softDrop = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("soft drop")) + "\"", textColor, 11 * scale, 10 * scale, 5 * scale, 2 * scale, backgroundColor);
-        hardDrop = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("hard drop")) + "\"", textColor, 11 * scale, 12 * scale, 5 * scale, 2 * scale, backgroundColor);
-        hold = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("hold tetro")) + "\"", textColor, 11 * scale, 14 * scale, 5 * scale, 2 * scale, backgroundColor);
-        rotateLeft = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("rotate left")) + "\"", textColor, 11 * scale, 16 * scale, 5 * scale, 2 * scale, backgroundColor);
-        rotateRight = new Button("\"" + KeyEvent.getKeyText(keyBinds.get("rotate right")) + "\"", textColor, 11 * scale, 18 * scale, 5 * scale, 2 * scale, backgroundColor);        
+        String moveLeftText = "\"" + KeyEvent.getKeyText(keyBinds.get("move left")) + "\"";
+        String moveRightText = "\"" + KeyEvent.getKeyText(keyBinds.get("move right")) + "\"";
+        String softDropText = "\"" + KeyEvent.getKeyText(keyBinds.get("soft drop")) + "\"";
+        String hardDropText = "\"" + KeyEvent.getKeyText(keyBinds.get("hard drop")) + "\"";
+        String holdText = "\"" + KeyEvent.getKeyText(keyBinds.get("hold tetro")) + "\"";
+        String rotateLeftText = "\"" + KeyEvent.getKeyText(keyBinds.get("rotate left")) + "\"";
+        String rotateRightText = "\"" + KeyEvent.getKeyText(keyBinds.get("rotate right")) + "\"";
+        
+        int X = width / 2 + 4 * Cetruus.scale;
+        int moveLeftY = height / 2 - 4 * Cetruus.scale;
+        int moveRightY = height / 2 - 2 * Cetruus.scale;
+        int softDropY = height / 2;
+        int hardDropY = height / 2 + 2 * Cetruus.scale;
+        int holdY = height / 2 + 4 * Cetruus.scale;
+        int rotateLeftY = height / 2 + 6 * Cetruus.scale;
+        int rotateRightY = height / 2 + 8 * Cetruus.scale;
+        int width = 5 * Cetruus.scale;
+        int height = 2 * Cetruus.scale;
+        
+        moveLeft = new Button(moveLeftText, textColor, X, moveLeftY, width, height, backgroundColor);
+        moveRight = new Button(moveRightText, textColor, X, moveRightY, width, height, backgroundColor);
+        softDrop = new Button(softDropText, textColor, X, softDropY, width, height, backgroundColor);
+        hardDrop = new Button(hardDropText, textColor, X, hardDropY, width, height, backgroundColor);
+        hold = new Button(holdText, textColor, X, holdY, width, height, backgroundColor);
+        rotateLeft = new Button(rotateLeftText, textColor, X, rotateLeftY, width, height, backgroundColor);
+        rotateRight = new Button(rotateRightText, textColor, X, rotateRightY, width, height, backgroundColor);        
     }
     
     public void display() {
@@ -29,21 +50,51 @@ public class GUISettingsKeyBindings extends GUI{
         rotateRight.display();
         
         textAlign(LEFT);
-        textSize(18);
+        textSize(Cetruus.scale * 3 / 5);
         fill(255);
         
-        text("move left",(int)(0.5 * scale), 6 * scale + 10);
-        text("move right",(int)(0.5 * scale), 8 * scale + 10);
-        text("soft drop",(int)(0.5 * scale), 10 * scale + 10);
-        text("hard drop",(int)(0.5 * scale), 12 * scale + 10);
-        text("hold tetromino",(int)(0.5 * scale), 14 * scale + 10);
-        text("rotate left",(int)(0.5 * scale), 16 * scale + 10);
-        text("rotate right",(int)(0.5 * scale), 18 * scale + 10);
+        int x = width / 2 - (int)(6.5 * Cetruus.scale);
+        int moveLeftY = height / 2 - 4 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        int moveRightY = height / 2 - 2 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        int softDropY = height / 2 + (int)(Cetruus.scale / 3);
+        int hardDropY = height / 2 + 2 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        int holdTetroY = height / 2 + 4 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        int rotateLeftY = height / 2 + 6 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        int rotateRightY = height / 2 + 8 * Cetruus.scale + (int)(Cetruus.scale / 3);
+        
+        text("move left", x, moveLeftY);
+        text("move right", x, moveRightY);
+        text("soft drop", x, softDropY);
+        text("hard drop", x, hardDropY);
+        text("hold tetromino", x, holdTetroY);
+        text("rotate left", x, rotateLeftY);
+        text("rotate right", x, rotateRightY);
         
         checkForNewSettings();
         
         popMatrix();
         popStyle();
+    }
+    
+    public void windowResized() {
+        int X = width / 2 + 4 * Cetruus.scale;
+        int moveLeftY = height / 2 - 4 * Cetruus.scale;
+        int moveRightY = height / 2 - 2 * Cetruus.scale;
+        int softDropY = height / 2;
+        int hardDropY = height / 2 + 2 * Cetruus.scale;
+        int holdY = height / 2 + 4 * Cetruus.scale;
+        int rotateLeftY = height / 2 + 6 * Cetruus.scale;
+        int rotateRightY = height / 2 + 8 * Cetruus.scale;
+        int width = 5 * Cetruus.scale;
+        int height = 2 * Cetruus.scale;
+        
+        moveLeft.resize(X, moveLeftY, width, height);
+        moveRight.resize(X, moveRightY, width, height);
+        softDrop.resize(X, softDropY, width, height);
+        hardDrop.resize(X, hardDropY, width, height);
+        hold.resize(X, holdY, width, height);
+        rotateLeft.resize(X, rotateLeftY, width, height);
+        rotateRight.resize(X, rotateRightY, width, height);
     }
     
     private void checkForNewSettings() {

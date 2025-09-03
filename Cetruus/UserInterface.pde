@@ -94,9 +94,10 @@ public class UserInterface{
         if (!(inGame || currentGUI.equals(pause)))
             exit();
         
+        currentGUI = pause;
+        
         inPause = !inPause;
         inGame = !inGame;
-        currentGUI = pause;
         
     }
     

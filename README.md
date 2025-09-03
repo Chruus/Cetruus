@@ -13,6 +13,8 @@ Features:
 - Able to see next three tetrominos
 - Able to hold a tetromino
 - Can customize & save keybinds and delays
+- Can change volume of music / sound independently, and mute / unmute midgame
+- Fully scalable for whatever size you want to play at.
 - Teacher/Boss-proof
   - Saves game-state if window is closed mid-game
   - Pauses game if alt-tabs 
